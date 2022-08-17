@@ -56,13 +56,17 @@ export default {
   },
   computed: {
     titleColor() {
-      if (this.todoList.filter((item) => item.isDone).length === 0)
+      const doneItemsLength = this.todoList.filter(
+        (item) => item.isDone
+      ).length;
+      const isNotDoneItemsLength = this.todoList.filter(
+        (item) => !item.isDone
+      ).length;
+      if (doneItemsLength === 0 || doneItemsLength < isNotDoneItemsLength)
         return "red";
       if (
-        this.todoList.filter((item) => item.isDone).length >=
-          this.todoList.filter((item) => !item.isDone).length &&
-        this.todoList.filter((item) => item.isDone).length !==
-          this.todoList.length
+        doneItemsLength >= isNotDoneItemsLength &&
+        doneItemsLength !== this.todoList.length
       )
         return "yellow";
       return "green";
