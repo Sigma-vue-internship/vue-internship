@@ -11,12 +11,12 @@
           <ul class="todoList" v-if="todoList.length">
             <TodoItem
               v-for="todoItem in todoList"
-              :key="todoItem.itemId"
+              :key="todoItem.id"
               :item="{
-                itemLabel: todoItem.itemLabel,
-                itemDescription: todoItem.itemDescription,
+                label: todoItem.label,
+                description: todoItem.description,
               }"
-              :itemId="todoItem.itemId"
+              :itemId="todoItem.id"
               @deleteItem="deleteItem"
             />
           </ul>
@@ -41,27 +41,27 @@ export default {
       todoList: [],
       item: {
         itemId: null,
-        itemLabel: "",
-        itemDescription: "",
+        label: "",
+        description: "",
       },
     };
   },
 
   methods: {
     addItem(formData) {
-      if (formData.title.length) {
+      if (formData.title.length && formData.description.length) {
         this.item = {
-          itemId: Date.now(),
-          itemLabel: formData.title,
-          itemDescription: formData.description,
+          id: Date.now(),
+          label: formData.title,
+          description: formData.description,
         };
         this.todoList.push(this.item);
-        this.item = { itemId: null, itemLabel: "", itemDescription: "" };
+        this.item = { id: null, label: "", description: "" };
       }
     },
 
     deleteItem(id) {
-      this.todoList = this.todoList.filter((item) => item.itemId !== id);
+      this.todoList = this.todoList.filter((item) => item.id !== id);
     },
   },
 };

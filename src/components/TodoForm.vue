@@ -7,6 +7,7 @@
         placeholder="Title"
         v-model="formData.title"
       />
+      <p class="form_error" v-if="error.title">{{ error.title }}</p>
       <textarea
         class="form__input"
         v-model="formData.description"
@@ -15,6 +16,9 @@
         rows="5"
         placeholder="Description"
       ></textarea>
+      <p class="form_error" v-if="error.description">
+        {{ error.description }}
+      </p>
       <slot name="additionalField"> </slot>
       <button class="addTaskBtn" type="submit" @keydown.enter="emitAddItem()">
         Add task
@@ -31,13 +35,25 @@ export default {
         title: "",
         description: "",
       },
+      error: {
+        title: "",
+        description: "",
+      },
     };
   },
   methods: {
     emitAddItem() {
+      if (!this.formData.title.length)
+        return (this.error.title = "Please write a title");
+
+      if (!this.formData.description.length)
+        return (this.error.description = "Please write a description");
+
       this.$emit("addItem", this.formData);
       this.formData.title = "";
       this.formData.description = "";
+      this.error.title = "";
+      this.error.description = "";
     },
   },
 };
@@ -60,6 +76,9 @@ export default {
     &:focus {
       border: 2px dashed #15d798;
     }
+  }
+  .form_error {
+    color: rgb(252, 90, 90);
   }
 }
 .addTaskBtn {

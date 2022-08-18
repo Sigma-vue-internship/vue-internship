@@ -2,12 +2,12 @@
   <div class="item_container">
     <div>
       <h2 @click="showHideDescription">
-        {{ item.itemLabel }}
+        {{ item.label }}
       </h2>
       <TodoDetails
         v-if="isDescriptionShow"
         class="description"
-        :itemDescription="item.itemDescription"
+        :itemDescription="item.description"
       />
     </div>
     <div>
