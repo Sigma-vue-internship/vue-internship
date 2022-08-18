@@ -17,7 +17,7 @@
           <h2 :class="{ done: todoItem.isDone }" @click="deleteItem(index)">
             {{ todoItem.task }}
           </h2>
-          <input type="checkbox" @click="setDone(index)" />
+          <input type="checkbox" v-model="todoItem.isDone" />
         </li>
       </ul>
     </div>
@@ -30,38 +30,40 @@ export default {
   data() {
     return {
       todoList: [],
-      item: {},
+      item: {
+        task: null,
+        isDone: false,
+      },
       currentItem: "",
     };
   },
   methods: {
     addItem() {
       if (this.currentItem.length) {
+        this.item.task = this.currentItem;
+        this.todoList.push(this.item);
         this.item = {
-          task: this.currentItem,
+          task: null,
           isDone: false,
         };
-        this.todoList.push(this.item);
-        this.item = {};
         this.currentItem = "";
       }
-      return;
-    },
-    setDone(id) {
-      this.todoList[id].isDone = !this.todoList[id].isDone;
     },
     deleteItem(id) {
       this.todoList = this.todoList.filter((item, i) => i !== id);
     },
+    countDoneItems(isDone) {
+      return isDone
+        ? this.todoList.filter((item) => item.isDone).length
+        : this.todoList.filter((item) => !item.isDone).length;
+    },
   },
   computed: {
     titleColor() {
-      const doneItemsLength = this.todoList.filter(
-        (item) => item.isDone
-      ).length;
-      const isNotDoneItemsLength = this.todoList.filter(
-        (item) => !item.isDone
-      ).length;
+      const doneItemsLength = this.countDoneItems(true);
+
+      const isNotDoneItemsLength = this.countDoneItems(false);
+
       if (doneItemsLength === 0 || doneItemsLength < isNotDoneItemsLength)
         return "red";
       if (
