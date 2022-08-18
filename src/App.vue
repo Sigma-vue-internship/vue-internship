@@ -39,15 +39,11 @@ export default {
   },
   methods: {
     addItem() {
-      if (this.currentItem.length) {
-        this.item.task = this.currentItem;
-        this.todoList.push(this.item);
-        this.item = {
-          task: null,
-          isDone: false,
-        };
-        this.currentItem = "";
-      }
+      if (!this.currentItem.length) return;
+      this.item.task = this.currentItem;
+      this.todoList.push(this.item);
+      this.item = {...this.item, task: null};
+      this.currentItem = "";
     },
     deleteItem(id) {
       this.todoList = this.todoList.filter((item, i) => i !== id);
