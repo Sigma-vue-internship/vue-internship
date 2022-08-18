@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <span>
     <button @click="autoIncrement">
       🚀 {{ count }} units
     </button>
-  </div>
+  </span>
 </template>
 
 <script>

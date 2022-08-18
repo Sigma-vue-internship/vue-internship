@@ -26,6 +26,11 @@ nav a {
 nav a.router-link-exact-active {
   color: #42b983;
 }
+button {
+  padding: 5px;
+  background: beige;
+  margin-left: 10px;
+}
 </style>
 <script>
 import Navigation from "@/components/Navigation";

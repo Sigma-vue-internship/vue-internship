@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <span>
     <button @mouseover="autoIncrement">
       🚀 {{ count }} units
     </button>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -26,8 +26,4 @@ export default {
 </script>
 
 <style scoped>
-  button {
-    padding: 5px;
-    background: beige;
-  }
 </style>
