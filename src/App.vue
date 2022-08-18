@@ -10,13 +10,13 @@
           <h1 class="todoTitle">Your current todos:</h1>
           <ul class="todoList" v-if="todoList.length">
             <TodoItem
-              v-for="(todoItem, index) in todoList"
-              :key="'item: ' + index"
+              v-for="todoItem in todoList"
+              :key="todoItem.itemId"
               :item="{
                 itemLabel: todoItem.itemLabel,
                 itemDescription: todoItem.itemDescription,
               }"
-              :itemIndex="index"
+              :itemId="todoItem.itemId"
               @deleteItem="deleteItem"
             />
           </ul>
@@ -40,25 +40,28 @@ export default {
     return {
       todoList: [],
       item: {
+        itemId: null,
         itemLabel: "",
         itemDescription: "",
       },
     };
   },
+
   methods: {
     addItem(formData) {
       if (formData.title.length) {
         this.item = {
+          itemId: Date.now(),
           itemLabel: formData.title,
           itemDescription: formData.description,
         };
         this.todoList.push(this.item);
-        this.item = {};
+        this.item = { itemId: null, itemLabel: "", itemDescription: "" };
       }
     },
 
     deleteItem(id) {
-      this.todoList = this.todoList.filter((item, i) => i !== id);
+      this.todoList = this.todoList.filter((item) => item.itemId !== id);
     },
   },
 };

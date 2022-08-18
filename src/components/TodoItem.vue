@@ -1,13 +1,13 @@
 <template>
   <div class="item_container">
     <div>
-      <h2 @click="showHideDescription()">
-        {{ this.item.itemLabel }}
+      <h2 @click="showHideDescription">
+        {{ item.itemLabel }}
       </h2>
       <TodoDetails
-        v-if="this.isDescriptionShow"
+        v-if="isDescriptionShow"
         class="description"
-        :itemDescription="this.item.itemDescription"
+        :itemDescription="item.itemDescription"
       />
     </div>
     <div>
@@ -27,7 +27,7 @@ export default {
       type: Object,
       default: () => ({}),
     },
-    itemIndex: {
+    itemId: {
       type: Number,
     },
   },
@@ -41,7 +41,7 @@ export default {
       this.isDescriptionShow = !this.isDescriptionShow;
     },
     callDeleteItem() {
-      this.$emit("deleteItem", this.itemIndex);
+      this.$emit("deleteItem", this.itemId);
     },
   },
 };
