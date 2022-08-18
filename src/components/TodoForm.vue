@@ -43,15 +43,18 @@ export default {
   },
   methods: {
     emitAddItem() {
+      this.formValidation();
+      this.$emit("addItem", this.formData);
+      this.formData.title = "";
+      this.formData.description = "";
+    },
+    formValidation() {
       if (!this.formData.title.length)
         return (this.error.title = "Please write a title");
 
       if (!this.formData.description.length)
         return (this.error.description = "Please write a description");
 
-      this.$emit("addItem", this.formData);
-      this.formData.title = "";
-      this.formData.description = "";
       this.error.title = "";
       this.error.description = "";
     },
