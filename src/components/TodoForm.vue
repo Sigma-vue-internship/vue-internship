@@ -4,14 +4,12 @@
       <input
         class="form__input"
         type="text"
-        @input="updateItemInfo()"
-        ref="itemLabel"
         placeholder="Title"
+        v-model="formData.title"
       />
       <textarea
         class="form__input"
-        @input="updateItemInfo()"
-        ref="itemDescription"
+        v-model="formData.description"
         maxlength="150"
         cols="30"
         rows="5"
@@ -27,17 +25,19 @@
 
 <script>
 export default {
+  data() {
+    return {
+      formData: {
+        title: "",
+        description: "",
+      },
+    };
+  },
   methods: {
-    updateItemInfo() {
-      this.$emit("input", {
-        itemLabel: this.$refs.itemLabel.value,
-        itemDescription: this.$refs.itemDescription.value,
-      });
-    },
     emitAddItem() {
-      this.$emit("addItem");
-      this.$refs.itemLabel.value = "";
-      this.$refs.itemDescription.value = "";
+      this.$emit("addItem", this.formData);
+      this.formData.title = "";
+      this.formData.description = "";
     },
   },
 };

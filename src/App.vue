@@ -4,7 +4,7 @@
       <div class="content__container">
         <div class="todo_form">
           <h1 class="todoTitle">TODO</h1>
-          <TodoForm v-model="currentItem" @addItem="addItem"> </TodoForm>
+          <TodoForm @addItem="addItem"> </TodoForm>
         </div>
         <div class="todo_list">
           <h1 class="todoTitle">Your current todos:</h1>
@@ -14,7 +14,6 @@
               :key="'item: ' + index"
               :item="{
                 itemLabel: todoItem.itemLabel,
-                isItemOpen: todoItem.isOpen,
                 itemDescription: todoItem.itemDescription,
               }"
               :itemIndex="index"
@@ -40,27 +39,22 @@ export default {
   data() {
     return {
       todoList: [],
-      item: {},
-      currentItem: {
+      item: {
         itemLabel: "",
         itemDescription: "",
       },
     };
   },
   methods: {
-    addItem() {
-      if (this.currentItem.itemLabel.length) {
+    addItem(formData) {
+      if (formData.title.length) {
         this.item = {
-          itemLabel: this.currentItem.itemLabel,
-          isOpen: false,
-          itemDescription: this.currentItem.itemDescription,
+          itemLabel: formData.title,
+          itemDescription: formData.description,
         };
         this.todoList.push(this.item);
         this.item = {};
-        this.currentItem.itemLabel = "";
-        this.currentItem.itemDescription = "";
       }
-      return;
     },
 
     deleteItem(id) {

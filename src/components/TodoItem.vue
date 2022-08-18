@@ -7,7 +7,6 @@
       <TodoDetails
         v-if="this.isDescriptionShow"
         class="description"
-        :isItemOpen="this.item.isItemOpen"
         :itemDescription="this.item.itemDescription"
       />
     </div>
