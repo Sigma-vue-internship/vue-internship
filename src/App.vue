@@ -54,7 +54,7 @@ export default {
   },
   computed: {
     titleColor() {
-      const doneItemsLength = this.countDoneItems(true);
+      const doneItemsLength = this.countDoneItems();
       const todoListLength = this.todoList.length;
 
       if (doneItemsLength < todoListLength / 2) {
