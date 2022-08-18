@@ -1,7 +1,7 @@
 <template>
   <div>
     <button @click="autoIncrement">
-      Click {{ count }} times
+      🚀 {{ count }} units
     </button>
   </div>
 </template>

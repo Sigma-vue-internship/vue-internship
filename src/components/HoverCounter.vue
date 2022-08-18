@@ -1,7 +1,7 @@
 <template>
   <div>
     <button @mouseover="autoIncrement">
-      Hover {{ count }} times
+      🚀 {{ count }} units
     </button>
   </div>
 </template>
