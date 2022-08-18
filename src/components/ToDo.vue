@@ -1,7 +1,8 @@
 <template>
   <div class="todo">
     <h1 :style="{ color: fontColor }">
-      {{ msg }}</h1>
+      {{ msg }}
+    </h1>
     <input type="text" placeholder="Enter text..." v-model.trim="currentValue" class="input-current" />
     <button @click="addItem" class="btn-add">ADD</button>
     <ul class="ul-list">
@@ -9,7 +10,8 @@
         <button @click="removeItem(index, item)"
           :class="{
             'btn-remove': item,
-            'li-cross': item.done===true}">
+            'li-cross': item.done===true}"
+        >
           {{item.title}}
         </button>
         <input type="checkbox" @click="crossItem(item)" v-model="item.done" />
@@ -28,8 +30,7 @@
       return {
         items:[],
         currentValue:"",
-        count:0,
-        color:""
+        count:0
       }
     },
     methods: {
