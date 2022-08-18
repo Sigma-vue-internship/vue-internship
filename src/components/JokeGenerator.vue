@@ -2,9 +2,9 @@
   <div>
     <p v-if="joke">{{ joke }}</p>
     <button @click="getJoke">Generate Joke</button>
-    <p v-if="jokeHistory.length > 1"><a @click="showHideJokes" href="javascript:;">{{ labelText }} Joke History</a></p>
+    <p v-if="jokeHistory.length > 1"><a @click="showHideJokes" href="javascript:void(0)">{{ labelText }} Joke History</a></p>
     <ol v-if="showHistory">
-      <li v-for="(joke, index) in jokeHistory" :key="`li-${index}`">{{ joke }}</li>
+      <li v-for="(joke, index) in jokeHistory" :key="`id-${index}`">{{ joke }}</li>
     </ol>
   </div>
 </template>
