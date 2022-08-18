@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <ClickCounter />
+    <HoverCounter />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+
+import HoverCounter from "@/components/HoverCounter";
+import ClickCounter from "@/components/ClickCounter";
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ClickCounter,
+    HoverCounter
   }
 }
 </script>
@@ -23,8 +26,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin: 100px;
 }
 </style>
