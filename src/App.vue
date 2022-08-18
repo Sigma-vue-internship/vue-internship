@@ -42,31 +42,30 @@ export default {
       if (!this.currentItem.length) return;
       this.item.task = this.currentItem;
       this.todoList.push(this.item);
-      this.item = {...this.item, task: null};
+      this.item = { ...this.item, task: null };
       this.currentItem = "";
     },
     deleteItem(id) {
       this.todoList = this.todoList.filter((item, i) => i !== id);
     },
-    countDoneItems(isDone) {
-      return isDone
-        ? this.todoList.filter((item) => item.isDone).length
-        : this.todoList.filter((item) => !item.isDone).length;
+    countDoneItems() {
+      return this.todoList.filter((item) => item.isDone).length;
     },
   },
   computed: {
     titleColor() {
       const doneItemsLength = this.countDoneItems(true);
+      const todoListLength = this.todoList.length;
 
-      const isNotDoneItemsLength = this.countDoneItems(false);
-
-      if (doneItemsLength === 0 || doneItemsLength < isNotDoneItemsLength)
+      if (doneItemsLength < todoListLength / 2) {
         return "red";
+      }
       if (
-        doneItemsLength >= isNotDoneItemsLength &&
-        doneItemsLength !== this.todoList.length
-      )
+        doneItemsLength >= todoListLength / 2 &&
+        doneItemsLength !== todoListLength
+      ) {
         return "yellow";
+      }
       return "green";
     },
   },
