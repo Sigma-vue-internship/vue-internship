@@ -3,18 +3,14 @@
     <h1 :style="{ color: fontColor }">
       {{ msg }}
     </h1>
-    <input type="text" placeholder="Enter text..." v-model.trim="currentValue" class="input-current" />
+    <input type="text" placeholder="Enter text..." v-model.trim="currentValue" class="current" />
     <button @click="addItem" class="btn-add">ADD</button>
-    <ul class="ul-list">
-      <li v-for="(item, index) in items" :key="item.id" class="li-item">
-        <button @click="removeItem(index, item)"
-          :class="{
-            'btn-remove': item,
-            'li-cross': item.done===true}"
-        >
-          {{item.title}}
+    <ul class="list" v-if="items.length">
+      <li v-for="(item, index) in items" :key="item.id" class="item">
+        <button @click="removeItem(index)" class="btn-remove" :class="{ cross: item.done }">
+          {{ item.title }}
         </button>
-        <input type="checkbox" @click="crossItem(item)" v-model="item.done" />
+        <input type="checkbox" v-model="item.done" />
       </li>
     </ul>
   </div>
@@ -29,34 +25,35 @@
     data () {
       return {
         items:[],
-        currentValue:"",
-        count:0
+        currentValue:""
       }
     },
     methods: {
       addItem() {
-        this.currentValue?this.items.push({
-          title: this.currentValue,
-          done: false
-        }):false;
+        this.currentValue ? this.pushData() : false;
         this.currentValue="";
       },
-      crossItem(item) {
-        item.done = !item.done;
-        item.done?this.count++:this.count--;
+      pushData() {
+        this.items.push({
+          title: this.currentValue,
+          done: false
+        })
       },
-      removeItem(index, item) {
+      removeItem(index) {
         this.items.splice(index, 1);
-        (this.count!==0&&item.done)?this.count--:false;
       }
     },
     computed: {
       fontColor() {
-        const result = Math.floor(this.items.length/2);
-        return this.count===0&&this.items.length>0?"red"
-          :this.count>result&&this.count!==this.items.length?"yellow"
-            :this.count===this.items.length&&this.count!==0?"green"
+        const numberOfDone = this.items.filter(item => item.done).length;
+        const numberOfItems = this.items.length;
+        return numberOfDone===0 && numberOfItems>0 ? "red"
+          :numberOfDone>=numberOfItems/2 && numberOfDone!==numberOfItems ? "yellow"
+            :numberOfDone===numberOfItems && numberOfDone!==0 ? "green"
               :"rgb(17, 1, 34)"
+      },
+      crossed() {
+        return "cross";
       }
     }
   }
@@ -70,11 +67,11 @@
     border: 1px solid rgb(17, 1, 34);
     border-radius: 2px;
   }
-  .ul-list {
+  .list {
     list-style-type: none;
     padding: 0;
   }
-  .li-cross {
+  .cross {
     text-decoration: line-through;
   }
   input[type=text] {
@@ -98,7 +95,7 @@
     width: 45px;
     margin: 0;
   }
-  .li-item {
+  .item {
     display: flex;
     flex-direction: row;
     justify-content: center;
