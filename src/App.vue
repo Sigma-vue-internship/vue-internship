@@ -1,76 +1,73 @@
 <template>
   <div id="app">
     <div class="container">
-      <h1 class="todoTitle" :style="{ color: titleColor }">TODO</h1>
-      <TodoForm v-model="currentItem" @addItem="addItem"></TodoForm>
-      <ul class="todoList" v-if="todoList.length">
-        <li
-          class="todoItem"
-          v-for="(todoItem, index) in todoList"
-          :key="'li' + index"
-        >
-          <h2 :class="{ done: todoItem.isDone }" @click="deleteItem(index)">
-            {{ todoItem.task }}
-          </h2>
-          <input type="checkbox" @click="setDone(index)" />
-        </li>
-      </ul>
+      <div class="content__container">
+        <div class="todo_form">
+          <h1 class="todoTitle">TODO</h1>
+          <TodoForm v-model="currentItem" @addItem="addItem"> </TodoForm>
+        </div>
+        <div class="todo_list">
+          <h1 class="todoTitle">Your current todos:</h1>
+          <ul class="todoList" v-if="todoList.length">
+            <TodoItem
+              v-for="(todoItem, index) in todoList"
+              :key="'item: ' + index"
+              :itemProps="{
+                itemIndex: index,
+                itemLabel: todoItem.itemLabel,
+                isItemOpen: todoItem.isOpen,
+                itemDescription: todoItem.itemDescription,
+              }"
+              @openDescription="openDescription"
+              @deleteItem="deleteItem"
+            />
+          </ul>
+          <span v-else>There will be your todos</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import TodoForm from "./components/TodoForm/TodoForm.vue";
+import TodoItem from "./components/TodoItem/TodoItem.vue";
 export default {
   name: "App",
   components: {
     TodoForm,
+    TodoItem,
   },
   data() {
     return {
       todoList: [],
       item: {},
-      currentItem: "",
-      description: "",
+      currentItem: {
+        itemLabel: "",
+        itemDescription: "",
+      },
     };
   },
   methods: {
     addItem() {
-      if (this.currentItem.length) {
+      if (this.currentItem.itemLabel.length) {
         this.item = {
-          task: this.currentItem,
-          isDone: false,
-          description: this.description,
+          itemLabel: this.currentItem.itemLabel,
+          isOpen: false,
+          itemDescription: this.currentItem.itemDescription,
         };
         this.todoList.push(this.item);
         this.item = {};
-        this.currentItem = "";
+        this.currentItem.itemLabel = "";
+        this.currentItem.itemDescription = "";
       }
       return;
     },
-    setDone(id) {
-      this.todoList[id].isDone = !this.todoList[id].isDone;
+    openDescription(index) {
+      this.todoList[index].isOpen = !this.todoList[index].isOpen;
     },
     deleteItem(id) {
       this.todoList = this.todoList.filter((item, i) => i !== id);
-    },
-  },
-  computed: {
-    titleColor() {
-      const doneItemsLength = this.todoList.filter(
-        (item) => item.isDone
-      ).length;
-      const isNotDoneItemsLength = this.todoList.filter(
-        (item) => !item.isDone
-      ).length;
-      if (doneItemsLength === 0 || doneItemsLength < isNotDoneItemsLength)
-        return "red";
-      if (
-        doneItemsLength >= isNotDoneItemsLength &&
-        doneItemsLength !== this.todoList.length
-      )
-        return "yellow";
-      return "green";
     },
   },
 };

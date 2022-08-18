@@ -1,42 +1,25 @@
-.done {
-    text-decoration: line-through;
-    color: rgba(119, 119, 119, 0.507);
-}
-
 .todoTitle {
     font-family: cursive;
     font-size: 26px;
     font-weight: bold;
+    margin-bottom: 20px;
 }
-
-.todoItem {
+.item_container{
     display: flex;
-    justify-content: center;
-    gap: 15px;
-    cursor: pointer;
-    font-family: cursive;
-    font-size: 16px;
+    justify-content: space-between;
 }
 
 .todoList {
     list-style: none;
 }
-
+.todo_form{
+    flex-basis: 60%;
+}
 .container {
     margin: 0 auto;
     text-align: center;
 }
-
-.addTaskBtn {
-    margin-left: 10px;
-    background: #15d798;
-    background: linear-gradient(#15d798, #073763);
-    border-radius: 11px;
-    border: 0px;
-    padding: 10px 25px;
-    color: #ffffff;
-    cursor: pointer;
-    display: inline-block;
-    font: normal bold 15px "Open Sans", sans-serif;
-    text-align: center;
+.content__container{
+    display: flex;
+    justify-content: space-evenly;
 }
