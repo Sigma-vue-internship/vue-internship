@@ -12,13 +12,12 @@
             <TodoItem
               v-for="(todoItem, index) in todoList"
               :key="'item: ' + index"
-              :itemProps="{
-                itemIndex: index,
+              :item="{
                 itemLabel: todoItem.itemLabel,
                 isItemOpen: todoItem.isOpen,
                 itemDescription: todoItem.itemDescription,
               }"
-              @openDescription="openDescription"
+              :itemIndex="index"
               @deleteItem="deleteItem"
             />
           </ul>
@@ -30,8 +29,8 @@
 </template>
 
 <script>
-import TodoForm from "./components/TodoForm/TodoForm.vue";
-import TodoItem from "./components/TodoItem/TodoItem.vue";
+import TodoForm from "./components/TodoForm.vue";
+import TodoItem from "./components/TodoItem.vue";
 export default {
   name: "App",
   components: {
@@ -63,9 +62,7 @@ export default {
       }
       return;
     },
-    openDescription(index) {
-      this.todoList[index].isOpen = !this.todoList[index].isOpen;
-    },
+
     deleteItem(id) {
       this.todoList = this.todoList.filter((item, i) => i !== id);
     },
