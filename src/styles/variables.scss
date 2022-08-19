@@ -1,0 +1,21 @@
+$darkFontColor: rgb(17, 1, 34);
+
+@mixin infoElement {
+    height: 31px;
+    width: 200px;
+}
+
+@mixin btn-style {
+    font-weight: 700;
+    color: white;
+    background-color: rgb(70, 42, 82);
+    border: 1px solid $darkFontColor;
+    border-radius: 2px;
+}
+
+@mixin controlledElement {
+    width: 500px;
+    border: 1px solid $darkFontColor;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
