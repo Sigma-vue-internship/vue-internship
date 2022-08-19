@@ -51,9 +51,6 @@
           :numberOfDone>=numberOfItems/2 && numberOfDone!==numberOfItems ? "yellow"
             :numberOfDone===numberOfItems && numberOfDone!==0 ? "green"
               :"rgb(17, 1, 34)"
-      },
-      crossed() {
-        return "cross";
       }
     }
   }
