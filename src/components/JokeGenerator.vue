@@ -10,38 +10,32 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
   name: "JokeGenerator",
   data() {
     return {
-      joke: null,
-      jokeHistory: [],
       showHistory: false,
     }
   },
   computed: {
+    ...mapGetters({ joke: 'getJoke', jokeHistory: 'getJokeHistory' }),
     labelText() {
       return !this.showHistory ? 'Show' : 'Hide';
-    }
+    },
+    // joke() {
+    //   return this.$store.getters.getJoke;
+    // },
+    // jokeHistory() {
+    //   return this.$store.getters.getJokeHistory;
+    // }
   },
   methods: {
-   async getJoke() {
-      const config = {
-        headers: {
-          Accept: 'application/json'
-        }
-      }
-      // fetch('https://icanhazdadjoke.com/', config)
-      //   .then(res => res.json())
-      //   .then(res => this.setJoke(res.joke))
-      const response = await this.axios.get('https://icanhazdadjoke.com/', config);
-      const { data: { joke } } =  response;
-      this.setJoke(joke);
-    },
-    setJoke(joke) {
-      this.joke = joke;
-      this.jokeHistory.push(joke);
-    },
+    ...mapActions(['getJoke']),
+    // getJoke() {
+    //  this.$store.dispatch('getJoke');
+    // },
     showHideJokes() {
       this.showHistory = !this.showHistory;
     }
