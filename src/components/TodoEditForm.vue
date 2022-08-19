@@ -1,16 +1,16 @@
 <template>
-  <form @submit.prevent="addItem()">
+  <form @submit.prevent="editTask()" class="item_container">
     <div class="form__container">
       <input
         class="form__input"
         type="text"
         placeholder="Title"
-        v-model="formData.label"
+        v-model="editFormData.label"
       />
       <p class="form_error" v-if="error.title">{{ error.title }}</p>
       <textarea
         class="form__input"
-        v-model="formData.description"
+        v-model="editFormData.description"
         maxlength="150"
         cols="30"
         rows="5"
@@ -19,11 +19,10 @@
       <p class="form_error" v-if="error.description">
         {{ error.description }}
       </p>
-      <slot name="additionalField"> </slot>
-      <button class="addTaskBtn" type="submit" @keydown.enter="addItem()">
-        Add task
-      </button>
     </div>
+    <button class="editTaskBtn" type="submit" @keydown.enter="editTask()">
+      Apply
+    </button>
   </form>
 </template>
 
@@ -31,21 +30,22 @@
 import taskFormValidation from "@/mixins/taskFormValidation";
 export default {
   mixins: [taskFormValidation],
+  props: ["id", "title", "description"],
   data() {
     return {
-      formData: {
-        label: "",
-        description: "",
+      editFormData: {
+        id: this.id,
+        label: this.title,
+        description: this.description,
       },
     };
   },
   methods: {
-    addItem() {
-      const validationResult = this.formValidation(this.formData);
+    editTask() {
+      const validationResult = this.formValidation(this.editFormData);
       if (validationResult) return;
-      this.$store.dispatch("addTask", this.formData);
-      this.formData.label = "";
-      this.formData.description = "";
+      this.$store.dispatch("editTask", this.editFormData);
+      this.$emit("showHideEditForm");
     },
   },
 };
@@ -73,8 +73,9 @@ export default {
     color: rgb(252, 90, 90);
   }
 }
-.addTaskBtn {
+.editTaskBtn {
   margin-left: 10px;
+  height: 50px;
   background: #15d798;
   background: linear-gradient(#15d798, #073763);
   border-radius: 11px;

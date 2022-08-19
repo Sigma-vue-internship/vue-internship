@@ -2,13 +2,21 @@
   <div id="app">
     <nav>
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/history">Task History</router-link>
     </nav>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
-<style>
+<script>
+export default {
+  name: "App",
+};
+</script>
+
+<style lang="scss">
+@import "~bootstrap/scss/bootstrap";
+@import "./styles/index.scss";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -18,7 +26,7 @@
 }
 
 nav {
-  padding: 30px;
+  padding: 30px 30px 60px 30px;
 }
 
 nav a {
