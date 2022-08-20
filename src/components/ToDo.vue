@@ -3,9 +3,9 @@
     <h1 :style="{ color: fontColor }">
       {{ msg }}
     </h1>
-    <ToDoForm @addNewItem="addItem($event)"/>
+    <ToDoForm @addNewItem="addItem($event)" />
     <ToDoItems :listOfItems="items" @deleteItem="removeItem" v-if="items.length">
-      <template slot="select">
+      <template #select>
         <input type="checkbox" v-for="item in items" :key="item.id" v-model="item.done" />
       </template>
     </ToDoItems>
@@ -27,7 +27,7 @@ import ToDoItems from './ToDoItems.vue';
     },
     methods: {
       addItem({title, description}) {
-        (title && description) ? 
+        (title) ? 
           this.items.push({
             title: title,
             description: description,
@@ -41,12 +41,12 @@ import ToDoItems from './ToDoItems.vue';
     },
     computed: {
       fontColor() {
-          const numberOfDone = this.items.filter(item => item.done).length;
-          const numberOfItems = this.items.length;
-          return numberOfDone === 0 && numberOfItems > 0 ? "red"
-              : numberOfDone >= numberOfItems / 2 && numberOfDone !== numberOfItems ? "yellow"
-                : numberOfDone === numberOfItems && numberOfDone !== 0 ? "green"
-                  : "rgb(17, 1, 34)";
+        const numberOfDone = this.items.filter(item => item.done).length;
+        const numberOfItems = this.items.length;
+        return numberOfDone === 0 && numberOfItems > 0 ? "red"
+            : numberOfDone >= numberOfItems / 2 && numberOfDone !== numberOfItems ? "yellow"
+              : numberOfDone === numberOfItems && numberOfDone !== 0 ? "green"
+                : "rgb(17, 1, 34)";
       }
     },
     components: { ToDoForm, ToDoItems }

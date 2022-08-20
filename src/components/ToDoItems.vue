@@ -4,7 +4,7 @@
       <button @click="item.clicked=!item.clicked" class="element" :class="{ cross: item.done }">
         {{ item.title }}
       </button>
-      <ToDoDetails v-if="item.clicked" :element="item"/>
+      <ToDoDetails v-if="item.clicked && item.description" :element="item" />
       <slot name="select" />
       <button @click="delItem(index)" class="btn-remove">X</button>
     </li>
@@ -17,10 +17,9 @@ import ToDoDetails from './ToDoDetails.vue';
     name: "ToDoItems",
     props: ["listOfItems"],
     data() {
-        return {
-          item: "",
-          items: []
-        };
+      return {
+        item: ""
+      };
     },
     methods: {
       delItem() {
@@ -28,7 +27,7 @@ import ToDoDetails from './ToDoDetails.vue';
       }
     },
     components: { ToDoDetails }
-}
+  }
 </script>
 
 <style scoped lang="scss">
