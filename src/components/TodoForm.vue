@@ -20,9 +20,13 @@
         {{ error.description }}
       </p>
       <slot name="additionalField"> </slot>
-      <button class="addTaskBtn" type="submit" @keydown.enter="addItem()">
+      <action-btn
+        class="addTaskBtnColor"
+        type="submit"
+        @keydown.enter="addItem()"
+      >
         Add task
-      </button>
+      </action-btn>
     </div>
   </form>
 </template>
@@ -73,22 +77,8 @@ export default {
     color: rgb(252, 90, 90);
   }
 }
-.addTaskBtn {
-  margin-left: 10px;
+.addTaskBtnColor {
   background: #15d798;
   background: linear-gradient(#15d798, #073763);
-  border-radius: 11px;
-  border: 0px;
-  transform: scale(1);
-  padding: 10px 25px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font: normal bold 15px "Open Sans", sans-serif;
-  text-align: center;
-  transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
-  &:hover {
-    transform: scale(1.2);
-  }
 }
 </style>

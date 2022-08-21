@@ -12,8 +12,8 @@
         />
       </div>
       <div>
-        <button class="deleteBtn" @click="deleteTask">Delete</button>
-        <button class="editBtn" @click="showHideEditForm">Edit</button>
+        <action-btn class="deleteBtn" @click="deleteTask">Delete</action-btn>
+        <action-btn class="editBtn" @click="showHideEditForm">Edit</action-btn>
       </div>
     </div>
     <TodoEditForm
@@ -89,39 +89,12 @@ export default {
   cursor: pointer;
 }
 .deleteBtn {
-  margin-left: 10px;
   background: #d75215;
   background: linear-gradient(#d73c15, #360707);
-  border-radius: 11px;
-  border: 0px;
-  transform: scale(1);
-  padding: 10px 25px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font: normal bold 15px "Open Sans", sans-serif;
-  text-align: center;
-  transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
-  &:hover {
-    transform: scale(1.2);
-  }
 }
 .editBtn {
   margin-left: 10px;
   background: #3cd715;
   background: linear-gradient(#62c949, #082b08);
-  border-radius: 11px;
-  border: 0px;
-  transform: scale(1);
-  padding: 10px 25px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font: normal bold 15px "Open Sans", sans-serif;
-  text-align: center;
-  transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
-  &:hover {
-    transform: scale(1.2);
-  }
 }
 </style>

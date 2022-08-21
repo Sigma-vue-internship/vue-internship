@@ -20,9 +20,9 @@
         {{ error.description }}
       </p>
     </div>
-    <button class="editTaskBtn" type="submit" @keydown.enter="editTask()">
+    <action-btn class="editTaskBtn" type="submit" @keydown.enter="editTask()">
       Apply
-    </button>
+    </action-btn>
   </form>
 </template>
 
@@ -74,22 +74,9 @@ export default {
   }
 }
 .editTaskBtn {
-  margin-left: 10px;
   height: 50px;
+  align-self: center;
   background: #15d798;
   background: linear-gradient(#15d798, #073763);
-  border-radius: 11px;
-  border: 0px;
-  transform: scale(1);
-  padding: 10px 25px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font: normal bold 15px "Open Sans", sans-serif;
-  text-align: center;
-  transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
-  &:hover {
-    transform: scale(1.2);
-  }
 }
 </style>
