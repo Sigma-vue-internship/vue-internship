@@ -1,12 +1,7 @@
 <template>
   <form @submit.prevent="addItem()">
     <div class="form__container">
-      <input
-        class="form__input"
-        type="text"
-        placeholder="Title"
-        v-model="formData.label"
-      />
+      <form-input placeholder="Title" v-model="formData.label" />
       <p class="form_error" v-if="error.title">{{ error.title }}</p>
       <textarea
         class="form__input"
@@ -61,18 +56,6 @@ export default {
   align-items: center;
   gap: 20px;
   flex-direction: column;
-  .form__input {
-    all: unset;
-    font-family: cursive;
-    border: 2px solid #15d798;
-    text-align: left;
-    padding: 5px;
-    border-radius: 10px;
-    width: 50%;
-    &:focus {
-      border: 2px dashed #15d798;
-    }
-  }
   .form_error {
     color: rgb(252, 90, 90);
   }

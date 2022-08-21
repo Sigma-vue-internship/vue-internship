@@ -1,2 +1,3 @@
 import ActionButton from "./ActionButton";
-export default [ActionButton];
+import FormInput from "./FormInput";
+export default [ActionButton, FormInput];
