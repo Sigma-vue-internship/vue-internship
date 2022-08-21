@@ -3,14 +3,13 @@
     <div class="form__container">
       <form-input placeholder="Title" v-model="editFormData.label" />
       <p class="form_error" v-if="error.title">{{ error.title }}</p>
-      <textarea
-        class="form__input"
+      <form-textarea
         v-model="editFormData.description"
         maxlength="150"
         cols="30"
         rows="5"
         placeholder="Description"
-      ></textarea>
+      ></form-textarea>
       <p class="form_error" v-if="error.description">
         {{ error.description }}
       </p>
