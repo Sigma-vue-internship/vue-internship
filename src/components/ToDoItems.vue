@@ -1,11 +1,11 @@
 <template>
   <ul class="list">
-    <li v-for="(item, index) in listOfItems" :key="item.id" class="item">
+    <li v-for="(item, index) in items" :key="item.id" class="item">
       <button @click="item.clicked=!item.clicked" class="element" :class="{ cross: item.done }">
         {{ item.title }}
       </button>
       <ToDoDetails v-if="item.clicked && item.description" :element="item" />
-      <slot name="select" />
+      <slot name="select" :item="item"/>
       <button @click="delItem(index)" class="btn-remove">X</button>
     </li>
   </ul>
@@ -15,7 +15,7 @@
 import ToDoDetails from './ToDoDetails.vue';
   export default {
     name: "ToDoItems",
-    props: ["listOfItems"],
+    props: ["items"],
     data() {
       return {
         item: ""

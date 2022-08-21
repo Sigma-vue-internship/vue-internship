@@ -4,9 +4,9 @@
       {{ msg }}
     </h1>
     <ToDoForm @addNewItem="addItem($event)" />
-    <ToDoItems :listOfItems="items" @deleteItem="removeItem" v-if="items.length">
-      <template #select>
-        <input type="checkbox" v-for="item in items" :key="item.id" v-model="item.done" />
+    <ToDoItems :items="items" @deleteItem="removeItem" v-if="items.length">
+      <template slot="select" scope="props">
+        <input type="checkbox" v-model="props.item.done"/>
       </template>
     </ToDoItems>
   </div>
@@ -37,6 +37,10 @@ import ToDoItems from './ToDoItems.vue';
       },
       removeItem(index) {
         this.items.splice(index, 1);
+      },
+      setDone(p) {
+        console.log(p.forEach((i)=>{i.done}))
+        //return !p;
       }
     },
     computed: {
