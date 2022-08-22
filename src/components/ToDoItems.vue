@@ -1,7 +1,15 @@
 <template>
   <ul class="list">
-    <li v-for="(item, index) in items" :key="item.id" class="item">
-      <button @click="item.clicked=!item.clicked" class="element" :class="{ cross: item.done }">
+    <li
+      v-for="(item, index) in items"
+      :key="item.id"
+      class="item"
+    >
+      <button
+        @click="item.clicked=!item.clicked" 
+        class="element"
+        :class="{ cross: item.done }"
+      >
         {{ item.title }}
       </button>
       <ToDoDetails v-if="item.clicked && item.description" :element="item" />
@@ -15,7 +23,12 @@
 import ToDoDetails from './ToDoDetails.vue';
   export default {
     name: "ToDoItems",
-    props: ["items"],
+    props: {
+      items: Array
+    },
+    components: {
+      ToDoDetails
+    },
     data() {
       return {
         item: ""
@@ -25,8 +38,7 @@ import ToDoDetails from './ToDoDetails.vue';
       delItem() {
         this.$emit("deleteItem", this.item);
       }
-    },
-    components: { ToDoDetails }
+    }
   }
 </script>
 

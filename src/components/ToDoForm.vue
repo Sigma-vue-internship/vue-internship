@@ -1,7 +1,15 @@
 <template>
   <div class="todoForm">
-    <input type="text" placeholder="Title" v-model.trim="currentTitle" />
-    <textarea placeholder="Description" maxlength="150" v-model.trim="currentDescription" />
+    <input
+      type="text"
+      placeholder="Title"
+      v-model.trim="currentTitle"
+    />
+    <textarea
+      placeholder="Description"
+      maxlength="150"
+      v-model.trim="currentDescription"
+    />
     <button @click="addInfo" class="btn-add">ADD</button>
   </div>
 </template>
@@ -16,18 +24,21 @@
       }
     },
     methods: {
-        addInfo () {
-          this.$emit('addNewItem', { title: this.currentTitle, description: this.currentDescription });
-          this.currentTitle="";
-          this.currentDescription="";
-        }
+      addInfo () {
+        const currentItem = { title: this.currentTitle, description: this.currentDescription };
+        this.$emit('addNewItem', currentItem);
+        this.clearFormState();
+      },
+      clearFormState() {
+        this.currentTitle="";
+        this.currentDescription="";
+      }
     }
   }
 </script>
 
 <style scoped lang="scss">
 @import "./../styles/variables.scss";
-
   .todoForm {
     display: flex;
     flex-direction: column;
