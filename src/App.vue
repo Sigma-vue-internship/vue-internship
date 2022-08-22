@@ -1,17 +1,21 @@
 <template>
-  <div id='app'>
-    <ToDo msg='I want to do...'/>
+  <div id="app">
+    <nav>
+      <router-link to="/">Home</router-link> |
+      <router-link to="/history">Task History</router-link>
+      <router-view />
+    </nav>
   </div>
 </template>
 
 <script>
-import ToDo from './components/ToDo.vue'
-
+import router from "./router/index.js";
+import store
+ from "./store";
 export default {
-  name: 'App',
-  components: {
-    ToDo
-  }
+  name: "App",
+  router: router,
+  store: store
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="todoDetails" >
     <button class="description">
-      {{ element.description }}
+      {{ item.description }}
     </button>
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
   export default {
     name: "ToDoDetails",
-    props: ["element"]
+    props: ["item"]
   }
 </script>
 

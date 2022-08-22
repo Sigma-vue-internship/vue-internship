@@ -3,8 +3,8 @@
     <h1 :style="{ color: fontColor }">
       {{ msg }}
     </h1>
-    <ToDoForm @addNewItem="addItem($event)" />
-    <ToDoItems :items="items" @deleteItem="removeItem" v-if="items.length">
+    <ToDoForm @addNewItem="addItem($event)" @editCurrentItem="editItem($event)" />
+    <ToDoItems :items="itemHistory" v-if="itemHistory.length">
       <template slot="select" scope="props">
         <input type="checkbox" v-model="props.item.done"/>
       </template>
@@ -27,26 +27,21 @@ import ToDoItems from './ToDoItems.vue';
     },
     methods: {
       addItem({title, description}) {
-        (title) ? 
-          this.items.push({
-            title: title,
-            description: description,
-            done: false,
-            clicked: false
-          }) : false;
+        (title) ?
+          this.$store.dispatch("addItem", [title, description])
+            : false;
       },
-      removeItem(index) {
-        this.items.splice(index, 1);
-      },
-      setDone(p) {
-        console.log(p.forEach((i)=>{i.done}))
-        //return !p;
+      editItem(index) {
+        this.$store.dispatch("editItem", index);
       }
     },
     computed: {
+      itemHistory() {
+        return this.$store.getters.getItemHistory;
+      },
       fontColor() {
-        const numberOfDone = this.items.filter(item => item.done).length;
-        const numberOfItems = this.items.length;
+        const numberOfDone = this.itemHistory.filter(item => item.done).length;
+        const numberOfItems = this.itemHistory.length;
         return numberOfDone === 0 && numberOfItems > 0 ? "red"
             : numberOfDone >= numberOfItems / 2 && numberOfDone !== numberOfItems ? "yellow"
               : numberOfDone === numberOfItems && numberOfDone !== 0 ? "green"

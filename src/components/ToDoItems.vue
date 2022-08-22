@@ -1,12 +1,15 @@
 <template>
   <ul class="list">
     <li v-for="(item, index) in items" :key="item.id" class="item">
-      <button @click="item.clicked=!item.clicked" class="element" :class="{ cross: item.done }">
+      <button @click="changeClick(item)" class="element" :class="{ cross: item.done }">
         {{ item.title }}
       </button>
-      <ToDoDetails v-if="item.clicked && item.description" :element="item" />
+      <ToDoDetails v-if="item.clicked && item.description" :item="item" />
       <slot name="select" :item="item"/>
-      <button @click="delItem(index)" class="btn-remove">X</button>
+      <button @click="editItem(index)" class="btn-edit">
+        Edit
+      </button>
+      <button @click="deleteItem(index)" class="btn-remove">X</button>
     </li>
   </ul>
 </template>
@@ -16,15 +19,17 @@ import ToDoDetails from './ToDoDetails.vue';
   export default {
     name: "ToDoItems",
     props: ["items"],
-    data() {
-      return {
-        item: ""
-      };
-    },
     methods: {
-      delItem() {
-        this.$emit("deleteItem", this.item);
+      deleteItem(index) {
+        this.$store.dispatch("removeItem", index);
+      },
+      editItem(index) {
+        this.$store.dispatch("editItem", index);
+      },
+      changeClick(item) {
+        this.$store.dispatch("changeClick", (item.clicked=!item.clicked));
       }
+
     },
     components: { ToDoDetails }
   }
@@ -41,6 +46,12 @@ import ToDoDetails from './ToDoDetails.vue';
   .btn-remove {
     width: 30px;
     height: 30px;
+    @include btn-style;
+  }
+  .btn-edit {
+    width: 50px;
+    height: 30px;
+    margin-right: 10px;
     @include btn-style;
   }
   input[type=checkbox] {
