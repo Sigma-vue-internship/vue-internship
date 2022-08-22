@@ -10,7 +10,7 @@
   export default {
     name: "ToDoDetails",
     props: {
-      item: String
+      item: Object
     }
   }
 </script>

@@ -5,7 +5,7 @@
       :key="item.id"
       class="item"
     >
-      <button
+       <button
         @click="changeClick(item)"
         class="element"
         :class="{ cross: item.done }"
@@ -13,7 +13,7 @@
         {{ item.title }}
       </button>
       <ToDoDetails v-if="item.clicked && item.description" :item="item" />
-      <slot name="select" :item="item"/>
+      <slot name="select" :item="item" />
       <button @click="editItem(index)" class="btn-edit">
         Edit
       </button>
@@ -33,9 +33,9 @@ import ToDoDetails from './ToDoDetails.vue';
       ToDoDetails
     },
     data() {
-      return {
-        item: ""
-      };
+      return{
+        item: Object
+      }
     },
     methods: {
       deleteItem(index) {
@@ -43,7 +43,7 @@ import ToDoDetails from './ToDoDetails.vue';
       },
       editItem(index) {
         this.$store.dispatch("editItem", index);
-      },
+    },
       changeClick(item) {
         this.$store.dispatch("changeClick", (item.clicked=!item.clicked));
       }
@@ -53,7 +53,6 @@ import ToDoDetails from './ToDoDetails.vue';
 
 <style scoped lang="scss">
 @import "./../styles/variables.scss";
-
   .list {
     list-style-type: none;
     padding: 0;

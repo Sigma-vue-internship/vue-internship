@@ -8,7 +8,9 @@
 import ToDo from "../components/ToDo.vue";
   export default {
     name: "Home",
-    components: { ToDo }
+    components: {
+      ToDo
+    }
   }
 </script>
 

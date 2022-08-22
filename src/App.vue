@@ -1,8 +1,12 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/history">Task History</router-link>
+      <router-link to="/">
+        <span class="title">Home</span>
+      </router-link> |
+      <router-link to="/history">
+         <span class="title">Task History</span>
+      </router-link>
       <router-view />
     </nav>
   </div>
@@ -32,5 +36,10 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+  }
+  .title {
+    font-weight: 700;
+    font-size: 25px;
+    color: rgb(70, 42, 82);
   }
 </style>

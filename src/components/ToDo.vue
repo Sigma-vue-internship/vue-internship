@@ -4,10 +4,7 @@
       {{ msg }}
     </h1>
     <ToDoForm @addNewItem="addItem($event)" @editCurrentItem="editItem($event)" />
-    <ToDoItems
-      :items="itemHistory"
-      v-if="itemHistory.length"
-    >
+    <ToDoItems :items="itemHistory" v-if="itemHistory.length">
       <template slot="select" scope="props">
         <input type="checkbox" v-model="props.item.done"/>
       </template>
@@ -27,19 +24,11 @@ import ToDoItems from './ToDoItems.vue';
       ToDoForm,
       ToDoItems 
     },
-    data() {
-      return {
-        items: []
-      };
-    },
     methods: {
       addItem({title, description}) {
         (title) ?
           this.$store.dispatch("addItem", [title, description])
             : false;
-      },
-      editItem(index) {
-        this.$store.dispatch("editItem", index);
       }
     },
     computed: {

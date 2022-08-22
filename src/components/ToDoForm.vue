@@ -24,7 +24,7 @@
       }
     },
     methods: {
-      addInfo () {
+      addInfo() {
         const currentItem = { title: this.currentTitle, description: this.currentDescription };
         this.$emit('addNewItem', currentItem);
         this.clearFormState();
