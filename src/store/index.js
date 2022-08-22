@@ -12,6 +12,13 @@ export default new Vuex.Store({
             clicked: false,
             edit: false
         },
+        newItemEdit: {
+            title: "",
+            description: "",
+            done: false,
+            clicked: false,
+            edit: true
+        },
         itemHistory: []
     },
     getters: {
@@ -38,15 +45,11 @@ export default new Vuex.Store({
         CHANGE_CLICK(state, item) {
             state.item.clicked = !item.clicked;
         },
+        NEW_ITEM(state, item) {
+            state.newItemEdit = item;
+        },
         EDIT_ITEM(state, index) {
-            const newItem = {
-                title: "New Item",
-                description: "New description",
-                done: false,
-                clicked: false,
-                edit: false
-            };
-            state.itemHistory.splice(index, 1, newItem);
+            state.itemHistory.splice(index, 1, state.newItemEdit);
         }
     },
     actions: {
@@ -60,8 +63,11 @@ export default new Vuex.Store({
         changeClick({ commit }, item) {
             commit("CHANGE_CLICK", item)
         },
-        editItem({ commit }, item) {
-            commit("EDIT_ITEM", item)
+        newItem({ commit }, item) {
+            commit("NEW_ITEM", item)
+        },
+        editItem({ commit }, index) {
+            commit("EDIT_ITEM", index)
         }
     }
 })
