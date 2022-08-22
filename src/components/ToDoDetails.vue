@@ -9,7 +9,9 @@
 <script>
   export default {
     name: "ToDoDetails",
-    props: ["item"]
+    props: {
+      item: String
+    }
   }
 </script>
 

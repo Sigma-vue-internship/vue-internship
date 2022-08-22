@@ -4,7 +4,10 @@
       {{ msg }}
     </h1>
     <ToDoForm @addNewItem="addItem($event)" @editCurrentItem="editItem($event)" />
-    <ToDoItems :items="itemHistory" v-if="itemHistory.length">
+    <ToDoItems
+      :items="itemHistory"
+      v-if="itemHistory.length"
+    >
       <template slot="select" scope="props">
         <input type="checkbox" v-model="props.item.done"/>
       </template>
@@ -19,6 +22,10 @@ import ToDoItems from './ToDoItems.vue';
     name: "ToDo",
     props: {
       msg: String
+    },
+    components: { 
+      ToDoForm,
+      ToDoItems 
     },
     data() {
       return {
@@ -47,9 +54,8 @@ import ToDoItems from './ToDoItems.vue';
               : numberOfDone === numberOfItems && numberOfDone !== 0 ? "green"
                 : "rgb(17, 1, 34)";
       }
-    },
-    components: { ToDoForm, ToDoItems }
-}
+    }
+  }
 </script>
 
 <style scoped lang="scss">
