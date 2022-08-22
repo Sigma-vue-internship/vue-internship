@@ -1,6 +1,13 @@
 <template>
-  <form @submit.prevent="addItem()">
-    <div class="form__container">
+  <form
+    @submit.prevent="formAction()"
+    :class="mode === 'add' ? '' : 'item_container'"
+  >
+    <div
+      :class="
+        mode === 'add' ? 'form__container' : 'form__container edit__container'
+      "
+    >
       <form-input placeholder="Title" v-model="formData.label" />
       <p class="form_error" v-if="error.title">{{ error.title }}</p>
       <form-textarea
@@ -13,13 +20,13 @@
       <p class="form_error" v-if="error.description">
         {{ error.description }}
       </p>
-      <slot name="additionalField"> </slot>
+      <slot name="additionalField"></slot>
       <action-btn
-        class="addTaskBtnColor"
+        :class="mode === 'add' ? 'addTaskBtnColor' : 'editTaskBtn'"
         type="submit"
-        @keydown.enter="addItem()"
+        @keydown.enter="formAction()"
       >
-        Add task
+        <slot></slot>
       </action-btn>
     </div>
   </form>
@@ -28,6 +35,16 @@
 <script>
 import taskFormValidation from "@/mixins/taskFormValidation";
 export default {
+  props: {
+    mode: {
+      type: String,
+      default: () => "add",
+    },
+    id: {
+      type: Number,
+      default: () => 0,
+    },
+  },
   mixins: [taskFormValidation],
   data() {
     return {
@@ -38,13 +55,25 @@ export default {
     };
   },
   methods: {
-    addItem() {
+    formAction() {
+      if (this.mode === "add") {
+        const validationResult = this.formValidation(this.formData);
+        if (validationResult) return;
+        this.$store.dispatch("addTask", this.formData);
+        this.formData.label = "";
+        this.formData.description = "";
+        return;
+      }
       const validationResult = this.formValidation(this.formData);
       if (validationResult) return;
-      this.$store.dispatch("addTask", this.formData);
-      this.formData.label = "";
-      this.formData.description = "";
+      this.$store.dispatch("editTask", this.formData);
+      this.$emit("showHideEditForm");
     },
+  },
+  created() {
+    if (this.mode !== "add") {
+      this.formData = this.$store.getters.getTaskById(this.id);
+    }
   },
 };
 </script>
@@ -59,8 +88,18 @@ export default {
     color: rgb(252, 90, 90);
   }
 }
+.editTaskBtn {
+  height: 50px;
+  align-self: center;
+  background: #15d798;
+  background: linear-gradient(#15d798, #073763);
+}
 .addTaskBtnColor {
   background: #15d798;
   background: linear-gradient(#15d798, #073763);
+}
+.edit__container {
+  flex-direction: row;
+  align-items: flex-start;
 }
 </style>

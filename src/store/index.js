@@ -13,11 +13,10 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    getAllTasks(state) {
-      return state.tasks;
-    },
-    getCurrentTask(state) {
-      return state.currentTask;
+    getAllTasks: (state) => state.tasks,
+    getCurrentTask: (state) => state.currentTask,
+    getTaskById: (state) => (id) => {
+      return state.tasks.find((task) => task.id === id);
     },
   },
   mutations: {

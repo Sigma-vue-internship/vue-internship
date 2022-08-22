@@ -13,28 +13,41 @@
       </div>
       <div>
         <action-btn class="deleteBtn" @click="deleteTask">Delete</action-btn>
-        <action-btn class="editBtn" @click="showHideEditForm">Edit</action-btn>
+        <action-btn
+          v-if="showMode === 'history'"
+          class="editBtn"
+          @click="showHideEditForm"
+          >Edit</action-btn
+        >
       </div>
     </div>
-    <TodoEditForm
+    <TodoForm
       @showHideEditForm="showHideEditForm"
       :id="itemId"
-      :title="item.label"
-      :description="item.description"
+      :mode="'edit'"
       v-if="isEditFormShow"
-    />
+      >Apply</TodoForm
+    >
   </div>
 </template>
 
 <script>
 import TodoDetails from "@/components/TodoDetails.vue";
-import TodoEditForm from "@/components/TodoEditForm.vue";
+import TodoForm from "@/components/TodoForm.vue";
 export default {
   components: {
     TodoDetails,
-    TodoEditForm,
+    TodoForm,
   },
   props: {
+    showMode: {
+      type: String,
+      default: () => "history",
+    },
+    mode: {
+      type: String,
+      default: () => "edit",
+    },
     item: {
       type: Object,
       default: () => ({}),
@@ -73,7 +86,7 @@ export default {
 }
 .item_details_container {
   max-width: 350px;
-
+  margin-right: 10px;
   word-wrap: break-word;
   text-align: left;
 }
@@ -89,12 +102,10 @@ export default {
   cursor: pointer;
 }
 .deleteBtn {
-  background: #d75215;
   background: linear-gradient(#d73c15, #360707);
 }
 .editBtn {
   margin-left: 10px;
-  background: #3cd715;
   background: linear-gradient(#62c949, #082b08);
 }
 </style>
