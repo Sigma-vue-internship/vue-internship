@@ -3,7 +3,7 @@
     <h1 :style="{ color: fontColor }">
       {{ msg }}
     </h1>
-    <ToDoForm @addNewItem="addItem($event)" @editCurrentItem="editItem($event)" />
+    <ToDoForm @addNewItem="addItem($event)" />
     <ToDoItems :items="itemHistory" v-if="itemHistory.length">
       <template slot="select" scope="props">
         <input type="checkbox" v-model="props.item.done"/>

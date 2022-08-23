@@ -25,7 +25,7 @@ export default {
 
 <style>
   html {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     background-image: linear-gradient(to bottom, #af85b8, #bca1ca, #cbbdda, #ded9e8, #f4f4f4);
   }

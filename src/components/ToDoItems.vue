@@ -5,7 +5,7 @@
       :key="item.id"
       class="item"
     >
-       <button
+      <button
         @click="changeClick(item)"
         class="element"
         :class="{ cross: item.done }"
@@ -14,9 +14,6 @@
       </button>
       <ToDoDetails v-if="item.clicked && item.description" :item="item" />
       <slot name="select" :item="item" />
-      <button @click="editItem(index, item)" class="btn-edit">
-        {{ item.edit ? "Edited" : "Edit" }}
-      </button>
       <button @click="deleteItem(index)" class="btn-remove">X</button>
     </li>
   </ul>
@@ -27,33 +24,14 @@ import ToDoDetails from './ToDoDetails.vue';
   export default {
     name: "ToDoItems",
     props: {
-      items: Array,
+      items: Array
     },
     components: {
       ToDoDetails
     },
-    data() {
-      return{
-        item: Object,
-        newItem: {
-            title: "",
-            description: "",
-            done: false,
-            clicked: false,
-            edit: true
-        },
-      }
-    },
     methods: {
       deleteItem(index) {
         this.$store.dispatch("removeItem", index);
-      },
-      editItem(index, item) {
-        const newTitle = window.prompt ("Enter new Title", item.title);
-        const newDescription = window.prompt ("Enter new Description", item.description);
-        this.newItem = { title:newTitle, description:newDescription, done: false, clicked: false, edit: true };
-        this.$store.dispatch("newItem", this.newItem);
-        this.$store.dispatch("editItem", index);
       },
       changeClick(item) {
         this.$store.dispatch("changeClick", (item.clicked=!item.clicked));
@@ -74,12 +52,6 @@ import ToDoDetails from './ToDoDetails.vue';
     height: 30px;
     @include btn-style;
   }
-  .btn-edit {
-    width: 60px;
-    height: 30px;
-    margin-right: 10px;
-    @include btn-style;
-  }
   input[type=checkbox] {
     height: 31px;
     width: 45px;
@@ -89,7 +61,6 @@ import ToDoDetails from './ToDoDetails.vue';
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items:center;
     margin-bottom: 5px;
   }
   .cross {
