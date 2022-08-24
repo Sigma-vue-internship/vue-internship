@@ -1,11 +1,21 @@
 <template>
   <div>
     <SearchForm :mode="'optional'" @findMovies="findMovies" class="m-4 mt-5" />
-    <ul>
-      <li v-for="movie in movies[0]" :key="movie.id" class="container">
+    <div class="text-center">
+      <div v-if="isLoading" class="spinner-border text-primary">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+    <ul v-if="movies.length">
+      <li v-for="movie in movies" :key="movie.id" class="container">
         <b-card
-          :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
+          :img-src="
+            movie.poster_path
+              ? 'https://image.tmdb.org/t/p/w185/' + movie.poster_path
+              : 'https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png'
+          "
           img-alt="Card image"
+          img-width="185"
           img-left
           class="mb-3"
         >
@@ -29,18 +39,26 @@
 
 <script>
 import SearchForm from "@/components/SearchForm.vue";
+import { mapGetters } from "vuex";
 export default {
+  data() {
+    return {
+      isLoading: false,
+    };
+  },
   components: {
     SearchForm,
   },
   computed: {
-    movies() {
-      return this.$store.getters.getAllMovies;
-    },
+    ...mapGetters({
+      movies: "getAllMovies",
+    }),
   },
   methods: {
-    findMovies(searchData) {
-      this.$store.dispatch("findMovies", searchData);
+    async findMovies(searchData) {
+      this.isLoading = true;
+      await this.$store.dispatch("findMovies", searchData);
+      this.isLoading = false;
     },
     redirectToMovie(id) {
       this.$router.push(`/movie/${id}`);

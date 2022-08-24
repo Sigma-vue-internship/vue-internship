@@ -30,8 +30,11 @@ export default {
   },
   methods: {
     findMovies(searchData) {
-      this.$store.dispatch("findMovies", searchData);
-      this.$router.push("/search");
+      if (searchData) {
+        this.$router.push("/search");
+        this.$store.dispatch("findMovies", searchData);
+        return;
+      }
     },
   },
 };

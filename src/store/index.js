@@ -12,7 +12,7 @@ export default new Vuex.Store({
   },
   mutations: {
     SET_CURRENT_MOVIES(state, movies) {
-      state.currentMovies = [...state.currentMovies, movies];
+      state.currentMovies = [...state.currentMovies, ...movies];
     },
     RESET_CURRENT_MOVIES(state) {
       state.currentMovies = [];
@@ -41,5 +41,4 @@ export default new Vuex.Store({
       }
     },
   },
-  modules: {},
 });
