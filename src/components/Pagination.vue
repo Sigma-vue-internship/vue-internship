@@ -4,9 +4,9 @@
             v-model="currentPage"
             :total-rows="totalPages"
             :per-page="limit"
-            aria-controls="my-table"
             @page-click="setPage(currentPage)"
             class="pagiantion"
+            first-number
         ></b-pagination>
     </div>
 </template>
