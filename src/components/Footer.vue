@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <footer class="py-3 my-4">
+        <footer class="py-3">
             <b-nav align="center" tabs>
                 <b-nav-item href="#">Support</b-nav-item>
                 <b-nav-item href="#">Features</b-nav-item>
@@ -23,7 +23,6 @@ export default {
     .container {
         min-width: 100%;
         height: 150px;
-        position: fixed;
         bottom: 0;
         background-color: rgb(58, 56, 56);
     }

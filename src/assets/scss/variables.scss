@@ -1,0 +1,13 @@
+$darkGray: rgb(34, 34, 34);
+
+@mixin flex-center($direction) {
+    display: flex;
+    flex-direction: $direction;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@mixin paginationButton {
+    background-color: $darkGray;
+    color: white;
+}
