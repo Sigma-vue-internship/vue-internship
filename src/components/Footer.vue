@@ -1,23 +1,13 @@
 <template>
     <div class="container">
         <footer class="py-3 my-4">
-            <ul class="nav justify-content-center border-top pb-3 mb-3">
-                <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-muted">Support</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-muted">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-muted">Privacy</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-muted">FAQ</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link px-2 text-muted">About</a>
-                </li>
-            </ul>
+            <b-nav align="center" tabs>
+                <b-nav-item href="#">Support</b-nav-item>
+                <b-nav-item href="#">Features</b-nav-item>
+                <b-nav-item href="#">Privacy</b-nav-item>
+                <b-nav-item href="#">FAQ</b-nav-item>
+                <b-nav-item href="#">About</b-nav-item>
+            </b-nav>
             <p class="text-center text-muted">© 2022 Sigma Software</p>
         </footer>
     </div>
@@ -34,5 +24,9 @@ export default {
         min-width: 100%;
         position: fixed;
         bottom: 0;
+        background-color: rgb(58, 56, 56);
+    }
+    .nav-link, .nav-link:focus, .nav-link:hover {
+        color: white;
     }
 </style>
