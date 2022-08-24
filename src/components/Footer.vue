@@ -22,11 +22,15 @@ export default {
 <style scoped lang="scss">
     .container {
         min-width: 100%;
+        height: 150px;
         position: fixed;
         bottom: 0;
         background-color: rgb(58, 56, 56);
     }
     .nav-link, .nav-link:focus, .nav-link:hover {
         color: white;
+    }
+    p {
+        padding-top: 10px;
     }
 </style>
