@@ -38,6 +38,7 @@
 
 <script>
 export default {
+
   props: {
     mode: {
       type: String,

@@ -1,11 +1,7 @@
 <template>
   <div>
     <SearchForm :mode="'optional'" @findMovies="findMovies" class="m-4 mt-5" />
-    <div class="text-center">
-      <div v-if="isLoading" class="spinner-border text-primary">
-        <span class="visually-hidden">Loading...</span>
-      </div>
-    </div>
+    <Loading :isLoading="isLoading" />
     <ul v-if="movies.length">
       <li v-for="movie in movies" :key="movie.id" class="container">
         <b-card
@@ -40,9 +36,11 @@
 <script>
 import SearchForm from "@/components/SearchForm.vue";
 import { mapGetters } from "vuex";
+import Loading from "@/components/Loading.vue";
 export default {
   components: {
     SearchForm,
+    Loading,
   },
   computed: {
     ...mapGetters({
