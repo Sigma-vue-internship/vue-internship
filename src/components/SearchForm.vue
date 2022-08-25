@@ -38,7 +38,6 @@
 
 <script>
 export default {
-
   props: {
     mode: {
       type: String,
@@ -63,14 +62,11 @@ export default {
     emitFindMovies() {
       if (this.searchQuery && !this.selected) {
         this.$emit("findMovies", this.searchData);
-        this.searchQuery = "";
         if (this.alertStatus) this.showHideAlert();
         return;
       }
       if (this.searchQuery && this.searchByValue) {
         this.$emit("findMovies", this.searchData);
-        this.searchQuery = "";
-        this.searchByValue = "";
         if (this.alertStatus) this.showHideAlert();
         return;
       }
@@ -97,6 +93,9 @@ export default {
       }
       return this.showHideAlert();
     },
+  },
+  created() {
+    this.searchQuery = this.$route.query.searchQuery;
   },
 };
 </script>
