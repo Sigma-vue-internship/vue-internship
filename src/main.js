@@ -22,6 +22,7 @@ axiosInstance.interceptors.request.use((config) => {
 
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axiosInstance);
+store.axios = axiosInstance;
 
 Vue.config.productionTip = false;
 

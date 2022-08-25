@@ -5,6 +5,7 @@ $darkGray: rgb(34, 34, 34);
     flex-direction: $direction;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
 }
 
 @mixin paginationButton {

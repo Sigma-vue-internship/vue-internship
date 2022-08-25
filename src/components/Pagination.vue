@@ -3,10 +3,9 @@
         <b-pagination
             v-model="currentPage"
             :total-rows="totalPages"
-            :per-page="limit"
-            @page-click="setPage(currentPage)"
             class="pagiantion"
             first-number
+            @input="changePage"
         ></b-pagination>
     </div>
 </template>
@@ -15,7 +14,6 @@
 export default {
     name: "Pagination",
     props: {
-        limit: Number,
         totalPages: Number
     },
     data() {
@@ -24,8 +22,8 @@ export default {
         }
     },
     methods: {
-        setPage(currentPage) {
-            this.$emit('changePage', currentPage);
+        changePage(currentPage) {
+            this.$emit("changePage", currentPage);
         }
     }
 }
