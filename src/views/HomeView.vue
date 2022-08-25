@@ -32,12 +32,14 @@ export default {
     async findMovies(searchData) {
       if (searchData) {
         await this.$store.dispatch("findMovies", searchData);
-        this.$router.push({
-          name: "searchByTitle",
-          params: {
-            searchQuery: searchData.searchQuery,
-          },
-        });
+        this.$router
+          .push({
+            path: "/search",
+            query: {
+              searchQuery: searchData.searchQuery,
+            },
+          })
+          .catch(() => {});
         return;
       }
     },

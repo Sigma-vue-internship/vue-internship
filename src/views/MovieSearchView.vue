@@ -1,7 +1,7 @@
 <template>
   <div>
     <SearchForm :mode="'optional'" @findMovies="findMovies" class="m-4 mt-5" />
-    <Loading :isLoading="isLoading" />
+    <SpinnerLoader :isLoading="isLoading" />
     <ul v-if="movies.length">
       <li v-for="movie in movies" :key="movie.id" class="container">
         <b-card
@@ -36,7 +36,7 @@
 <script>
 import SearchForm from "@/components/SearchForm.vue";
 import { mapGetters } from "vuex";
-import Loading from "@/components/Loading.vue";
+import SpinnerLoader from "@/components/SpinnerLoader.vue";
 export default {
   data() {
     return {
@@ -45,7 +45,7 @@ export default {
   },
   components: {
     SearchForm,
-    Loading,
+    SpinnerLoader,
   },
   computed: {
     ...mapGetters({
@@ -55,12 +55,11 @@ export default {
   },
   methods: {
     async findMovies(searchData) {
-      this.isSearchTriggered = true;
       if (searchData.searchBy) {
         this.$router
           .push({
-            name: "searchByFilter",
-            params: {
+            name: "search",
+            query: {
               searchQuery: searchData.searchQuery,
               searchBy: searchData.searchBy,
               searchByValue: searchData.searchByValue,
@@ -68,27 +67,27 @@ export default {
           })
           .catch(() => {});
         await this.$store.dispatch("findMovies", searchData);
-        this.isSearchTriggered = false;
         return;
       }
-      this.$router
-        .push({
-          name: "searchByTitle",
-          params: {
-            searchQuery: searchData.searchQuery,
-          },
-        })
-        .catch(() => {});
-      await this.$store.dispatch("findMovies", searchData);
-      this.isSearchTriggered = false;
+      if (searchData.searchQuery) {
+        this.$router
+          .push({
+            path: "/search",
+            query: {
+              searchQuery: searchData.searchQuery,
+            },
+          })
+          .catch(() => {});
+        await this.$store.dispatch("findMovies", searchData);
+        return;
+      }
     },
-    findMoviesByRoute() {},
     redirectToMovie(id) {
       this.$router.push(`/movie/${id}`);
     },
   },
   async created() {
-    this.routeSearchData = { ...this.$route.params };
+    this.routeSearchData = { ...this.$route.query };
     if (this.routeSearchData && !this.movies.length)
       await this.findMovies(this.routeSearchData);
   },

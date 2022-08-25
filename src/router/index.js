@@ -11,21 +11,9 @@ const routes = [
     component: HomeView,
   },
   {
-    path: "/search/",
+    path: "/search",
     name: "search",
     component: () => import("../views/MovieSearchView.vue"),
-    children: [
-      {
-        path: ":searchQuery",
-        name: "searchByTitle",
-        component: () => import("../views/MovieSearchView.vue"),
-      },
-      {
-        path: ":searchQuery/:searchBy/:searchByValue",
-        name: "searchByFilter",
-        component: () => import("../views/MovieSearchView.vue"),
-      },
-    ],
   },
   {
     path: "/movie/:id",
