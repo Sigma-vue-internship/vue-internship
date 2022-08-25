@@ -41,24 +41,18 @@
 import SearchForm from "@/components/SearchForm.vue";
 import { mapGetters } from "vuex";
 export default {
-  data() {
-    return {
-      isLoading: false,
-    };
-  },
   components: {
     SearchForm,
   },
   computed: {
     ...mapGetters({
       movies: "getAllMovies",
+      isLoading: "getLoadingStatus",
     }),
   },
   methods: {
     async findMovies(searchData) {
-      this.isLoading = true;
       await this.$store.dispatch("findMovies", searchData);
-      this.isLoading = false;
     },
     redirectToMovie(id) {
       this.$router.push(`/movie/${id}`);
