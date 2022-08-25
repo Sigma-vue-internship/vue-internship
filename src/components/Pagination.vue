@@ -36,6 +36,7 @@ export default {
     }
     .pagination > li > button:focus{
        @include paginationButton;
+       box-shadow: none;
     }
     .pagination > li > button:hover {
        @include paginationButton;
