@@ -29,10 +29,15 @@ export default {
     SearchForm,
   },
   methods: {
-    findMovies(searchData) {
+    async findMovies(searchData) {
       if (searchData) {
-        this.$router.push("/search");
-        this.$store.dispatch("findMovies", searchData);
+        await this.$store.dispatch("findMovies", searchData);
+        this.$router.push({
+          name: "searchByTitle",
+          params: {
+            searchQuery: searchData.searchQuery,
+          },
+        });
         return;
       }
     },

@@ -38,6 +38,11 @@ import SearchForm from "@/components/SearchForm.vue";
 import { mapGetters } from "vuex";
 import Loading from "@/components/Loading.vue";
 export default {
+  data() {
+    return {
+      routeSearchData: null,
+    };
+  },
   components: {
     SearchForm,
     Loading,
@@ -50,11 +55,42 @@ export default {
   },
   methods: {
     async findMovies(searchData) {
+      this.isSearchTriggered = true;
+      if (searchData.searchBy) {
+        this.$router
+          .push({
+            name: "searchByFilter",
+            params: {
+              searchQuery: searchData.searchQuery,
+              searchBy: searchData.searchBy,
+              searchByValue: searchData.searchByValue,
+            },
+          })
+          .catch(() => {});
+        await this.$store.dispatch("findMovies", searchData);
+        this.isSearchTriggered = false;
+        return;
+      }
+      this.$router
+        .push({
+          name: "searchByTitle",
+          params: {
+            searchQuery: searchData.searchQuery,
+          },
+        })
+        .catch(() => {});
       await this.$store.dispatch("findMovies", searchData);
+      this.isSearchTriggered = false;
     },
+    findMoviesByRoute() {},
     redirectToMovie(id) {
       this.$router.push(`/movie/${id}`);
     },
+  },
+  async created() {
+    this.routeSearchData = { ...this.$route.params };
+    if (this.routeSearchData && !this.movies.length)
+      await this.findMovies(this.routeSearchData);
   },
 };
 </script>
