@@ -4,20 +4,9 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    // loadingStatus: false,
-  },
-  getters: {
-    // getLoadingStatus: (state) => state.loadingStatus,
-  },
-  mutations: {
-    // SET_LOADING_STATUS_ACTIVE(state) {
-    //   state.loadingStatus = true;
-    // },
-    // SET_LOADING_STATUS_INACTIVE(state) {
-    //   state.loadingStatus = false;
-    // },
-  },
+  state: {},
+  getters: {},
+  mutations: {},
   actions: {
     async findMedia(
       context,
@@ -39,11 +28,11 @@ export default new Vuex.Store({
       try {
         const res = await this.axios.get("/3/movie/popular", {
           params: {
-            page: 1
-          }
+            page: 1,
+          },
         });
         return res.data.results;
-      } catch(error) {
+      } catch (error) {
         console.log(error);
       }
     },
@@ -51,18 +40,18 @@ export default new Vuex.Store({
       try {
         const res = await this.axios.get("/3/movie/popular", {
           params: {
-            page: newPage
-          }
+            page: newPage,
+          },
         });
         return res.data.results;
-      } catch(error) {
+      } catch (error) {
         console.log(error);
       }
     },
     async getMovie(_, id) {
       const res = await this.axios.get(`/3/movie/${id}`);
-      console.log(res.data)
+      console.log(res.data);
       return res.data;
-    }
-  }
-})
+    },
+  },
+});
