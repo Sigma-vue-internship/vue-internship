@@ -58,6 +58,11 @@ export default new Vuex.Store({
       } catch(error) {
         console.log(error);
       }
+    },
+    async getMovie(_, id) {
+      const res = await this.axios.get(`/3/movie/${id}`);
+      console.log(res.data)
+      return res.data;
     }
   }
 })

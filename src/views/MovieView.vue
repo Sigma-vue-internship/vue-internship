@@ -1,9 +1,25 @@
 <template>
-  <h1>Single Movie page</h1>
+  <SingleMoviePage :movie="movie" />
 </template>
 
 <script>
-export default {};
+import SingleMoviePage from "../components/SingleMoviePage";
+export default {
+  name: "MovieView",
+  data() {
+    return {
+      movie: {}
+    }
+  },
+  components: {
+    SingleMoviePage
+  },
+  methods: {
+  },
+  async created() {
+    this.movie = await this.$store.dispatch("getMovie", this.$route.params.id)
+  }
+};
 </script>
 
 <style>
