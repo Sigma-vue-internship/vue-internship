@@ -19,29 +19,18 @@
         />
       </div>
     </div>
-    <div class="moviesList">
-      <MoviesList v-if="movies" :movies="movies" />
-      <PaginationWrapper @changePage="changePage" :totalRows=totalRows />
-    </div>
+    <MoviesList />
   </div>
 </template>
 
 <script>
 import SearchForm from "@/components/SearchForm";
-import PaginationWrapper from "../components/PaginationWrapper";
 import MoviesList from "../components/MoviesList";
 export default {
   name: "HomeView",
   components: {
     SearchForm,
-    PaginationWrapper,
     MoviesList
-  },
-  data() {
-    return {
-      movies: [],
-      totalRows: 1000
-    }
   },
   methods: {
     async findMovies(searchData) {
@@ -57,25 +46,11 @@ export default {
           .catch(() => {});
         return;
       }
-    },
-    routeToMovie(id) {
-      this.$router.push({ path:`/movie/${id}` });
-    },
-    async changePage(page) {
-      this.movies = await this.$store.dispatch("changePage", page);
-    },
-  },
-  async created() {
-    this.movies = await this.$store.dispatch("getMovies")
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/variables.scss";
-  .moviesList {
-    background-color: rgb(34, 34, 34);
-    @include flex-center(column);
-    margin-top: 72px;
-  }
+
 </style>
