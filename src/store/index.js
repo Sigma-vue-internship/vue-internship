@@ -1,49 +1,80 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     allMovies: [],
-    page: 1,
-    totalPages: 0
+    currentMovies: [],
+    loadingStatus: false,
   },
   getters: {
+    getAllMovies: (state) => state.currentMovies,
+    getLoadingStatus: (state) => state.loadingStatus,
     getMovies: state => state.allMovies,
-    getPage: state => state.page,
-    getPages: state => state.totalPages,
   },
   mutations: {
     SET_MOVIES(state, movies) {
       state.allMovies = movies;
     },
-    SET_PAGE(state, page) {
-      state.page = page;
+    SET_CURRENT_MOVIES(state, movies) {
+      state.currentMovies = [...state.currentMovies, ...movies];
     },
-    SET_TOTAL_PAGES(state, totalPages) {
-      state.totalPages = totalPages;
-    }
+    SET_LOADING_STATUS_ACTIVE(state) {
+      state.loadingStatus = true;
+    },
+    SET_LOADING_STATUS_INACTIVE(state) {
+      state.loadingStatus = false;
+    },
+    RESET_CURRENT_MOVIES(state) {
+      state.currentMovies = [];
+    },
   },
   actions: {
-    async setMovies({ commit, state }) {
+    async findMovies(
+      { commit },
+      { searchQuery, searchBy = null, searchByValue = null }
+    ) {
+      try {
+        commit("RESET_CURRENT_MOVIES");
+        if (!searchBy || !searchByValue) {
+          commit("SET_LOADING_STATUS_ACTIVE");
+          const res = await this.axios.get(`/3/search/movie`, {
+            params: { query: searchQuery, page: 1 },
+          });
+          commit("SET_CURRENT_MOVIES", res.data.results);
+
+          commit("SET_LOADING_STATUS_INACTIVE");
+          return;
+        }
+        commit("SET_LOADING_STATUS_ACTIVE");
+        const res = await this.axios.get(`/3/search/movie`, {
+          params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
+        });
+        commit("SET_CURRENT_MOVIES", res.data.results);
+        commit("SET_LOADING_STATUS_INACTIVE");
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async setMovies({ commit }) {
       const res = await this.axios.get("/3/movie/popular", {
         params: {
-          page: state.page
+          page: 1
         }
       });
-      commit("SET_TOTAL_PAGES", res.data.total_pages);
       commit("SET_MOVIES", res.data.results);
     },
-    async changePage({ commit, state }, newPage) {
-      commit("SET_PAGE", newPage);
+    async changePage({ commit }, newPage) {
+      commit("SET_LOADING_STATUS_ACTIVE");
       const res = await this.axios.get("/3/movie/popular", {
         params: {
-          page: state.page
+          page: newPage
         }
       });
-      commit("SET_TOTAL_PAGES", res.data.total_pages);
       commit("SET_MOVIES", res.data.results);
+      commit("SET_LOADING_STATUS_INACTIVE");
     }
   }
 })
