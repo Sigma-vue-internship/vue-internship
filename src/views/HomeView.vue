@@ -5,17 +5,17 @@
       <p class="lead mb-4 text-light">Watch films online</p>
     </div>
     <div class="col-lg-6 mx-auto">
-      <SearchForm :mode="'preview'" @findMovies="findMovies" />
+      <SearchForm :mode="'preview'" @findMedia="findMedia" />
     </div>
     <div class="overflow-hidden" style="max-height: 30vh">
       <div class="container px-5">
         <img
-          src="../assets/hero_image.png"
-          class="img-fluid rounded-3 shadow-lg mb-4"
-          alt="Example image"
-          width="700"
-          height="500"
-          loading="lazy"
+            src="../assets/hero_image.png"
+            class="img-fluid rounded-3 shadow-lg mb-4"
+            alt="Example image"
+            width="700"
+            height="500"
+            loading="lazy"
         />
       </div>
     </div>
@@ -32,25 +32,45 @@ export default {
     SearchForm,
     MoviesList
   },
+  data() {
+    return {
+      movies: [],
+      totalRows: 1000
+    }
+  },
   methods: {
-    async findMovies(searchData) {
+    async findMedia(searchData) {
       if (searchData) {
-        await this.$store.dispatch("findMovies", searchData);
         this.$router
-          .push({
-            path: "/search",
-            query: {
-              searchQuery: searchData.searchQuery,
-            },
-          })
-          .catch(() => {});
+            .push({
+              path: "/search",
+              query: {
+                searchQuery: searchData.searchQuery,
+              },
+            })
+            .catch(() => {});
         return;
       }
     }
-  }
+  },
+  routeToMovie(id) {
+    this.$router.push({ path:`/movie/${id}` });
+  },
+  async changePage(page) {
+    this.movies = await this.$store.dispatch("changePage", page);
+  },
+  async created() {
+    this.movies = await this.$store.dispatch("getMovies")
+  },
 }
 </script>
 
 <style scoped lang="scss">
-
+@import "../assets/scss/variables.scss";
+  .moviesList {
+    background-color: rgb(34, 34, 34);
+    @include flex-center(column);
+    margin-top: 72px;
+  }
 </style>
+

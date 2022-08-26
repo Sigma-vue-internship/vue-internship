@@ -1,33 +1,14 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMovies="findMovies" class="m-4 mt-5" />
-    <SpinnerLoader :isLoading="isLoading" />
-    <ul v-if="movies.length">
-      <li v-for="movie in movies" :key="movie.id" class="container">
-        <b-card
-          :img-src="
-            movie.poster_path
-              ? 'https://image.tmdb.org/t/p/w185/' + movie.poster_path
-              : 'https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png'
-          "
-          img-alt="Card image"
-          img-width="185"
-          img-left
-          class="mb-3"
-        >
-          <b-card-title>{{ movie.title }}</b-card-title>
-          <b-card-text>
-            {{ movie.overview }}
-          </b-card-text>
-          <div class="offset-lg-10 offset-md-9 offset-sm-0">
-            <b-button
-              variant="outline-primary"
-              @click="redirectToMovie(movie.id)"
-              size="md"
-              >Details</b-button
-            >
-          </div>
-        </b-card>
+    <SearchForm :mode="'optional'" @findMedia="findMedia" class="mt-5" />
+    <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
+    <ul v-if="!isLoading">
+      <li v-for="media in searchMedia" :key="media.id">
+        <SingleMovieSearch v-if="media.media_type === 'movie'" :movie="media" />
+        <SingleCelebritySearch
+          v-else-if="media.media_type === 'person'"
+          :celebrity="media"
+        />
       </li>
     </ul>
   </div>
@@ -35,30 +16,34 @@
 
 <script>
 import SearchForm from "@/components/SearchForm.vue";
-import { mapGetters } from "vuex";
+import SingleMovieSearch from "@/components/SingleMovieSearch.vue";
 import SpinnerLoader from "@/components/SpinnerLoader.vue";
+import SingleCelebritySearch from "@/components/SingleCelebritySearch.vue";
 export default {
   data() {
     return {
+      resData: null,
       routeSearchData: null,
+      isLoading: false,
     };
   },
   components: {
     SearchForm,
+    SingleMovieSearch,
     SpinnerLoader,
+    SingleCelebritySearch,
   },
   computed: {
-    ...mapGetters({
-      movies: "getAllMovies",
-      isLoading: "getLoadingStatus",
-    }),
+    searchMedia() {
+      return this.resData && this.resData.data.results;
+    },
   },
   methods: {
-    async findMovies(searchData) {
+    async findMedia(searchData) {
       if (searchData.searchBy) {
         this.$router
           .push({
-            name: "search",
+            path: "/search",
             query: {
               searchQuery: searchData.searchQuery,
               searchBy: searchData.searchBy,
@@ -66,8 +51,15 @@ export default {
             },
           })
           .catch(() => {});
-        await this.$store.dispatch("findMovies", searchData);
-        return;
+        try {
+          this.isLoading = true;
+          this.resData = await this.$store.dispatch("findMedia", searchData);
+          this.isLoading = false;
+          return;
+        } catch (e) {
+          console.log(e);
+          this.isLoading = false;
+        }
       }
       if (searchData.searchQuery) {
         this.$router
@@ -78,18 +70,38 @@ export default {
             },
           })
           .catch(() => {});
-        await this.$store.dispatch("findMovies", searchData);
-        return;
+        try {
+          this.isLoading = true;
+          this.resData = await this.$store.dispatch("findMedia", searchData);
+          this.isLoading = false;
+          return;
+        } catch (e) {
+          console.log(e);
+          this.isLoading = false;
+        }
       }
-    },
-    redirectToMovie(id) {
-      this.$router.push(`/movie/${id}`);
     },
   },
   async created() {
     this.routeSearchData = { ...this.$route.query };
-    if (this.routeSearchData && !this.movies.length)
-      await this.findMovies(this.routeSearchData);
+    if (this.routeSearchData.searchQuery && !this.searchMedia) {
+      try {
+        this.isLoading = true;
+        this.resData = await this.$store.dispatch(
+          "findMedia",
+          this.routeSearchData
+        );
+        this.isLoading = false;
+      } catch (e) {
+        console.log(e);
+        this.isLoading = false;
+      }
+    }
   },
 };
 </script>
+<style lang="scss">
+ul {
+  padding: 0;
+}
+</style>
