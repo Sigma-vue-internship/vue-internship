@@ -10,7 +10,7 @@
 
 <script>
 export default {
-    name: "Pagination",
+    name: "PaginationWrapper",
     props: {
         totalRows: Number
     },

@@ -5,19 +5,14 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    allMovies: [],
     currentMovies: [],
     loadingStatus: false,
   },
   getters: {
     getAllMovies: (state) => state.currentMovies,
     getLoadingStatus: (state) => state.loadingStatus,
-    getMovies: state => state.allMovies,
   },
   mutations: {
-    SET_MOVIES(state, movies) {
-      state.allMovies = movies;
-    },
     SET_CURRENT_MOVIES(state, movies) {
       state.currentMovies = [...state.currentMovies, ...movies];
     },
@@ -58,13 +53,13 @@ export default new Vuex.Store({
         console.log(e);
       }
     },
-    async setMovies({ commit }) {
+    async getMovies() {
       const res = await this.axios.get("/3/movie/popular", {
         params: {
           page: 1
         }
       });
-      commit("SET_MOVIES", res.data.results);
+      return res.data.results;
     },
     async changePage({ commit }, newPage) {
       commit("SET_LOADING_STATUS_ACTIVE");
@@ -73,8 +68,8 @@ export default new Vuex.Store({
           page: newPage
         }
       });
-      commit("SET_MOVIES", res.data.results);
       commit("SET_LOADING_STATUS_INACTIVE");
+      return res.data.results;
     }
   }
 })
