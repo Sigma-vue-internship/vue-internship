@@ -70,6 +70,11 @@ export default new Vuex.Store({
       });
       commit("SET_LOADING_STATUS_INACTIVE");
       return res.data.results;
+    },
+    async getMovie(_, id) {
+      const res = await this.axios.get(`/3/movie/${id}`);
+      console.log(res.data)
+      return res.data;
     }
   }
 })

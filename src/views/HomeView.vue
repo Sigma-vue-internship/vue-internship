@@ -58,9 +58,6 @@ export default {
         return;
       }
     },
-    routeToMovie(id) {
-      this.$router.push({ path:`/movie/${id}` });
-    },
     async changePage(page) {
       this.movies = await this.$store.dispatch("changePage", page);
     },

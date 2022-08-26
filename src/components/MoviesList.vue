@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     routeToMovie(id) {
-      this.$router.push({ path: `/movie/${id}` });
+      this.$router.push({ path:`/movie/${id}` });
     }
   },
   computed: {
