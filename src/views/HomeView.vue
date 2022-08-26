@@ -20,26 +20,26 @@
       </div>
     </div>
     <div class="moviesList">
-      <MoviesList v-if="movies" :movies=movies />
-      <Pagination @changePage="changePage" :totalRows=totalRows />
+      <MoviesList v-if="movies" :movies="movies" />
+      <PaginationWrapper @changePage="changePage" :totalRows=totalRows />
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
 import SearchForm from "@/components/SearchForm";
-import Pagination from "../components/Pagination";
+import PaginationWrapper from "../components/PaginationWrapper";
 import MoviesList from "../components/MoviesList";
 export default {
   name: "HomeView",
   components: {
     SearchForm,
-    Pagination,
+    PaginationWrapper,
     MoviesList
   },
   data() {
     return {
+      movies: [],
       totalRows: 1000
     }
   },
@@ -58,22 +58,16 @@ export default {
         return;
       }
     },
-    ...mapActions(["setMovies"]),
     routeToMovie(id) {
       this.$router.push({ path:`/movie/${id}` });
     },
-    changePage(page) {
-      this.$store.dispatch("changePage", page);
+    async changePage(page) {
+      this.movies = await this.$store.dispatch("changePage", page);
     },
   },
-  mounted() {
-    this.setMovies();
-  },
-  computed: {
-    ...mapGetters({
-      movies: "getMovies"
-    })
-  },
+  async created() {
+    this.movies = await this.$store.dispatch("getMovies")
+  }
 }
 </script>
 

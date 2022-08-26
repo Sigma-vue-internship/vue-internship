@@ -8,9 +8,7 @@
         class="movie"
         @click="routeToMovie(movie.id)"
       >
-        <SingleMovieElementList 
-          :movie="movie"
-        />
+        <SingleMovieElementList :movie="movie" />
       </li>
     </ul>
   </div>
@@ -21,7 +19,7 @@ import { mapGetters } from "vuex";
 import SingleMovieElementList from "./SingleMovieElementList";
 import SpinnerLoader from "./SpinnerLoader";
 export default {
-  name: "ListOfPopularMovies",
+  name: "MoviesList",
   props: {
     movies: Array
   },
@@ -32,9 +30,6 @@ export default {
   methods: {
     routeToMovie(id) {
       this.$router.push({ path: `/movie/${id}` });
-    },
-    changePage(page) {
-      this.$store.dispatch("changePage", page);
     }
   },
   computed: {
