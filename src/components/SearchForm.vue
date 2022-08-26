@@ -81,7 +81,9 @@ export default {
     emitFindMedia() {
       if (this.searchQuery && !this.selected) {
         this.$emit("findMedia", this.searchData);
-        if (this.alertStatus) this.showHideAlert();
+        if (this.alertStatus) {
+          this.showHideAlert();
+        }
         return;
       }
       if (this.searchQuery && this.searchByValue) {
@@ -107,10 +109,7 @@ export default {
       if (this.selected && !this.searchByValue) {
         return `To find movie or actor, you have to provide ${this.selected}`;
       }
-      if (!this.searchQuery) {
-        return `To find movie or actor, you have to provide name`;
-      }
-      return this.showHideAlert();
+      return `To find movie or actor, you have to provide name`;
     },
   },
   created() {

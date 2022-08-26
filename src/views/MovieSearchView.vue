@@ -63,10 +63,7 @@ export default {
             },
           })
           .catch(() => {});
-        this.searchMedia = await this.$store.dispatch(
-          "findMedia",
-          this.searchData
-        );
+        this.searchMedia = await this.$store.dispatch("findMedia", searchData);
         return;
       }
     },
