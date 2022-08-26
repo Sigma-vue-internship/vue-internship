@@ -1,14 +1,15 @@
 <template>
   <div class="singleMovie">
+    <SpinnerLoader :isLoading="movie.poster_path ? false : true" />
     <b-card
-    :title="movie.title"
-    :sub-title="movie.tagline"
-    :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
-    img-alt="Image"
-    img-height="400"
-    img-width="250"
-    img-left
-    tag="article"
+      :title="movie.title"
+      :sub-title="movie.tagline"
+      :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
+      img-alt="Image"
+      img-height="400"
+      img-width="250"
+      img-left
+      tag="article"
     >
       <b-card-body class="text-left">
         <b-card-text>
@@ -28,17 +29,32 @@
           {{ movie.runtime }} minutes
         </b-card-text>
         <b-card-text>{{ movie.overview }}</b-card-text>
-        <b-button :href="movie.homepage" variant="dark">Go to the movie site</b-button>
+        <b-button
+          v-if="movie.homepage"
+          :href="movie.homepage"
+          variant="dark"
+        >
+          Go to the movie site
+        </b-button>
       </b-card-body>
     </b-card>
   </div>
 </template>
 
 <script>
+import SpinnerLoader from './SpinnerLoader';
 export default {
   name: "SingleMoviePage",
   props: {
     movie: Object
+  },
+  components: {
+    SpinnerLoader
+  },
+  data() {
+    return {
+      isLoading: false
+    }
   }
 }
 </script>

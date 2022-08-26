@@ -54,22 +54,28 @@ export default new Vuex.Store({
       }
     },
     async getMovies() {
-      const res = await this.axios.get("/3/movie/popular", {
-        params: {
-          page: 1
-        }
-      });
-      return res.data.results;
+      try {
+        const res = await this.axios.get("/3/movie/popular", {
+          params: {
+            page: 1
+          }
+        });
+        return res.data.results;
+      } catch(error) {
+        console.log(error);
+      }
     },
-    async changePage({ commit }, newPage) {
-      commit("SET_LOADING_STATUS_ACTIVE");
-      const res = await this.axios.get("/3/movie/popular", {
-        params: {
-          page: newPage
-        }
-      });
-      commit("SET_LOADING_STATUS_INACTIVE");
-      return res.data.results;
+    async changePage(_, newPage) {
+      try {
+        const res = await this.axios.get("/3/movie/popular", {
+          params: {
+            page: newPage
+          }
+        });
+        return res.data.results;
+      } catch(error) {
+        console.log(error);
+      }
     },
     async getMovie(_, id) {
       const res = await this.axios.get(`/3/movie/${id}`);
