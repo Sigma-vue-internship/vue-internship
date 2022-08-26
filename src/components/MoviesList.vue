@@ -2,14 +2,13 @@
   <div class="moviesList">
     <SpinnerLoader :isLoading="isLoading" class="spinner"/>
     <ul class="movies" v-if="movies.length">
-      <li
+      <SingleMovieElementList
+        :movie="movie"
         v-for="(movie) in movies"
         :key="movie.id"
         class="movie"
-        @click="routeToMovie(movie.id)"
-      >
-        <SingleMovieElementList :movie="movie" />
-      </li>
+        @click.native="routeToMovie(movie.id)"
+      />
     </ul>
     <PaginationWrapper @changePage="changePage" :totalRows=totalRows />
   </div>
@@ -28,7 +27,7 @@ export default {
       isLoading: false
     }
   },
-  components: { 
+  components: {
     SingleMovieElementList,
     PaginationWrapper,
     SpinnerLoader
@@ -70,7 +69,7 @@ export default {
     width: 1100px;
     @include flex-center(row);
     padding: 0;
-    list-style-type: none; 
+    list-style-type: none;
     padding-top: 35px;
   }
   .movie {
