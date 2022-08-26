@@ -14,8 +14,8 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((config) => {
   config.params = {
-    ...config.params,
     api_key: "6dea3fe2eb0c52fe2c7bcbd5148b10d4",
+    ...config.params,
   };
   return config;
 });
