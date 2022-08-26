@@ -14,18 +14,18 @@
         <b-form-input
           v-model="searchQuery"
           placeholder="Search for media"
-          @keyup.enter="emitFindMovies"
+          @keyup.enter="emitFindMedia"
         ></b-form-input>
         <b-form-input
           v-if="selected"
           v-model="searchByValue"
           :placeholder="selected"
-          @keyup.enter="emitFindMovies"
+          @keyup.enter="emitFindMedia"
         ></b-form-input>
 
         <button
           type="button"
-          @click="emitFindMovies"
+          @click="emitFindMedia"
           class="btn btn-primary btn-lg px-4"
         >
           Search
@@ -78,14 +78,14 @@ export default {
     };
   },
   methods: {
-    emitFindMovies() {
+    emitFindMedia() {
       if (this.searchQuery && !this.selected) {
-        this.$emit("findMovies", this.searchData);
+        this.$emit("findMedia", this.searchData);
         if (this.alertStatus) this.showHideAlert();
         return;
       }
       if (this.searchQuery && this.searchByValue) {
-        this.$emit("findMovies", this.searchData);
+        this.$emit("findMedia", this.searchData);
         if (this.alertStatus) this.showHideAlert();
         return;
       }

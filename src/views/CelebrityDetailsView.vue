@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import SpinnerLoader from "../components/SpinnerLoader.vue";
 export default {
   data() {
@@ -33,9 +34,9 @@ export default {
     };
   },
   computed: {
-    isLoading() {
-      return this.$store.getters.getLoadingStatus;
-    },
+    ...mapGetters({
+      isLoading: "getLoadingStatus",
+    }),
   },
   async created() {
     this.celebrity = await this.$store.dispatch(

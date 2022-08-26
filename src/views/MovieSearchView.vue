@@ -1,13 +1,13 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMovies="findMovies" class="mt-5" />
-    <SpinnerLoader :isLoading="isLoading" />
-    <ul v-if="movies.length">
-      <li v-for="movie in movies" :key="movie.id">
-        <SingleMovieSearch v-if="movie.media_type === 'movie'" :movie="movie" />
+    <SearchForm :mode="'optional'" @findMedia="findMedia" class="mt-5" />
+    <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
+    <ul v-if="!isLoading">
+      <li v-for="media in searchMedia" :key="media.id">
+        <SingleMovieSearch v-if="media.media_type === 'movie'" :movie="media" />
         <SingleCelebritySearch
-          v-else-if="movie.media_type === 'person'"
-          :celebrity="movie"
+          v-else-if="media.media_type === 'person'"
+          :celebrity="media"
         />
       </li>
     </ul>
@@ -23,6 +23,7 @@ import SingleCelebritySearch from "@/components/SingleCelebritySearch.vue";
 export default {
   data() {
     return {
+      searchMedia: [],
       routeSearchData: null,
     };
   },
@@ -34,16 +35,15 @@ export default {
   },
   computed: {
     ...mapGetters({
-      movies: "getAllMovies",
       isLoading: "getLoadingStatus",
     }),
   },
   methods: {
-    async findMovies(searchData) {
+    async findMedia(searchData) {
       if (searchData.searchBy) {
         this.$router
           .push({
-            name: "search",
+            path: "/search",
             query: {
               searchQuery: searchData.searchQuery,
               searchBy: searchData.searchBy,
@@ -51,7 +51,7 @@ export default {
             },
           })
           .catch(() => {});
-        await this.$store.dispatch("findMovies", searchData);
+        this.searchMedia = await this.$store.dispatch("findMedia", searchData);
         return;
       }
       if (searchData.searchQuery) {
@@ -63,15 +63,22 @@ export default {
             },
           })
           .catch(() => {});
-        await this.$store.dispatch("findMovies", searchData);
+        this.searchMedia = await this.$store.dispatch(
+          "findMedia",
+          this.searchData
+        );
         return;
       }
     },
   },
   async created() {
     this.routeSearchData = { ...this.$route.query };
-    if (this.routeSearchData && !this.movies.length)
-      await this.findMovies(this.routeSearchData);
+    if (this.routeSearchData && !this.searchMedia.length) {
+      this.searchMedia = await this.$store.dispatch(
+        "findMedia",
+        this.routeSearchData
+      );
+    }
   },
 };
 </script>
