@@ -1,37 +1,58 @@
 <template>
-  <div style="height: 120px">
-    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-2">
-      <b-form-input
-        v-model="searchQuery"
-        placeholder="Search for films"
-        @keyup.enter="emitFindMovies"
-      ></b-form-input>
-      <b-form-input
-        v-if="selected"
-        v-model="searchByValue"
-        :placeholder="selected"
-        @keyup.enter="emitFindMovies"
-      ></b-form-input>
-      <b-form-select
-        v-if="mode !== 'preview'"
-        v-model="selected"
-        :options="options"
-        size="sm"
-      ></b-form-select>
-      <button
-        type="button"
-        @click="emitFindMovies"
-        class="btn btn-primary btn-lg px-4 me-sm-3"
+  <div class="search-form__container container">
+    <div>
+      <div
+        class="
+          search-form
+          d-grid
+          gap-2
+          d-sm-flex
+          justify-content-sm-center
+          mb-2
+        "
       >
-        Search
-      </button>
-    </div>
-    <div
-      v-if="alertStatus"
-      class="alert alert-warning p-2 text-start"
-      role="alert"
-    >
-      {{ alertSign }}
+        <b-form-input
+          v-model="searchQuery"
+          placeholder="Search for media"
+          @keyup.enter="emitFindMovies"
+        ></b-form-input>
+        <b-form-input
+          v-if="selected"
+          v-model="searchByValue"
+          :placeholder="selected"
+          @keyup.enter="emitFindMovies"
+        ></b-form-input>
+
+        <button
+          type="button"
+          @click="emitFindMovies"
+          class="btn btn-primary btn-lg px-4"
+        >
+          Search
+        </button>
+      </div>
+      <div class="radio__container">
+        <b-form-group
+          class="radio-group__container"
+          v-if="mode !== 'preview'"
+          label="Please select an option"
+        >
+          <b-form-radio-group
+            id="radio-group-1"
+            class="d-flex gap-3"
+            v-model="selected"
+            :options="options"
+            name="radio-options"
+          ></b-form-radio-group>
+        </b-form-group>
+        <div
+          v-if="alertStatus"
+          class="alert alert-warning p-2 text-start"
+          role="alert"
+        >
+          {{ alertSign }}
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -51,10 +72,8 @@ export default {
       alertStatus: false,
       selected: null,
       options: [
-        { value: null, text: "Please select an option", disabled: true },
         { value: null, text: "By film title" },
         { value: "region", text: "By region" },
-        { value: "year", text: "By year" },
       ],
     };
   },
@@ -86,10 +105,10 @@ export default {
     },
     alertSign() {
       if (this.selected && !this.searchByValue) {
-        return `To find movies, you have to provide movie ${this.selected}`;
+        return `To find movie or actor, you have to provide ${this.selected}`;
       }
       if (!this.searchQuery) {
-        return `To find movies, you have to provide movie title`;
+        return `To find movie or actor, you have to provide name`;
       }
       return this.showHideAlert();
     },
@@ -100,5 +119,26 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.radio__container {
+  display: flex;
+  justify-content: space-between;
+  > .alert {
+    flex-basis: 55%;
+  }
+}
+.search-form {
+  width: 100%;
+}
+.search-form__container {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  height: 180px;
+}
+#radio-group-1 {
+  > .custom-control-input {
+    margin-right: 10px;
+  }
+}
 </style>

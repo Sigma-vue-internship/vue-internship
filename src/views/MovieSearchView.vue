@@ -1,33 +1,14 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMovies="findMovies" class="m-4 mt-5" />
+    <SearchForm :mode="'optional'" @findMovies="findMovies" class="mt-5" />
     <SpinnerLoader :isLoading="isLoading" />
     <ul v-if="movies.length">
-      <li v-for="movie in movies" :key="movie.id" class="container">
-        <b-card
-          :img-src="
-            movie.poster_path
-              ? 'https://image.tmdb.org/t/p/w185/' + movie.poster_path
-              : 'https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png'
-          "
-          img-alt="Card image"
-          img-width="185"
-          img-left
-          class="mb-3"
-        >
-          <b-card-title>{{ movie.title }}</b-card-title>
-          <b-card-text>
-            {{ movie.overview }}
-          </b-card-text>
-          <div class="offset-lg-10 offset-md-9 offset-sm-0">
-            <b-button
-              variant="outline-primary"
-              @click="redirectToMovie(movie.id)"
-              size="md"
-              >Details</b-button
-            >
-          </div>
-        </b-card>
+      <li v-for="movie in movies" :key="movie.id">
+        <SingleMovieSearch v-if="movie.media_type === 'movie'" :movie="movie" />
+        <SingleCelebritySearch
+          v-else-if="movie.media_type === 'person'"
+          :celebrity="movie"
+        />
       </li>
     </ul>
   </div>
@@ -35,8 +16,10 @@
 
 <script>
 import SearchForm from "@/components/SearchForm.vue";
+import SingleMovieSearch from "@/components/SingleMovieSearch.vue";
 import { mapGetters } from "vuex";
 import SpinnerLoader from "@/components/SpinnerLoader.vue";
+import SingleCelebritySearch from "@/components/SingleCelebritySearch.vue";
 export default {
   data() {
     return {
@@ -45,7 +28,9 @@ export default {
   },
   components: {
     SearchForm,
+    SingleMovieSearch,
     SpinnerLoader,
+    SingleCelebritySearch,
   },
   computed: {
     ...mapGetters({
@@ -82,9 +67,6 @@ export default {
         return;
       }
     },
-    redirectToMovie(id) {
-      this.$router.push(`/movie/${id}`);
-    },
   },
   async created() {
     this.routeSearchData = { ...this.$route.query };
@@ -93,3 +75,8 @@ export default {
   },
 };
 </script>
+<style lang="scss">
+ul {
+  padding: 0;
+}
+</style>
