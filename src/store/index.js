@@ -35,5 +35,29 @@ export default new Vuex.Store({
     async findSingleCelebrity(context, celebrityId) {
       return this.axios.get(`/3/person/${celebrityId}`);
     },
-  },
-});
+    async getMovies() {
+      try {
+        const res = await this.axios.get("/3/movie/popular", {
+          params: {
+            page: 1
+          }
+        });
+        return res.data.results;
+      } catch(error) {
+        console.log(error);
+      }
+    },
+    async changePage(_, newPage) {
+      try {
+        const res = await this.axios.get("/3/movie/popular", {
+          params: {
+            page: newPage
+          }
+        });
+        return res.data.results;
+      } catch(error) {
+        console.log(error);
+      }
+    }
+  }
+})

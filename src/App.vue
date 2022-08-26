@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header/>
+    <Header />
     <router-view />
     <Footer />
   </div>
@@ -23,6 +23,8 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 body {
   --bs-body-bg: #121416;
