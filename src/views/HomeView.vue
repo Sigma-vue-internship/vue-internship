@@ -5,7 +5,7 @@
       <p class="lead mb-4 text-light">Watch films online</p>
     </div>
     <div class="col-lg-6 mx-auto">
-      <SearchForm :mode="'preview'" @findMovies="findMovies" />
+      <SearchForm :mode="'preview'" @findMedia="findMedia" />
     </div>
     <div class="overflow-hidden" style="max-height: 30vh">
       <div class="container px-5">
@@ -29,9 +29,8 @@ export default {
     SearchForm,
   },
   methods: {
-    async findMovies(searchData) {
+    async findMedia(searchData) {
       if (searchData) {
-        await this.$store.dispatch("findMovies", searchData);
         this.$router
           .push({
             path: "/search",
