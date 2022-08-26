@@ -27,16 +27,21 @@
 <script>
 import SpinnerLoader from "../components/SpinnerLoader.vue";
 export default {
+  data() {
+    return {
+      celebrity: {},
+    };
+  },
   computed: {
-    celebrity() {
-      return this.$store.getters.getCurrentCelebrity;
-    },
     isLoading() {
       return this.$store.getters.getLoadingStatus;
     },
   },
   async created() {
-    await this.$store.dispatch("findSingleCelebrity", this.$route.params.id);
+    this.celebrity = await this.$store.dispatch(
+      "findSingleCelebrity",
+      this.$route.params.id
+    );
   },
   components: { SpinnerLoader },
 };

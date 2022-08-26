@@ -1,6 +1,5 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import celebrity from "./modules/celebrity";
 
 Vue.use(Vuex);
 
@@ -55,6 +54,11 @@ export default new Vuex.Store({
         console.log(e);
       }
     },
+    async findSingleCelebrity({ commit }, celebrityId) {
+      commit("SET_LOADING_STATUS_ACTIVE");
+      const res = await this.axios.get(`/3/person/${celebrityId}`);
+      commit("SET_LOADING_STATUS_INACTIVE");
+      return res.data;
+    },
   },
-  modules: [celebrity],
 });
