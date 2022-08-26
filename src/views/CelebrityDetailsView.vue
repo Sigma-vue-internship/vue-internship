@@ -6,12 +6,8 @@
         <div class="celebrity-profile__image-container col-md-12 col-lg-4 px-5">
           <img
             class="celebrity-profile__image"
-            :src="
-              celebrity.profile_path
-                ? 'https://image.tmdb.org/t/p/w300/' + celebrity.profile_path
-                : 'https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png'
-            "
-            alt=""
+            :src="profilePath"
+            alt="celebrity profile image"
           />
         </div>
         <div class="celebrity-profile__info col-md-12 col-lg-6 p-5">
@@ -25,24 +21,36 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import SpinnerLoader from "../components/SpinnerLoader.vue";
 export default {
   data() {
     return {
-      celebrity: {},
+      resData: null,
+      isLoading: false,
     };
   },
   computed: {
-    ...mapGetters({
-      isLoading: "getLoadingStatus",
-    }),
+    celebrity() {
+      return this.resData.data;
+    },
+    profilePath() {
+      return this.celebrity.profile_path
+        ? "https://image.tmdb.org/t/p/w300/" + this.celebrity.profile_path
+        : "https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png";
+    },
   },
   async created() {
-    this.celebrity = await this.$store.dispatch(
-      "findSingleCelebrity",
-      this.$route.params.id
-    );
+    try {
+      this.isLoading = true;
+      this.resData = await this.$store.dispatch(
+        "findSingleCelebrity",
+        this.$route.params.id
+      );
+      this.isLoading = false;
+    } catch (e) {
+      this.isLoading = false;
+      console.log(e);
+    }
   },
   components: { SpinnerLoader },
 };

@@ -5,53 +5,35 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    loadingStatus: false,
+    // loadingStatus: false,
   },
   getters: {
-    getLoadingStatus: (state) => state.loadingStatus,
+    // getLoadingStatus: (state) => state.loadingStatus,
   },
   mutations: {
-    SET_LOADING_STATUS_ACTIVE(state) {
-      state.loadingStatus = true;
-    },
-    SET_LOADING_STATUS_INACTIVE(state) {
-      state.loadingStatus = false;
-    },
+    // SET_LOADING_STATUS_ACTIVE(state) {
+    //   state.loadingStatus = true;
+    // },
+    // SET_LOADING_STATUS_INACTIVE(state) {
+    //   state.loadingStatus = false;
+    // },
   },
   actions: {
     async findMedia(
-      { commit },
+      context,
       { searchQuery, searchBy = null, searchByValue = null }
     ) {
-      try {
-        if (!searchBy || !searchByValue) {
-          commit("SET_LOADING_STATUS_ACTIVE");
-          const res = await this.axios.get(`/3/search/multi`, {
-            params: { query: searchQuery, page: 1 },
-          });
-          commit("SET_LOADING_STATUS_INACTIVE");
-
-          return res.data.results;
-        }
-        commit("SET_LOADING_STATUS_ACTIVE");
-        const res = await this.axios.get(`/3/search/multi`, {
-          params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
+      if (!searchBy || !searchByValue) {
+        return this.axios.get(`/3/search/multi`, {
+          params: { query: searchQuery, page: 1 },
         });
-        commit("SET_LOADING_STATUS_INACTIVE");
-
-        return res.data.results;
-      } catch (e) {
-        console.log(e);
       }
+      return this.axios.get(`/3/search/multi`, {
+        params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
+      });
     },
-    async findSingleCelebrity({ commit }, celebrityId) {
-      commit("SET_LOADING_STATUS_ACTIVE");
-
-      const res = await this.axios.get(`/3/person/${celebrityId}`);
-
-      commit("SET_LOADING_STATUS_INACTIVE");
-
-      return res.data;
+    async findSingleCelebrity(context, celebrityId) {
+      return this.axios.get(`/3/person/${celebrityId}`);
     },
   },
 });

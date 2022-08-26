@@ -17,14 +17,14 @@
 <script>
 import SearchForm from "@/components/SearchForm.vue";
 import SingleMovieSearch from "@/components/SingleMovieSearch.vue";
-import { mapGetters } from "vuex";
 import SpinnerLoader from "@/components/SpinnerLoader.vue";
 import SingleCelebritySearch from "@/components/SingleCelebritySearch.vue";
 export default {
   data() {
     return {
-      searchMedia: [],
+      resData: null,
       routeSearchData: null,
+      isLoading: false,
     };
   },
   components: {
@@ -34,9 +34,9 @@ export default {
     SingleCelebritySearch,
   },
   computed: {
-    ...mapGetters({
-      isLoading: "getLoadingStatus",
-    }),
+    searchMedia() {
+      return this.resData && this.resData.data.results;
+    },
   },
   methods: {
     async findMedia(searchData) {
@@ -51,8 +51,15 @@ export default {
             },
           })
           .catch(() => {});
-        this.searchMedia = await this.$store.dispatch("findMedia", searchData);
-        return;
+        try {
+          this.isLoading = true;
+          this.resData = await this.$store.dispatch("findMedia", searchData);
+          this.isLoading = false;
+          return;
+        } catch (e) {
+          console.log(e);
+          this.isLoading = false;
+        }
       }
       if (searchData.searchQuery) {
         this.$router
@@ -63,18 +70,32 @@ export default {
             },
           })
           .catch(() => {});
-        this.searchMedia = await this.$store.dispatch("findMedia", searchData);
-        return;
+        try {
+          this.isLoading = true;
+          this.resData = await this.$store.dispatch("findMedia", searchData);
+          this.isLoading = false;
+          return;
+        } catch (e) {
+          console.log(e);
+          this.isLoading = false;
+        }
       }
     },
   },
   async created() {
     this.routeSearchData = { ...this.$route.query };
-    if (this.routeSearchData && !this.searchMedia.length) {
-      this.searchMedia = await this.$store.dispatch(
-        "findMedia",
-        this.routeSearchData
-      );
+    if (this.routeSearchData.searchQuery && !this.searchMedia) {
+      try {
+        this.isLoading = true;
+        this.resData = await this.$store.dispatch(
+          "findMedia",
+          this.routeSearchData
+        );
+        this.isLoading = false;
+      } catch (e) {
+        console.log(e);
+        this.isLoading = false;
+      }
     }
   },
 };
