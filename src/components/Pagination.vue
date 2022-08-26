@@ -2,9 +2,7 @@
     <div class="overflow-auto">
         <b-pagination
             v-model="currentPage"
-            :total-rows="totalPages"
-            class="pagiantion"
-            first-number
+            :total-rows="totalRows"
             @input="changePage"
         ></b-pagination>
     </div>
@@ -14,7 +12,7 @@
 export default {
     name: "Pagination",
     props: {
-        totalPages: Number
+        totalRows: Number
     },
     data() {
         return {
