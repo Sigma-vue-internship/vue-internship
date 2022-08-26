@@ -27,7 +27,7 @@ export default new Vuex.Store({
     },
     SET_TOTAL_PAGES(state, totalPages) {
       state.totalPages = totalPages;
-    }
+    },
     SET_CURRENT_MOVIES(state, movies) {
       state.currentMovies = [...state.currentMovies, ...movies];
     },
