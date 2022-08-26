@@ -19,22 +19,17 @@
         />
       </div>
     </div>
-    <div class="moviesList">
-      <MoviesList v-if="movies" :movies="movies" />
-      <PaginationWrapper @changePage="changePage" :totalRows=totalRows />
-    </div>
+    <MoviesList />
   </div>
 </template>
 
 <script>
 import SearchForm from "@/components/SearchForm";
-import PaginationWrapper from "../components/PaginationWrapper";
 import MoviesList from "../components/MoviesList";
 export default {
   name: "HomeView",
   components: {
     SearchForm,
-    PaginationWrapper,
     MoviesList
   },
   data() {
@@ -48,26 +43,26 @@ export default {
       if (searchData) {
         await this.$store.dispatch("findMovies", searchData);
         this.$router
-          .push({
-            path: "/search",
-            query: {
-              searchQuery: searchData.searchQuery,
-            },
-          })
-          .catch(() => {});
+            .push({
+              path: "/search",
+              query: {
+                searchQuery: searchData.searchQuery,
+              },
+            })
+            .catch(() => {});
         return;
       }
-    },
-    routeToMovie(id) {
-      this.$router.push({ path:`/movie/${id}` });
-    },
-    async changePage(page) {
-      this.movies = await this.$store.dispatch("changePage", page);
-    },
+    }
+  },
+  routeToMovie(id) {
+    this.$router.push({ path:`/movie/${id}` });
+  },
+  async changePage(page) {
+    this.movies = await this.$store.dispatch("changePage", page);
   },
   async created() {
     this.movies = await this.$store.dispatch("getMovies")
-  }
+  },
 }
 </script>
 
@@ -79,3 +74,4 @@ export default {
     margin-top: 72px;
   }
 </style>
+
