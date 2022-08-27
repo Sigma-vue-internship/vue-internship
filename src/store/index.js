@@ -21,6 +21,19 @@ export default new Vuex.Store({
         params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
       });
     },
+    async loadMoreMedia(
+      context,
+      { searchQuery, searchBy = null, searchByValue = null, page }
+    ) {
+      if (!searchBy || !searchByValue) {
+        return this.axios.get(`/3/search/multi`, {
+          params: { query: searchQuery, page },
+        });
+      }
+      return this.axios.get(`/3/search/multi`, {
+        params: { query: searchQuery, [searchBy]: searchByValue, page },
+      });
+    },
     async findSingleCelebrity(context, celebrityId) {
       return this.axios.get(`/3/person/${celebrityId}`);
     },
@@ -50,7 +63,6 @@ export default new Vuex.Store({
     },
     async getMovie(_, id) {
       const res = await this.axios.get(`/3/movie/${id}`);
-      console.log(res.data);
       return res.data;
     },
   },
