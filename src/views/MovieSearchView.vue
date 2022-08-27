@@ -11,6 +11,17 @@
         />
       </li>
     </ul>
+    <notifications
+      classes="search-notification"
+      group="empty-search"
+      position="top left"
+    >
+      <template slot="body">
+        <div class="alert alert-warning p-2 text-start m-2" role="alert">
+          Not found any result
+        </div>
+      </template>
+    </notifications>
     <div v-show="searchMedia.length && !isLoading" ref="observer"></div>
   </div>
 </template>
@@ -73,6 +84,13 @@ export default {
         try {
           this.isLoading = true;
           this.resData = await this.$store.dispatch("findMedia", searchData);
+          if (this.resData.data.results.length === 0) {
+            console.log(1);
+            this.$notify({
+              group: "empty-search",
+              classes: "search-notification",
+            });
+          }
           this.searchMedia = this.resData.data.results;
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
@@ -95,6 +113,12 @@ export default {
         try {
           this.isLoading = true;
           this.resData = await this.$store.dispatch("findMedia", searchData);
+          if (this.resData.data.results.length === 0) {
+            this.$notify({
+              group: "empty-search",
+              classes: "search-notification",
+            });
+          }
           this.searchMedia = this.resData.data.results;
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
