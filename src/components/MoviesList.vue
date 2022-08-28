@@ -1,16 +1,18 @@
 <template>
   <div class="moviesList">
-    <SpinnerLoader :isLoading="isLoading" class="spinner"/>
-    <ul class="movies" v-if="movies.length">
-      <li
-        v-for="(movie) in movies"
-        :key="movie.id"
-        class="movie"
-        @click="routeToMovie(movie.id)"
-      >
-        <SingleMovieElementList :movie="movie" />
-      </li>
-    </ul>
+    <SpinnerLoader :isLoading="isLoading" v-if="isLoading"/>
+    <div v-else>
+      <ul class="movies" v-if="movies.length" >
+        <li
+          v-for="(movie) in movies"
+          :key="movie.id"
+          class="movie"
+          @click="routeToMovie(movie.id)"
+        >
+          <SingleMovieElementList :movie="movie" />
+        </li>
+      </ul>
+    </div>
     <PaginationWrapper @changePage="changePage" :totalRows=totalRows />
   </div>
 </template>
@@ -65,6 +67,7 @@ export default {
     @include flex-center(column);
     margin-top: 72px;
     position: relative;
+    height: 100%;
   }
   .movies {
     width: 1100px;
@@ -76,9 +79,5 @@ export default {
   .movie {
     width: 200px;
     margin: 10px;
-  }
-  .spinner {
-    position: absolute;
-    top: 0;
   }
 </style>

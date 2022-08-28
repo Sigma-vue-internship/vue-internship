@@ -1,17 +1,16 @@
 <template>
   <div class="singleMovie">
-    <SpinnerLoader :isLoading="movie.poster_path ? false : true" />
     <b-card
       :title="movie.title"
       :sub-title="movie.tagline"
       :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
       img-alt="Image"
-      img-height="400"
-      img-width="250"
+      img-height="500"
+      img-width="330"
       img-left
-      tag="article"
+      class="cardMovie"
     >
-      <b-card-body class="text-left">
+      <b-card-body>
         <b-card-text>
           <span>Language: </span>
           {{ movie.original_language }}
@@ -42,19 +41,10 @@
 </template>
 
 <script>
-import SpinnerLoader from './SpinnerLoader';
 export default {
   name: "SingleMoviePage",
   props: {
     movie: Object
-  },
-  components: {
-    SpinnerLoader
-  },
-  data() {
-    return {
-      isLoading: false
-    }
   }
 }
 </script>
@@ -66,8 +56,9 @@ export default {
     margin-bottom: 71px;
     width: 100%;
     .card {
-    width: 1200px;
-    margin: auto;
+      width: 1200px;
+      margin: auto;
+      text-align: left;
     }
     span {
       font-weight: 700;
