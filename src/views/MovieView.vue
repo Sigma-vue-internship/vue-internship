@@ -20,8 +20,6 @@ export default {
     SingleMoviePage,
     SpinnerLoader
   },
-  methods: {
-  },
   async created() {
     try {
       this.isLoading = true;

@@ -1,7 +1,7 @@
 <template>
-  <div id="app" >
+  <div id="app">
     <Header />
-    <b-card no-body class="router" >
+    <b-card no-body class="router">
       <router-view />
     </b-card>
     <Footer />
