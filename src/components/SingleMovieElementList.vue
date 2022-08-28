@@ -1,12 +1,14 @@
 <template>
-  <b-card
-    :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
-    :img-alt="'Card image '+movie.id"
-    img-height="290px"
-    img-top
-  >
-    <b-card-text text-muted>{{ movie.title }}</b-card-text>
-  </b-card>
+  <li>
+    <b-card
+        :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
+        :img-alt="'Card image '+movie.id"
+        img-height="290px"
+        img-top
+    >
+      <b-card-text text-muted>{{ movie.title }}</b-card-text>
+    </b-card>
+  </li>
 </template>
 
 <script>
