@@ -37,13 +37,11 @@ export default new Vuex.Store({
     },
     async getMovies() {
       try {
-        const res = await this.axios
-          .get("/3/movie/popular", {
+        const res = await this.axios.get("/3/movie/popular", {
             params: {
               page: 1
             }
           })
-          .then(res => res = res.data.results);
         return res;
       } catch (error) {
         console.log(error);
@@ -51,13 +49,11 @@ export default new Vuex.Store({
     },
     async changePage(_, newPage) {
       try {
-        const res = await this.axios
-          .get("/3/movie/popular", {
+        const res = await this.axios.get("/3/movie/popular", {
             params: {
               page: newPage
             }
           })
-          .then(res => res = res.data.results);
         return res;
       } catch (error) {
         console.log(error);
@@ -65,9 +61,7 @@ export default new Vuex.Store({
     },
     async getMovie(_, id) {
       try {
-        const res = await this.axios
-          .get(`/3/movie/${id}`)
-          .then(res => res = res.data);
+        const res = await this.axios.get(`/3/movie/${id}`);
         return res;
       } catch (error) {
         console.log(error);

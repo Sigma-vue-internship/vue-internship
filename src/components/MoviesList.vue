@@ -39,7 +39,9 @@ export default {
     async changePage(page) {
       try {
         this.isLoading = true;
-        this.movies = await this.$store.dispatch("changePage", page);
+        const response = await this.$store.dispatch("changePage", page);
+        const { data } = response;
+        this.movies = data.results;
         this.isLoading = false;
       } catch(error) {
         this.isLoading = false;
@@ -49,7 +51,9 @@ export default {
   },
   async created() {
     try {
-      this.movies = await this.$store.dispatch("getMovies");
+      const response = await this.$store.dispatch("getMovies");
+      const { data } = response;
+      this.movies = data.results;
     } catch(error) {
       console.log(error);
     }
