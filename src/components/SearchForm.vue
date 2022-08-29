@@ -50,7 +50,7 @@
     <notifications
       classes="search-notification"
       group="search"
-      position="top left"
+      position="top right"
     >
       <template slot="body">
         <div class="alert alert-warning p-2 text-start m-2" role="alert">

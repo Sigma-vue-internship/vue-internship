@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <router-view />
+    <b-card no-body class="router">
+      <router-view />
+    </b-card>
     <Footer />
   </div>
 </template>
@@ -34,5 +36,14 @@ ol {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+html,
+body,
+#app {
+  height: 100%;
+}
+.router {
+  min-height: 100%;
+  background-color: #121416!important;
 }
 </style>

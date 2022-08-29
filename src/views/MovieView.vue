@@ -1,23 +1,36 @@
 <template>
-  <SingleMoviePage :movie="movie" />
+  <div>
+    <SpinnerLoader :isLoading="isLoading" v-if="isLoading" />
+    <SingleMoviePage :movie="movie" v-else />
+  </div>
 </template>
 
 <script>
+import SpinnerLoader from "../components/SpinnerLoader";
 import SingleMoviePage from "../components/SingleMoviePage";
 export default {
   name: "MovieView",
   data() {
     return {
-      movie: {}
+      movie: {},
+      isLoading: false
     }
   },
   components: {
-    SingleMoviePage
-  },
-  methods: {
+    SingleMoviePage,
+    SpinnerLoader
   },
   async created() {
-    this.movie = await this.$store.dispatch("getMovie", this.$route.params.id)
+    try {
+      this.isLoading = true;
+      const response = await this.$store.dispatch("getMovie", this.$route.params.id);
+      const { data } = response;
+      this.movie = data;
+      this.isLoading = false;
+    } catch (error) {
+      console.log(error);
+      this.isLoading = false;
+    }
   }
 };
 </script>
