@@ -37,6 +37,9 @@ export default new Vuex.Store({
     async findSingleCelebrity(context, celebrityId) {
       return this.axios.get(`/3/person/${celebrityId}`);
     },
+    async getCelebrityImages(context, celebrityId) {
+      return this.axios.get(`/3/person/${celebrityId}/images`);
+    },
     async getMovies() {
       const options = {
         params: {

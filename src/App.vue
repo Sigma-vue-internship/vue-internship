@@ -44,6 +44,6 @@ body,
 }
 .router {
   min-height: 100%;
-  background-color: #121416!important;
+  background-color: #121416 !important;
 }
 </style>
