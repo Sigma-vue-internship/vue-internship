@@ -1,4 +1,5 @@
 import Vue from "vue";
+import Notifications from "vue-notification";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -23,6 +24,7 @@ axiosInstance.interceptors.request.use((config) => {
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axiosInstance);
 store.axios = axiosInstance;
+Vue.use(Notifications);
 
 Vue.config.productionTip = false;
 

@@ -45,15 +45,19 @@
             name="radio-options"
           ></b-form-radio-group>
         </b-form-group>
-        <div
-          v-if="alertStatus"
-          class="alert alert-warning p-2 text-start"
-          role="alert"
-        >
-          {{ alertSign }}
-        </div>
       </div>
     </div>
+    <notifications
+      classes="search-notification"
+      group="search"
+      position="top right"
+    >
+      <template slot="body">
+        <div class="alert alert-warning p-2 text-start m-2" role="alert">
+          {{ alertSign }}
+        </div>
+      </template>
+    </notifications>
   </div>
 </template>
 
@@ -69,7 +73,6 @@ export default {
     return {
       searchQuery: "",
       searchByValue: "",
-      alertStatus: false,
       selected: null,
       options: [
         { value: null, text: "By film title" },
@@ -81,20 +84,22 @@ export default {
     emitFindMedia() {
       if (this.searchQuery && !this.selected) {
         this.$emit("findMedia", this.searchData);
-        if (this.alertStatus) {
-          this.showHideAlert();
-        }
+        this.$notify({
+          group: "search",
+          clean: true,
+        });
         return;
       }
       if (this.searchQuery && this.searchByValue) {
         this.$emit("findMedia", this.searchData);
-        if (this.alertStatus) this.showHideAlert();
+        this.$notify({
+          group: "search",
+          classes: "search-notification",
+          clean: true,
+        });
         return;
       }
-      if (!this.alertStatus) this.showHideAlert();
-    },
-    showHideAlert() {
-      this.alertStatus = !this.alertStatus;
+      this.$notify({ group: "search" });
     },
   },
   computed: {
@@ -119,12 +124,12 @@ export default {
 </script>
 
 <style lang="scss">
+.search-notification {
+  margin-left: 100px;
+}
 .radio__container {
   display: flex;
   justify-content: space-between;
-  > .alert {
-    flex-basis: 55%;
-  }
 }
 .search-form {
   width: 100%;
@@ -133,7 +138,7 @@ export default {
   color: white;
   display: flex;
   flex-direction: column;
-  height: 180px;
+  height: 130px;
 }
 #radio-group-1 {
   > .custom-control-input {

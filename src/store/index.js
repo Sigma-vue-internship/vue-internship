@@ -4,20 +4,9 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-    // loadingStatus: false,
-  },
-  getters: {
-    // getLoadingStatus: (state) => state.loadingStatus,
-  },
-  mutations: {
-    // SET_LOADING_STATUS_ACTIVE(state) {
-    //   state.loadingStatus = true;
-    // },
-    // SET_LOADING_STATUS_INACTIVE(state) {
-    //   state.loadingStatus = false;
-    // },
-  },
+  state: {},
+  getters: {},
+  mutations: {},
   actions: {
     async findMedia(
       context,
