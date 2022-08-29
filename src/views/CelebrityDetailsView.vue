@@ -19,7 +19,7 @@
             />
           </div>
         </div>
-        <div ref="div" class="celebrity-profile__info col-md-12 col-lg-6">
+        <div class="celebrity-profile__info col-md-12 col-lg-6">
           <h1 class="celebrity-profile__name">{{ celebrity.name }}</h1>
           <h2 class="celebrity-profile__bio-name">Biography</h2>
 
@@ -29,6 +29,7 @@
                 ? 'celebrity-profile__bio bio--active'
                 : 'celebrity-profile__bio'
             "
+            ref="bio"
           >
             {{ celebrity.biography }}
           </p>
@@ -118,6 +119,9 @@ export default {
       this.isLoading = false;
       console.log(e);
     }
+  },
+  mounted() {
+    console.log(this.$refs.bio);
   },
   components: { SpinnerLoader },
 };
