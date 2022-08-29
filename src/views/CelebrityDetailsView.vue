@@ -24,12 +24,12 @@
           <h2 class="celebrity-profile__bio-name">Biography</h2>
 
           <p
+            ref="bio"
             :class="
               isBioOpen
                 ? 'celebrity-profile__bio bio--active'
                 : 'celebrity-profile__bio'
             "
-            ref="bio"
           >
             {{ celebrity.biography }}
           </p>
@@ -49,6 +49,7 @@
 <script>
 import SpinnerLoader from "../components/SpinnerLoader.vue";
 export default {
+  components: { SpinnerLoader },
   data() {
     return {
       resData: null,
@@ -121,9 +122,8 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$refs.bio);
+    setTimeout(() => console.log(this.$refs.bio), 100);
   },
-  components: { SpinnerLoader },
 };
 </script>
 
