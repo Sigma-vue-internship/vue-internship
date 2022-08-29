@@ -22,7 +22,10 @@
         </div>
       </template>
     </notifications>
-    <div v-show="searchMedia.length && !isLoading" ref="observer"></div>
+    <div
+      v-show="searchMedia.length && !isLoading"
+      v-intersection="loadMoreMedia"
+    ></div>
   </div>
 </template>
 
@@ -49,7 +52,8 @@ export default {
     SingleCelebritySearch,
   },
   methods: {
-    async loadMoreMedia(routeSearchData) {
+    async loadMoreMedia() {
+      const routeSearchData = { ...this.$route.query };
       this.currentPage += 1;
       if (this.currentPage <= this.totalPages) {
         routeSearchData.page = this.currentPage;
@@ -150,19 +154,6 @@ export default {
         this.isLoading = false;
       }
     }
-  },
-  mounted() {
-    const options = {
-      rootMargin: "0px",
-      threshold: 1.0,
-    };
-    const callback = (entries) => {
-      if (entries[0].isIntersecting) {
-        this.loadMoreMedia({ ...this.$route.query });
-      }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(this.$refs.observer);
   },
 };
 </script>
