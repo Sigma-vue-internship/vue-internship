@@ -1,7 +1,7 @@
 <template>
   <div class="moviesList">
-    <SpinnerLoader :isLoading="isLoading" class="spinner"/>
-    <ul class="movies" v-if="movies.length">
+    <SpinnerLoader :isLoading="isLoading" v-if="isLoading" />
+    <ul class="movies" v-else >
       <SingleMovieElementList
         :movie="movie"
         v-for="(movie) in movies"
@@ -64,6 +64,7 @@ export default {
     @include flex-center(column);
     margin-top: 72px;
     position: relative;
+    height: 100%;
   }
   .movies {
     width: 1100px;
@@ -75,9 +76,5 @@ export default {
   .movie {
     width: 200px;
     margin: 10px;
-  }
-  .spinner {
-    position: absolute;
-    top: 0;
   }
 </style>
