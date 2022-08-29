@@ -23,7 +23,9 @@ export default {
   async created() {
     try {
       this.isLoading = true;
-      this.movie = await this.$store.dispatch("getMovie", this.$route.params.id);
+      const response = await this.$store.dispatch("getMovie", this.$route.params.id);
+      const { data } = response;
+      this.movie = data;
       this.isLoading = false;
     } catch (error) {
       console.log(error);

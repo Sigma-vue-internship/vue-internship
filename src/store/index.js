@@ -36,42 +36,35 @@ export default new Vuex.Store({
       return this.axios.get(`/3/person/${celebrityId}`);
     },
     async getMovies() {
+      const options = {
+        params: {
+          page: 1
+        }
+      };
       try {
-        const res = await this.axios
-          .get("/3/movie/popular", {
-            params: {
-              page: 1
-            }
-          })
-          .then(res => res = res.data.results);
-        return res;
+        return await this.axios.get("/3/movie/popular", options);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     async changePage(_, newPage) {
+      const options = {
+        params: {
+          page: newPage
+        }
+      };
       try {
-        const res = await this.axios
-          .get("/3/movie/popular", {
-            params: {
-              page: newPage
-            }
-          })
-          .then(res => res = res.data.results);
-        return res;
+        return await this.axios.get("/3/movie/popular", options)
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     },
     async getMovie(_, id) {
       try {
-        const res = await this.axios
-          .get(`/3/movie/${id}`)
-          .then(res => res = res.data);
-        return res;
+        return await this.axios.get(`/3/movie/${id}`);
       } catch (error) {
-        console.log(error);
-      } 
+        console.error(error);
+      }
     }
   }
 })
