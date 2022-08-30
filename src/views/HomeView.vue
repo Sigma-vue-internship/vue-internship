@@ -19,6 +19,7 @@
         />
       </div>
     </div>
+    <CelebritiesList />
     <MoviesList />
   </div>
 </template>
@@ -26,11 +27,13 @@
 <script>
 import SearchForm from "@/components/SearchForm";
 import MoviesList from "../components/MoviesList";
+import CelebritiesList from "../components/CelebritiesList";
 export default {
   name: "HomeView",
   components: {
     SearchForm,
-    MoviesList
+    MoviesList,
+    CelebritiesList
   },
   methods: {
     async findMedia(searchData) {
@@ -47,12 +50,8 @@ export default {
       }
     }
   },
-  routeToMovie(id) {
-    this.$router.push({ path:`/movie/${id}` });
-  },
 }
 </script>
 
 <style scoped lang="scss">
 </style>
-
