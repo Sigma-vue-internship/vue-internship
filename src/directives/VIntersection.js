@@ -4,13 +4,12 @@ export default {
       rootMargin: "0px",
       threshold: 1.0,
     };
-    const callback = (entries) => {
+    const lazyLoadingObserver = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
         binding.value();
       }
-    };
-    const observer = new IntersectionObserver(callback, options);
-    observer.observe(el);
+    }, options);
+    lazyLoadingObserver.observe(el);
   },
   name: "intersection",
 };
