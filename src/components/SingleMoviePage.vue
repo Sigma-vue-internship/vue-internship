@@ -7,6 +7,18 @@
           :src="'https://image.tmdb.org/t/p/w300/' + movie.poster_path"
           alt="movie poster"
         />
+        <div class="movie-raiting">
+          <div class="movie-raiting__info">
+            <h2 class="movie-raiting__title">Movie raiting</h2>
+            <p class="movie-raiting__number">{{ movieRaiting }}</p>
+          </div>
+          <progress
+            class="movie-raiting__bar"
+            :style="{ accentColor: movieRaitingColor }"
+            :value="movieRaiting"
+            max="10"
+          />
+        </div>
       </div>
       <div class="movie__info col-lg-7">
         <h1>{{ movie.title }}</h1>
@@ -27,14 +39,68 @@
         </b-button>
       </div>
     </div>
+    <div
+      v-if="imgUrls && imgUrls.length"
+      class="row justify-content-end p-1 my-4"
+    >
+      <Carousel
+        class="col-lg-7 movie-carousel col-lg-7-p-4"
+        :imgUrls="imgUrls"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import Carousel from "./Carousel.vue";
 export default {
+  data() {
+    return {
+      movieImgRes: null,
+    };
+  },
+  components: { Carousel },
   name: "SingleMoviePage",
   props: {
     movie: Object,
+  },
+  computed: {
+    imgUrls() {
+      return (
+        this.movieImgRes &&
+        this.movieImgRes.data.backdrops
+          .map(
+            (imageObj) =>
+              `https://image.tmdb.org/t/p/original/${imageObj.file_path}`
+          )
+          .splice(0, 5)
+      );
+    },
+    movieRaitingColor() {
+      if (this.movieRaiting < 4) {
+        return "rgb(255, 80, 80)";
+      }
+      if (this.movieRaiting >= 4 && this.movieRaiting < 6) {
+        return "rgb(252, 255, 80)";
+      }
+      if (this.movieRaiting >= 6) {
+        return "rgb(150, 255, 80)";
+      }
+      return null;
+    },
+    movieRaiting() {
+      return this.movie.vote_average;
+    },
+  },
+  async created() {
+    try {
+      this.movieImgRes = await this.$store.dispatch(
+        "getMovieImages",
+        this.movie.id
+      );
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 </script>
@@ -45,13 +111,44 @@ export default {
   display: flex;
   justify-content: space-around;
 }
+.movie-carousel {
+  padding: 0;
+  margin-right: 1.8%;
+}
+@media (max-width: 992px) {
+  .movie-carousel {
+    margin-right: 0;
+  }
+}
 .movie__poster {
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   padding-bottom: 20px;
   .movie__poster-img {
     box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+    margin-bottom: 40px;
     border-radius: 10px;
+  }
+  .movie-raiting {
+    width: 60%;
+  }
+  .movie-raiting__bar {
+    width: 100%;
+    height: 30px;
+  }
+  .movie-raiting__info {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    text-align: end;
+    color: white;
+  }
+  .movie-raiting__number {
+    font-size: 1rem;
+  }
+  .movie-raiting__title {
+    font-size: 1.2rem;
   }
 }
 .movie__info {
