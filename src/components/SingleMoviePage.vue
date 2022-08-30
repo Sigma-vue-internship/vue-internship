@@ -28,11 +28,7 @@
           {{ movie.runtime }} minutes
         </b-card-text>
         <b-card-text>{{ movie.overview }}</b-card-text>
-        <b-button
-          v-if="movie.homepage"
-          :href="movie.homepage"
-          variant="dark"
-        >
+        <b-button v-if="movie.homepage" :href="movie.homepage" variant="dark">
           Go to the movie site
         </b-button>
       </b-card-body>
@@ -44,24 +40,24 @@
 export default {
   name: "SingleMoviePage",
   props: {
-    movie: Object
-  }
-}
+    movie: Object,
+  },
+};
 </script>
 
 <style lang="scss">
 @import "../assets/scss/variables.scss";
-  .singleMovie {
-    margin-top: 71px;
-    margin-bottom: 71px;
-    width: 100%;
-    .card {
-      width: 1200px;
-      margin: auto;
-      text-align: left;
-    }
-    span {
-      font-weight: 700;
-    }
+.singleMovie {
+  margin-top: 71px;
+  margin-bottom: 71px;
+  width: 100%;
+  .card {
+    width: 1200px;
+    margin: auto;
+    text-align: left;
   }
+  span {
+    font-weight: 700;
+  }
+}
 </style>

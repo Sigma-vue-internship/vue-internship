@@ -8,7 +8,7 @@ import VueAxios from "vue-axios";
 import { BootstrapVue } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
-
+import directives from "./directives";
 const axiosInstance = axios.create({
   baseURL: "https://api.themoviedb.org",
 });
@@ -25,7 +25,9 @@ Vue.use(BootstrapVue);
 Vue.use(VueAxios, axiosInstance);
 store.axios = axiosInstance;
 Vue.use(Notifications);
-
+directives.forEach((directive) => {
+  Vue.directive(directive.name, directive);
+});
 Vue.config.productionTip = false;
 
 new Vue({

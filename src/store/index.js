@@ -21,6 +21,19 @@ export default new Vuex.Store({
         params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
       });
     },
+    async loadMoreMedia(
+      context,
+      { searchQuery, searchBy = null, searchByValue = null, page }
+    ) {
+      if (!searchBy || !searchByValue) {
+        return this.axios.get(`/3/search/multi`, {
+          params: { query: searchQuery, page },
+        });
+      }
+      return this.axios.get(`/3/search/multi`, {
+        params: { query: searchQuery, [searchBy]: searchByValue, page },
+      });
+    },
     async findSingleCelebrity(context, celebrityId) {
       return this.axios.get(`/3/person/${celebrityId}`);
     },
@@ -48,11 +61,14 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async getCelebrityImages(context, celebrityId) {
+      return this.axios.get(`/3/person/${celebrityId}/images`);
+    },
     async getMovies() {
       const options = {
         params: {
-          page: 1
-        }
+          page: 1,
+        },
       };
       try {
         return await this.axios.get("/3/movie/popular", options);
@@ -63,11 +79,11 @@ export default new Vuex.Store({
     async changePage(_, newPage) {
       const options = {
         params: {
-          page: newPage
-        }
+          page: newPage,
+        },
       };
       try {
-        return await this.axios.get("/3/movie/popular", options)
+        return await this.axios.get("/3/movie/popular", options);
       } catch (error) {
         console.error(error);
       }
@@ -78,6 +94,6 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
-    }
-  }
-})
+    },
+  },
+});
