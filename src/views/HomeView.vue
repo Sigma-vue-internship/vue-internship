@@ -1,39 +1,49 @@
 <template>
-  <div class="px-4 pt-5 my-5 text-center border-bottom">
-    <div class="hero__info-container">
-      <h1 class="display-4 fw-bold text-light">Moviedesk</h1>
-      <p class="lead mb-4 text-light">Watch films online</p>
-    </div>
-    <div class="col-lg-6 mx-auto">
-      <SearchForm :mode="'preview'" @findMedia="findMedia" />
-    </div>
-    <div class="overflow-hidden" style="max-height: 30vh">
-      <div class="container px-5">
-        <img
-          src="../assets/hero_image.png"
-          class="img-fluid rounded-3 shadow-lg mb-4"
-          alt="Example image"
-          width="700"
-          height="500"
-          loading="lazy"
-        />
+  <div class="main">
+    <div class="main__home">
+      <div class="main__caption"> 
+        <div class="main__logo">
+          <div class="main__name">
+            <h1>Moviedesk</h1>
+          </div>  
+        </div>
+        <div class="main__watch">
+          <p>Watch films online</p>
+          <SearchForm :mode="'preview'" @findMedia="findMedia" />
+        </div>
       </div>
+      <MediaList 
+        title="Popular actors" 
+        route="/celebrity/"
+        :elements="celebrities" 
+        :changePage="changeCelebritiesPage"
+      />
+      <MediaList 
+        title="Popular movies" 
+        route="/movie/"
+        :elements="movies" 
+        :changePage="changeMoviesPage"
+      />
     </div>
-    <CelebritiesList />
-    <MoviesList />
   </div>
 </template>
 
 <script>
 import SearchForm from "@/components/SearchForm";
-import MoviesList from "../components/MoviesList";
-import CelebritiesList from "../components/CelebritiesList";
+import MediaList from "@/components/MediaList";
 export default {
   name: "HomeView",
   components: {
     SearchForm,
-    MoviesList,
-    CelebritiesList
+    MediaList
+  },
+  data() {
+    return {
+      celebrities: [],
+      celebritiesPage: 1,
+      movies: [],
+      moviesPage: 1
+    }
   },
   methods: {
     async findMedia(searchData) {
@@ -48,10 +58,136 @@ export default {
             .catch(() => {});
         return;
       }
+    },
+    async changeCelebritiesPage() {
+      try {
+        this.celebritiesPage++;
+        const response = await this.$store.dispatch("changeCelebritiesPage", this.celebritiesPage);
+        const { data } = response;
+        this.celebrities = this.celebrities.concat(data.results);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async changeMoviesPage() {
+      try {
+        this.moviesPage++;
+        const response = await this.$store.dispatch("changeMoviesPage", this.moviesPage);
+        const { data } = response;
+        this.movies = this.movies.concat(data.results);
+      } catch(error) {
+        console.log(error);
+      }
+    }
+  },
+  async created() {
+    try {
+      const response = await this.$store.dispatch("getCelebrities");
+      const { data } = response;
+      this.celebrities = data.results;
+    } catch (error) {
+      console.log(error);
+    }
+    try {
+      const response = await this.$store.dispatch("getMovies");
+      const { data } = response;
+      this.movies = data.results;
+    } catch(error) {
+      console.log(error);
     }
   },
 }
 </script>
 
 <style scoped lang="scss">
+@import "../assets/scss/variables.scss";
+  .main {
+    @include flex-center(column);
+    text-align: center;
+    &__home {
+      width: 1100px;
+    }
+    &__caption {
+      height: 950px;
+      background-color: $lightPurple;
+      border-radius: 10px;
+    }
+    &__logo {
+      margin-top: 25px;
+      background-image: url(../assets/hero_image.png);
+      width: 100%;
+      height: 750px;
+      @include flex-center(column);
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    &__name {
+      height: 200px;
+      background-color:rgba(122, 63, 224, 0.537);
+      width: 100%;
+      @include flex-center(column);
+      h1 {
+        font-size: 70px;
+        font-weight: lighter;
+        color: white;
+      }
+    }
+    &__watch {
+      margin-top: 35px;
+      p {
+        color: white;
+        font-size: 30px;
+      }
+    }
+  }
+  @media (max-width: 992px) and (min-width: 376px) {
+    .main {
+      &__home {
+        width: 100%;
+      }
+      &__caption {
+        height: 650px;
+      }
+      &__logo {
+        height: 450px;
+      }
+      &__name {
+        height: 150px;
+        h1 {
+          font-size: 50px;
+        }
+      }
+      &__watch {
+        margin-top: 45px;
+        p {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+  @media (max-width: 375px) {
+    .main {
+      &__home {
+        width: 100%;
+      }
+      &__caption {
+        height: 450px;
+      }
+      &__logo {
+        height: 250px;
+      }
+      &__name {
+        height: 100px;
+        h1 {
+          font-size: 35px;
+        }
+      }
+      &__watch {
+        margin-top: 10px;
+        p {
+          font-size: 16px;
+        }
+      }
+    }
+  }
 </style>
