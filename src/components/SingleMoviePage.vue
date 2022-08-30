@@ -1,38 +1,32 @@
 <template>
-  <div class="singleMovie">
-    <b-card
-      :title="movie.title"
-      :sub-title="movie.tagline"
-      :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
-      img-alt="Image"
-      img-height="500"
-      img-width="330"
-      img-left
-      class="cardMovie"
-    >
-      <b-card-body>
-        <b-card-text>
-          <span>Language: </span>
-          {{ movie.original_language }}
-        </b-card-text>
-        <b-card-text>
-          <span>Status: </span>
-          {{ movie.status }}
-        </b-card-text>
-        <b-card-text>
-          <span>Release date: </span>
-          {{ movie.release_date }}
-        </b-card-text>
-        <b-card-text>
-          <span>Runtime: </span>
-          {{ movie.runtime }} minutes
-        </b-card-text>
-        <b-card-text>{{ movie.overview }}</b-card-text>
+  <div class="movie__container p-5">
+    <div class="row movie">
+      <div class="movie__poster col-lg-4">
+        <img
+          class="movie__poster-img img-fluid"
+          :src="'https://image.tmdb.org/t/p/w300/' + movie.poster_path"
+          alt="movie poster"
+        />
+      </div>
+      <div class="movie__info col-lg-7">
+        <h1>{{ movie.title }}</h1>
+        <span class="movie__tagline" v-if="movie.tagline">{{
+          movie.tagline
+        }}</span>
+        <p>
+          <strong>Genres:</strong>
+          {{ movie.genres.map((genre) => genre.name).join(", ") }}
+        </p>
+        <p><strong>Language:</strong> {{ movie.original_language }}</p>
+        <p><strong>Status:</strong> {{ movie.status }}</p>
+        <p><strong>Release date:</strong> {{ movie.release_date }}</p>
+        <p><strong>Runtime:</strong> {{ movie.runtime }}</p>
+        <p class="movie__overview">{{ movie.overview }}</p>
         <b-button v-if="movie.homepage" :href="movie.homepage" variant="dark">
           Go to the movie site
         </b-button>
-      </b-card-body>
-    </b-card>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -47,17 +41,36 @@ export default {
 
 <style lang="scss">
 @import "../assets/scss/variables.scss";
-.singleMovie {
-  margin-top: 71px;
-  margin-bottom: 71px;
-  width: 100%;
-  .card {
-    width: 1200px;
-    margin: auto;
-    text-align: left;
+.movie {
+  display: flex;
+  justify-content: space-around;
+}
+.movie__poster {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+  .movie__poster-img {
+    box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+    border-radius: 10px;
   }
-  span {
-    font-weight: 700;
+}
+.movie__info {
+  background-color: rgba(74, 36, 141, 0.316);
+  box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+  padding: 40px 40px 80px 40px;
+  border-radius: 10px;
+  color: white;
+  > p {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .movie__overview {
+    font-size: 16px;
+  }
+  .movie__tagline {
+    display: block;
+    padding-bottom: 10px;
+    color: rgba(255, 255, 255, 0.507);
   }
 }
 </style>

@@ -2,7 +2,7 @@
   <div>
     <SearchForm :mode="'optional'" @findMedia="findMedia" class="mt-5" />
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
-    <ul v-if="searchMedia.length">
+    <ul class="search__results-list" v-if="searchMedia.length">
       <li v-for="media in searchMedia" :key="media.media_type + ' ' + media.id">
         <SingleMovieSearch v-if="media.media_type === 'movie'" :movie="media" />
         <SingleCelebritySearch
@@ -160,5 +160,8 @@ export default {
 <style lang="scss">
 ul {
   padding: 0;
+}
+.search__results-list {
+  padding-top: 30px;
 }
 </style>

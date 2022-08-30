@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="movie-result container">
       <b-card
         :img-src="
           movie.poster_path
@@ -10,17 +10,14 @@
         img-alt="Card image"
         img-width="185"
         img-left
-        class="mb-3"
+        class="mb-3 img-fluid"
       >
         <b-card-title>{{ movie.title }}</b-card-title>
         <b-card-text>
-          {{ movie.overview }}
+          {{ overview }}
         </b-card-text>
         <div class="offset-lg-10 offset-md-9 offset-sm-0">
-          <b-button
-            variant="outline-primary"
-            @click="redirectToMovie(movie.id)"
-            size="md"
+          <b-button variant="dark" @click="redirectToMovie(movie.id)" size="md"
             >Details</b-button
           >
         </div>
@@ -37,6 +34,13 @@ export default {
       default: () => {},
     },
   },
+  computed: {
+    overview() {
+      return this.movie.overview.length >= 125
+        ? this.movie.overview.slice(0, 125) + "..."
+        : this.movie.overview;
+    },
+  },
   methods: {
     redirectToMovie(id) {
       this.$router.push(`/movie/${id}`);
@@ -45,5 +49,20 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.movie-result .card {
+  --bs-card-bg: rgba(74, 36, 141, 0.493);
+  --bs-card-color: white;
+}
+.movie-result .card-title {
+  margin-bottom: 20px;
+}
+.movie-result .card-text {
+  max-width: 500px;
+}
+@media (max-width: 450px) {
+  .movie-result .card-text {
+    display: none;
+  }
+}
 </style>

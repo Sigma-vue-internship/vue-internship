@@ -26,7 +26,7 @@
         <button
           type="button"
           @click="emitFindMedia"
-          class="btn btn-primary btn-lg px-4"
+          class="btn btn-dark btn-lg px-4"
         >
           Search
         </button>

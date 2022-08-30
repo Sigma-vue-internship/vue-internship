@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="container">
+    <div class="celebrity-result container">
       <b-card
         :img-src="
           celebrity.profile_path
@@ -19,7 +19,7 @@
         >
         <div class="offset-lg-10 offset-md-9 offset-sm-0">
           <b-button
-            variant="outline-primary"
+            variant="dark"
             @click="redirectToMovie(celebrity.id)"
             size="md"
             >Details</b-button
@@ -54,5 +54,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+.celebrity-result .card {
+  --bs-card-bg: rgba(74, 36, 141, 0.316);
+  --bs-card-color: white;
+}
 </style>
