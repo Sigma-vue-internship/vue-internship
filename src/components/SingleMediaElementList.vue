@@ -34,17 +34,20 @@ export default {
 <style scoped lang="scss">
   @import "../assets/scss/variables.scss";
   .element {
-    height: 292px;
+    height: 360px;
     width: 200px;
     margin-right: 25px;
     border-radius: 0;
-    border: 10px solid $lightPurple;
-    background-color: $lightPurple;
+    border: 0;
+    background: transparent;
   }
   .card-img, .card-img-bottom { 
-    border: none;
-    border-radius: 10px;
-    box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+    border: 10px solid rgb(97, 47, 183);
+    box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
+  }
+  .card-title {
+    height: 60px;
+    overflow: hidden;
   }
 
   @media (max-width: 992px) and (min-width: 376px) {
@@ -52,13 +55,14 @@ export default {
       height: 269px;
       width: 150px;
       margin-right: 15px;
-      overflow: hidden;
     }
     .card-title {
+      height: 40px;
       font-size: 16px;
     }
     .card-img, .card-img-bottom { 
       border-radius: 0;
+      border: 7px solid rgb(97, 47, 183);
     }
   }
 
@@ -67,13 +71,14 @@ export default {
       height: 185px;
       width: 100px;
       margin-right: 12px;
-      overflow: hidden;
     }
     .card-title {
+      height: 30px;
       font-size: 12px;
     }
     .card-img, .card-img-bottom { 
       border-radius: 0;
+      border: 5px solid rgb(97, 47, 183);
     }
   }
 </style>

@@ -5,11 +5,12 @@
         <div class="main__logo">
           <div class="main__name">
             <h1>Moviedesk</h1>
-          </div>  
+          </div>
+          <div class="main__overlay"></div> 
         </div>
         <div class="main__watch">
           <p>Watch films online</p>
-          <SearchForm :mode="'preview'" @findMedia="findMedia" />
+          <SearchForm :mode="'preview'" @findMedia="findMedia" class="main__searchForm"/>
         </div>
       </div>
       <MediaList 
@@ -108,64 +109,63 @@ export default {
       width: 100%;
     }
     &__caption {
-      height: 950px;
       border-radius: $borderRadius;
       @include flex-center(column);
       flex-wrap: nowrap;
     }
     &__logo {
-      margin-top: 25px;
-      background-image: url(../assets/hero_image.png);
+      background-image: url(../assets/poster.jpg);
       width: 100%;
-      height: 750px;
+      height: 350px;
+      position: relative;
       @include flex-center(column);
-      border-top-left-radius: $borderRadius;
-      border-top-right-radius: $borderRadius;
     }
     &__name {
-      height: 200px;
+      height: 150px;
       background-color:rgba(122, 63, 224, 0.537);
       width: 100%;
       @include flex-center(column);
       h1 {
-        font-size: 70px;
+        z-index: 3;
+        font-size: 60px;
         font-weight: lighter;
         color: white;
       }
     }
+    &__overlay {
+      position: absolute;     
+      height: 100%;   
+      width: 100%;   
+      top: 0;   
+      left: 0;   
+      background-color: rgb(0, 0, 0);   
+      opacity: 0.5;  
+    }
     &__watch {
-      width: 1100px;
-      height: 240px;
-      border-bottom-left-radius: $borderRadius;
-      border-bottom-right-radius: $borderRadius;
+      width: 100%;
+      height: 200px;
       background-color: $lightPurple;
       p {
         color: white;
-        padding-top: 30px;
-        font-size: 30px;
+        font-size: 25px;
       }
+    }
+    &__searchForm {
+      max-width: 800px;
     }
   }
   @media (max-width: 992px) and (min-width: 376px) {
     .main {
-      &__home {
-        width: 100%;
-      }
-      &__caption {
-        height: 650px;
-      }
       &__logo {
-        height: 450px;
+        height: 250px;
       }
       &__name {
-        height: 150px;
+        height: 100px;
         h1 {
-          font-size: 50px;
+          font-size: 40px;
         }
       }
       &__watch {
-        margin-top: 45px;
-        width: 100%;
         p {
           font-size: 20px;
         }
@@ -174,24 +174,16 @@ export default {
   }
   @media (max-width: 375px) {
     .main {
-      &__home {
-        width: 100%;
-      }
-      &__caption {
-        height: 450px;
-      }
       &__logo {
-        height: 250px;
+        height: 200px;
       }
       &__name {
-        height: 100px;
+        height: 70px;
         h1 {
-          font-size: 35px;
+          font-size: 30px;
         }
       }
       &__watch {
-        margin-top: 10px;
-        width: 100%;
         p {
           font-size: 16px;
         }

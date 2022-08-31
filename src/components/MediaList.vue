@@ -1,6 +1,6 @@
 <template>
-  <div class="elements">
-    <div class="elements__title">
+  <div class="elements container d-flex flex-column align-items-center">
+    <div class="elements__title text-start w-100">
       <p>{{ title }}</p>
     </div>
     <div class="elements__scroll">
@@ -43,20 +43,19 @@ export default {
   .elements {
     @include flex-center(column);
     margin-top: 25px;
+    width: 1100px;
+    --bs-gutter-x: 0;
     &__title {
       color: white;
       font-weight: 700;
-      margin-top: 20px;
       font-size: 36px;
-      width: 1100px;
       p {
-        width: 300px;
-        align-self: flex-start;
+        padding-bottom: 10px;
+        margin: 0;
       }
     }
     &__scroll {
-      height: 434px;
-      width: 1100px;
+      max-width: 100%;
       overflow-x: scroll;
       overflow-y: hidden;
       display: flex;
@@ -88,20 +87,16 @@ export default {
   @media (max-width: 992px) and (min-width: 376px) {
     .elements {
       margin-top: 10px;
+      width: 650px;
       &__title {
-      font-size: 30px;
-      width: 100%;
+        font-size: 30px;
+        width: 100%;
         p {
-          width: 100%;
-          align-self: center;
+          text-align: center;
         }
       }
       &__scroll {
-        height: 350px;
-        width: 645px;
-      }
-      &__list {
-        padding-left: 0;
+        max-width: 100%;
       }
       &__scroll::-webkit-scrollbar {
         height: 25px;
@@ -111,21 +106,17 @@ export default {
   
   @media (max-width: 375px) {
     .elements {
-      margin-top: 10px;
+      margin-top: 5px;
+      width: 325px;
       &__title {
-      font-size: 25px;
-      width: 100%;
+        font-size: 20px;
+        width: 100%;
         p {
-          width: 100%;
-          align-self: center;
+          text-align: center;
         }
       }
       &__scroll {
-        height: 250px;
-        width: 320px;
-      }
-      &__list {
-        width: 100%;
+        max-width: 100%;
       }
       &__scroll::-webkit-scrollbar {
         height: 20px;
