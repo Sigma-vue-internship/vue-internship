@@ -135,7 +135,7 @@ export default {
     }
     &__watch {
       width: 1100px;
-      height: 190px;
+      height: 240px;
       border-bottom-left-radius: $borderRadius;
       border-bottom-right-radius: $borderRadius;
       background-color: $lightPurple;
