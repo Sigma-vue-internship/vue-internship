@@ -40,8 +40,8 @@ export default new Vuex.Store({
     async getCelebrities() {
       const options = {
         params: {
-          page: 1
-        }
+          page: 1,
+        },
       };
       try {
         return await this.axios.get("/3/person/popular", options);
@@ -52,17 +52,20 @@ export default new Vuex.Store({
     async changeCelebritiesPage(_, newPage) {
       const options = {
         params: {
-          page: newPage
-        }
+          page: newPage,
+        },
       };
       try {
-        return await this.axios.get("/3/person/popular", options)
+        return await this.axios.get("/3/person/popular", options);
       } catch (error) {
         console.error(error);
       }
     },
     async getCelebrityImages(context, celebrityId) {
       return this.axios.get(`/3/person/${celebrityId}/images`);
+    },
+    async getMovieImages(context, movieId) {
+      return this.axios.get(`/3/movie/${movieId}/images`);
     },
     async getMovies() {
       const options = {

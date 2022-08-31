@@ -2,8 +2,8 @@
   <div class="celebrity-profile__back">
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="celebrity-profile">
-      <div class="row celebrity-profile__container col-md-12 py-4">
-        <div class="celebrity-profile__image-container col-md-12 col-lg-4 px-5">
+      <div class="row celebrity-profile__container py-4">
+        <div class="celebrity-profile__image-container col-lg-4 px-5 py-2">
           <img
             class="celebrity-profile__image img-fluid"
             :src="selectedImg ? selectedImg : profilePath"
@@ -19,27 +19,28 @@
             />
           </div>
         </div>
-        <div class="celebrity-profile__info col-md-12 col-lg-6">
+        <div class="celebrity-profile__info col-lg-6">
           <h1 class="celebrity-profile__name">{{ celebrity.name }}</h1>
+          <p><strong> Birthday: </strong>{{ celebrity.birthday }}</p>
+          <p>
+            <strong> Also known as: </strong
+            >{{ celebrity.also_known_as.join(", ") }}
+          </p>
+          <p>
+            <strong> Place of birth: </strong>{{ celebrity.place_of_birth }}
+          </p>
           <h2 class="celebrity-profile__bio-name">Biography</h2>
 
-          <p
-            ref="bio"
-            :class="
-              isBioOpen
-                ? 'celebrity-profile__bio bio--active'
-                : 'celebrity-profile__bio'
-            "
-          >
-            {{ celebrity.biography }}
+          <p class="celebrity-profile__bio">
+            <vue-show-more-text
+              :text="celebrity.biography"
+              :lines="4"
+              additional-content-css="font-size:16px;"
+              additional-content-expanded-css="font-size:16px;"
+              additional-anchor-css="font-size: 16px;"
+              @click="showHideBio"
+            />
           </p>
-
-          <button
-            @click="isBioOpen = !isBioOpen"
-            class="btn btn-dark celebrity-profile__show-more-btn"
-          >
-            {{ isBioOpen ? "Hide" : "Show more" }}
-          </button>
         </div>
       </div>
     </div>
@@ -48,14 +49,14 @@
 
 <script>
 import SpinnerLoader from "../components/SpinnerLoader.vue";
+import vueShowMoreText from "vue-show-more-text";
 export default {
-  components: { SpinnerLoader },
+  components: { SpinnerLoader, vueShowMoreText },
   data() {
     return {
       resData: null,
       selectedImg: "",
       prevSelectedImg: "",
-      isBioOpen: false,
       prevIndex: null,
       resImagesData: null,
       isLoading: false,
@@ -80,7 +81,9 @@ export default {
       this.prevIndex = i;
       this.prevSelectedImg = imgUrl;
     },
-    showHideBio() {},
+    showHideBio(showAll) {
+      console.log(showAll);
+    },
   },
   computed: {
     celebrity() {
@@ -121,9 +124,6 @@ export default {
       console.log(e);
     }
   },
-  mounted() {
-    setTimeout(() => console.log(this.$refs.bio), 100);
-  },
 };
 </script>
 
@@ -147,8 +147,7 @@ export default {
       right: 50px;
     }
     .celebrity-profile__bio {
-      max-height: 300px;
-      padding: 20px;
+      padding: 10px;
       border-radius: 10px;
       overflow: hidden;
       box-shadow: inset 0px 0px 21px 0px rgb(0, 0, 0);
@@ -161,11 +160,12 @@ export default {
 }
 .celebrity-profile__container {
   margin: 0;
+  justify-content: center;
 }
 .celebrity-profile__image-container {
   display: flex;
-  flex-basis: 40%;
   justify-content: center;
+  flex-basis: 40%;
 
   .celebrity-profile__preview-container {
     display: flex;
@@ -176,6 +176,7 @@ export default {
   .celebrity-profile__image {
     box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
     align-self: flex-start;
+    min-width: 220px;
     width: 300px;
     border-radius: 10px;
     display: block;
@@ -199,17 +200,17 @@ export default {
       margin-bottom: 0;
     }
   }
-  @media (max-width: 992px) {
-    .celebrity-profile__preview-container {
-      flex-direction: column;
-    }
-  }
+  // @media (max-width: 992px) {
+  //   .celebrity-profile__preview-container {
+  //     flex-direction: column;
+  //   }
+  // }
 }
-@media (max-width: 992px) {
-  .celebrity-profile__image-container {
-    flex-basis: 100%;
-    flex-direction: row;
-    justify-content: center;
-  }
-}
+// @media (max-width: 992px) {
+//   .celebrity-profile__image-container {
+//     flex-basis: 100%;
+//     flex-direction: row;
+//     justify-content: center;
+//   }
+// }
 </style>

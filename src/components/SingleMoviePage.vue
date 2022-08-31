@@ -1,63 +1,178 @@
 <template>
-  <div class="singleMovie">
-    <b-card
-      :title="movie.title"
-      :sub-title="movie.tagline"
-      :img-src="'https://image.tmdb.org/t/p/w185/' + movie.poster_path"
-      img-alt="Image"
-      img-height="500"
-      img-width="330"
-      img-left
-      class="cardMovie"
-    >
-      <b-card-body>
-        <b-card-text>
-          <span>Language: </span>
-          {{ movie.original_language }}
-        </b-card-text>
-        <b-card-text>
-          <span>Status: </span>
-          {{ movie.status }}
-        </b-card-text>
-        <b-card-text>
-          <span>Release date: </span>
-          {{ movie.release_date }}
-        </b-card-text>
-        <b-card-text>
-          <span>Runtime: </span>
-          {{ movie.runtime }} minutes
-        </b-card-text>
-        <b-card-text>{{ movie.overview }}</b-card-text>
+  <div class="movie__container p-5">
+    <div class="row movie">
+      <div class="movie__poster col-lg-4">
+        <img
+          class="movie__poster-img img-fluid"
+          :src="posterPath"
+          alt="movie poster"
+        />
+        <div class="movie-raiting">
+          <div class="movie-raiting__info">
+            <h2 class="movie-raiting__title">Movie raiting</h2>
+            <p class="movie-raiting__number">{{ movieRaiting }}</p>
+          </div>
+          <progress
+            class="movie-raiting__bar"
+            :style="{ accentColor: movieRaitingColor }"
+            :value="movieRaiting"
+            max="10"
+          />
+        </div>
+      </div>
+      <div class="movie__info col-lg-7">
+        <h1>{{ movie.title }}</h1>
+        <span class="movie__tagline" v-if="movie.tagline">{{
+          movie.tagline
+        }}</span>
+        <p>
+          <strong>Genres:</strong>
+          {{ movie.genres.map((genre) => genre.name).join(", ") }}
+        </p>
+        <p><strong>Language:</strong> {{ movie.original_language }}</p>
+        <p><strong>Status:</strong> {{ movie.status }}</p>
+        <p><strong>Release date:</strong> {{ movie.release_date }}</p>
+        <p><strong>Runtime:</strong> {{ movie.runtime }}</p>
+        <p class="movie__overview">{{ movie.overview }}</p>
         <b-button v-if="movie.homepage" :href="movie.homepage" variant="dark">
           Go to the movie site
         </b-button>
-      </b-card-body>
-    </b-card>
+      </div>
+    </div>
+    <div
+      v-if="imgUrls && imgUrls.length"
+      class="row justify-content-end p-1 my-4"
+    >
+      <Carousel
+        class="col-lg-7 movie-carousel col-lg-7-p-4"
+        :imgUrls="imgUrls"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import Carousel from "./Carousel.vue";
 export default {
+  data() {
+    return {
+      movieImgRes: null,
+    };
+  },
+  components: { Carousel },
   name: "SingleMoviePage",
   props: {
     movie: Object,
+  },
+  computed: {
+    imgUrls() {
+      return (
+        this.movieImgRes &&
+        this.movieImgRes.data.backdrops
+          .map(
+            (imageObj) =>
+              `https://image.tmdb.org/t/p/original/${imageObj.file_path}`
+          )
+          .splice(0, 5)
+      );
+    },
+    movieRaitingColor() {
+      if (this.movieRaiting < 4) {
+        return "rgb(255, 80, 80)";
+      }
+      if (this.movieRaiting >= 4 && this.movieRaiting < 6) {
+        return "rgb(252, 255, 80)";
+      }
+      if (this.movieRaiting >= 6) {
+        return "rgb(150, 255, 80)";
+      }
+      return null;
+    },
+    posterPath() {
+      return this.movie.poster_path
+        ? "https://image.tmdb.org/t/p/w300/" + this.movie.poster_path
+        : "https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png";
+    },
+    movieRaiting() {
+      return this.movie.vote_average;
+    },
+  },
+  async created() {
+    try {
+      this.movieImgRes = await this.$store.dispatch(
+        "getMovieImages",
+        this.movie.id
+      );
+    } catch (e) {
+      console.log(e);
+    }
   },
 };
 </script>
 
 <style lang="scss">
 @import "../assets/scss/variables.scss";
-.singleMovie {
-  margin-top: 71px;
-  margin-bottom: 71px;
-  width: 100%;
-  .card {
-    width: 1200px;
-    margin: auto;
-    text-align: left;
+.movie {
+  display: flex;
+  justify-content: space-around;
+}
+.movie-carousel {
+  padding: 0;
+  margin-right: 1.8%;
+}
+@media (max-width: 992px) {
+  .movie-carousel {
+    margin-right: 0;
   }
-  span {
-    font-weight: 700;
+}
+.movie__poster {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-bottom: 20px;
+  .movie__poster-img {
+    box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+    margin-bottom: 40px;
+    border-radius: 10px;
+  }
+  .movie-raiting {
+    width: 60%;
+  }
+  .movie-raiting__bar {
+    width: 100%;
+    height: 30px;
+  }
+  .movie-raiting__info {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    text-align: end;
+    color: white;
+  }
+  .movie-raiting__number {
+    font-size: 1rem;
+  }
+  .movie-raiting__title {
+    font-size: 1.2rem;
+  }
+}
+.movie__info {
+  background-color: rgba(74, 36, 141, 0.316);
+  box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+  padding: 40px 40px 80px 40px;
+  border-radius: 10px;
+  color: white;
+  > p {
+    font-size: 18px;
+    font-weight: 400;
+  }
+  .movie__overview {
+    font-size: 16px;
+  }
+  .movie__tagline {
+    display: block;
+    padding-bottom: 10px;
+    color: rgba(255, 255, 255, 0.507);
   }
 }
 </style>
