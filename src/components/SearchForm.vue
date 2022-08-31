@@ -11,25 +11,37 @@
           mb-2
         "
       >
-        <b-form-input
-          v-model="searchQuery"
-          placeholder="Search for media"
-          @keyup.enter="emitFindMedia"
-        ></b-form-input>
-        <b-form-input
-          v-if="selected"
-          v-model="searchByValue"
-          :placeholder="selected"
-          @keyup.enter="emitFindMedia"
-        ></b-form-input>
-
-        <button
-          type="button"
-          @click="emitFindMedia"
-          class="btn btn-dark btn-lg px-4"
-        >
-          Search
-        </button>
+        <div class="jumbotron">
+          <h1 class="display-4" v-if="mode !== 'preview'">Find media</h1>
+          <div class="d-flex search-form__filters">
+            <b-form-input
+              v-model="searchQuery"
+              placeholder="Search for media"
+              @keyup.enter="emitFindMedia"
+            ></b-form-input>
+            <b-form-input
+              v-if="selected"
+              v-model="searchByValue"
+              :placeholder="selected"
+              @keyup.enter="emitFindMedia"
+            ></b-form-input>
+          </div>
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between">
+            <p class="search-form__filters-info">
+              This is a multi-search, here you can find movies or actors
+            </p>
+            <p class="lead px-2">
+              <button
+                type="button"
+                @click="emitFindMedia"
+                class="btn btn-dark btn-lg px-4 search-btn"
+              >
+                Search
+              </button>
+            </p>
+          </div>
+        </div>
       </div>
       <div class="radio__container">
         <b-form-group
@@ -124,6 +136,27 @@ export default {
 </script>
 
 <style lang="scss">
+.jumbotron {
+  width: 100%;
+  text-align: start;
+  .search-form__filters {
+    width: 100%;
+    gap: 10px;
+  }
+}
+@media (max-width: 576px) {
+  .jumbotron {
+    width: 100%;
+    .search-form__filters {
+      width: 100%;
+      gap: 10px;
+    }
+    .lead {
+      display: flex;
+      max-height: 50px;
+    }
+  }
+}
 .search-notification {
   margin-left: 100px;
 }
@@ -138,7 +171,6 @@ export default {
   color: white;
   display: flex;
   flex-direction: column;
-  height: 130px;
 }
 #radio-group-1 {
   > .custom-control-input {
