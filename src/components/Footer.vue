@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <footer class="py-3">
+        <footer>
             <b-nav align="center" tabs>
                 <b-nav-item href="#">Support</b-nav-item>
                 <b-nav-item href="#">Features</b-nav-item>
@@ -31,5 +31,8 @@ export default {
     }
     p {
         padding-top: 10px;
+    }
+    footer {
+        padding-top: 20px;
     }
 </style>

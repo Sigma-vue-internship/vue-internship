@@ -166,6 +166,10 @@ export default {
 }
 .search-form {
   width: 100%;
+  .btn {
+    background-color: rgba(26, 11, 53, 0.682)!important;
+    border-color:rgba(0, 0, 0, 0.316)!important;
+  }
 }
 .search-form__container {
   color: white;

@@ -79,7 +79,7 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async changePage(_, newPage) {
+    async changeMoviesPage(_, newPage) {
       const options = {
         params: {
           page: newPage,
