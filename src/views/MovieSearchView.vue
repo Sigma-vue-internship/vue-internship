@@ -14,7 +14,7 @@
     <notifications
       classes="search-notification"
       group="empty-search"
-      position="top left"
+      position="top right"
     >
       <template slot="body">
         <div class="alert alert-warning p-2 text-start m-2" role="alert">
@@ -145,7 +145,12 @@ export default {
           "findMedia",
           this.routeSearchData
         );
-
+        if (this.resData.data.results.length === 0) {
+          this.$notify({
+            group: "empty-search",
+            classes: "search-notification",
+          });
+        }
         this.searchMedia = this.resData.data.results;
         this.totalPages = this.resData.data.total_pages;
         this.isLoading = false;

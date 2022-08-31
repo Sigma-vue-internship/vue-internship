@@ -4,11 +4,25 @@
     <div v-else class="celebrity-profile">
       <div class="row celebrity-profile__container py-4">
         <div class="celebrity-profile__image-container col-lg-4 px-5 py-2">
-          <img
-            class="celebrity-profile__image img-fluid"
-            :src="selectedImg ? selectedImg : profilePath"
-            alt="celebrity profile image"
-          />
+          <div class="px-4">
+            <img
+              class="celebrity-profile__image img-fluid"
+              :src="selectedImg ? selectedImg : profilePath"
+              alt="celebrity profile image"
+            />
+            <div class="movie-raiting">
+              <progress
+                class="movie-raiting__bar"
+                :style="{ accentColor: celebrityRaitingColor }"
+                :value="celebrityRaiting"
+                max="250"
+              />
+              <div class="movie-raiting__info">
+                <h4 class="movie-raiting__title">Popularity</h4>
+                <p class="movie-raiting__number">{{ celebrityRaiting }}</p>
+              </div>
+            </div>
+          </div>
           <div class="celebrity-profile__preview-container">
             <img
               v-for="(celImg, i) in celebrityImages"
@@ -19,6 +33,7 @@
             />
           </div>
         </div>
+
         <div class="celebrity-profile__info col-lg-6">
           <h1 class="celebrity-profile__name">{{ celebrity.name }}</h1>
           <p><strong> Birthday: </strong>{{ celebrity.birthday }}</p>
@@ -106,6 +121,21 @@ export default {
         ? "https://image.tmdb.org/t/p/w300/" + this.celebrity.profile_path
         : "https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png";
     },
+    celebrityRaiting() {
+      return this.celebrity.popularity;
+    },
+    celebrityRaitingColor() {
+      if (this.celebrityRaiting < 100) {
+        return "rgb(255, 80, 80)";
+      }
+      if (this.celebrityRaiting >= 100 && this.celebrityRaiting < 175) {
+        return "rgb(252, 255, 80)";
+      }
+      if (this.celebrityRaiting >= 175) {
+        return "rgb(150, 255, 80)";
+      }
+      return null;
+    },
   },
   async created() {
     try {
@@ -158,6 +188,32 @@ export default {
     }
   }
 }
+.movie-raiting {
+  margin: 0 auto;
+  margin-top: 20px;
+  width: 90%;
+}
+@media (max-width: 768px) {
+  .movie-raiting {
+    width: 100%;
+  }
+}
+.movie-raiting__bar {
+  width: 100%;
+  height: 20px;
+}
+.movie-raiting__info {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  color: white;
+}
+.movie-raiting__number {
+  font-size: 1rem;
+}
+.movie-raiting__title {
+  font-size: 1.2rem;
+}
 .celebrity-profile__container {
   margin: 0;
   justify-content: center;
@@ -180,7 +236,6 @@ export default {
     width: 300px;
     border-radius: 10px;
     display: block;
-    margin: 0 15px 15px 15px;
   }
   .celebrity-profile__preview-img {
     width: 85px;
@@ -200,17 +255,5 @@ export default {
       margin-bottom: 0;
     }
   }
-  // @media (max-width: 992px) {
-  //   .celebrity-profile__preview-container {
-  //     flex-direction: column;
-  //   }
-  // }
 }
-// @media (max-width: 992px) {
-//   .celebrity-profile__image-container {
-//     flex-basis: 100%;
-//     flex-direction: row;
-//     justify-content: center;
-//   }
-// }
 </style>
