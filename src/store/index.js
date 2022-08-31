@@ -61,10 +61,10 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getCelebrityImages(context, celebrityId) {
+    async getCelebrityImages(_, celebrityId) {
       return this.axios.get(`/3/person/${celebrityId}/images`);
     },
-    async getMovieImages(context, movieId) {
+    async getMovieImages(_, movieId) {
       return this.axios.get(`/3/movie/${movieId}/images`);
     },
     async getMovies() {

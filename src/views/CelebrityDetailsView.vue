@@ -3,7 +3,7 @@
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="celebrity-profile">
       <div class="row celebrity-profile__container py-4">
-        <div class="celebrity-profile__image-container col-lg-4 px-5 py-2">
+        <div class="celebrity-profile__image-container col-lg-4 px-5">
           <div class="px-4">
             <img
               class="celebrity-profile__image img-fluid"
@@ -58,6 +58,13 @@
           </p>
         </div>
       </div>
+      <MediaList
+        v-if="popularCelebrities.length"
+        title="Popular actors"
+        route="/celebrity/"
+        :elements="popularCelebrities"
+        :changePage="loadMorePopular"
+      />
     </div>
   </div>
 </template>
@@ -65,8 +72,9 @@
 <script>
 import SpinnerLoader from "../components/SpinnerLoader.vue";
 import vueShowMoreText from "vue-show-more-text";
+import MediaList from "../components/MediaList.vue";
 export default {
-  components: { SpinnerLoader, vueShowMoreText },
+  components: { SpinnerLoader, vueShowMoreText, MediaList },
   data() {
     return {
       resData: null,
@@ -74,10 +82,21 @@ export default {
       prevSelectedImg: "",
       prevIndex: null,
       resImagesData: null,
+      resPopularCelebrities: null,
+      popularCelebrities: [],
+      currentPopularPage: 1,
       isLoading: false,
     };
   },
   methods: {
+    async loadMorePopular() {
+      this.currentPopularPage += 1;
+      const { data } = await this.$store.dispatch(
+        "changeCelebritiesPage",
+        this.currentPopularPage
+      );
+      this.popularCelebrities = [...this.popularCelebrities, ...data.results];
+    },
     selectImg(imgUrl, i) {
       if (this.celebrityImages[i] === this.profilePath) {
         this.selectedImg = "";
@@ -96,9 +115,7 @@ export default {
       this.prevIndex = i;
       this.prevSelectedImg = imgUrl;
     },
-    showHideBio(showAll) {
-      console.log(showAll);
-    },
+    showHideBio() {},
   },
   computed: {
     celebrity() {
@@ -140,6 +157,22 @@ export default {
   async created() {
     try {
       this.isLoading = true;
+      this.$watch(
+        () => this.$route.params,
+        async () => {
+          this.isLoading = true;
+          this.selectedImg = "";
+          this.resData = await this.$store.dispatch(
+            "findSingleCelebrity",
+            this.$route.params.id
+          );
+          this.resImagesData = await this.$store.dispatch(
+            "getCelebrityImages",
+            this.$route.params.id
+          );
+          this.isLoading = false;
+        }
+      );
       this.resData = await this.$store.dispatch(
         "findSingleCelebrity",
         this.$route.params.id
@@ -148,6 +181,8 @@ export default {
         "getCelebrityImages",
         this.$route.params.id
       );
+      const { data } = await this.$store.dispatch("getCelebrities");
+      this.popularCelebrities = data.results;
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;
