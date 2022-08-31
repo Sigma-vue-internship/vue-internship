@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     routeToElementPage(id) {
-      console.log(id);
       this.$router.push({ path: `${this.route}${id}` }).catch(() => {});
     },
   },
