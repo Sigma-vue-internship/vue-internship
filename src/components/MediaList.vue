@@ -1,6 +1,8 @@
 <template>
   <div class="elements">
-    <div class="elements__title">{{ title }}</div>
+    <div class="elements__title">
+      <p>{{ title }}</p>
+    </div>
     <div class="elements__scroll">
       <ul class="elements__list" v-if="elements.length">
         <SingleMediaElementList
@@ -46,7 +48,11 @@ export default {
       font-weight: 700;
       margin-top: 20px;
       font-size: 36px;
-      align-self: flex-start;
+      width: 1100px;
+      p {
+        width: 300px;
+        align-self: flex-start;
+      }
     }
     &__scroll {
       height: 434px;
@@ -83,9 +89,12 @@ export default {
     .elements {
       margin-top: 10px;
       &__title {
-        margin-top: 10px;
-        font-size: 30px;
-        align-self: center;
+      font-size: 30px;
+      width: 100%;
+        p {
+          width: 100%;
+          align-self: center;
+        }
       }
       &__scroll {
         height: 350px;
@@ -104,9 +113,12 @@ export default {
     .elements {
       margin-top: 10px;
       &__title {
-        margin-top: 10px;
-        font-size: 25px;
-        align-self: center;
+      font-size: 25px;
+      width: 100%;
+        p {
+          width: 100%;
+          align-self: center;
+        }
       }
       &__scroll {
         height: 250px;

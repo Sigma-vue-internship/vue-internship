@@ -16,13 +16,13 @@
         title="Popular actors" 
         route="/celebrity/"
         :elements="celebrities" 
-        :changePage="changeElementsPage('celebrities')"
+        :changePage="changeCelebritiesPage"
       />
       <MediaList 
         title="Popular movies" 
         route="/movie/"
         :elements="movies" 
-        :changePage="changeElementsPage('movies')"
+        :changePage="changeMoviesPage"
       />
     </div>
   </div>
@@ -59,29 +59,7 @@ export default {
         return;
       }
     },
-    async changeElementsPage(type) {
-      if(type === "celebtity") {
-        try {
-          this.celebritiesPage++;
-          const response = await this.$store.dispatch("changeCelebritiesPage", this.celebritiesPage);
-          const { data } = response;
-          this.celebrities = this.celebrities.concat(data.results);
-        } catch (error) {
-          console.log(error);
-        }
-      } else if(type === "movies") {
-        try {
-          this.moviesPage++;
-          const response = await this.$store.dispatch("changeMoviesPage", this.moviesPage);
-          const { data } = response;
-          this.movies = this.movies.concat(data.results);
-        } catch(error) {
-          console.log(error);
-        }
-      }
-      
-    },
-    /* async changeCelebritiesPage() {
+    async changeCelebritiesPage() {
       try {
         this.celebritiesPage++;
         const response = await this.$store.dispatch("changeCelebritiesPage", this.celebritiesPage);
@@ -100,7 +78,7 @@ export default {
       } catch(error) {
         console.log(error);
       }
-    } */
+    }
   },
   async created() {
     try {
@@ -127,12 +105,13 @@ export default {
     @include flex-center(column);
     text-align: center;
     &__home {
-      width: 1100px;
+      width: 100%;
     }
     &__caption {
       height: 950px;
-      background-color: $lightPurple;
-      border-radius: 10px;
+      border-radius: $borderRadius;
+      @include flex-center(column);
+      flex-wrap: nowrap;
     }
     &__logo {
       margin-top: 25px;
@@ -140,8 +119,8 @@ export default {
       width: 100%;
       height: 750px;
       @include flex-center(column);
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
+      border-top-left-radius: $borderRadius;
+      border-top-right-radius: $borderRadius;
     }
     &__name {
       height: 200px;
@@ -155,9 +134,14 @@ export default {
       }
     }
     &__watch {
-      margin-top: 35px;
+      width: 1100px;
+      height: 190px;
+      border-bottom-left-radius: $borderRadius;
+      border-bottom-right-radius: $borderRadius;
+      background-color: $lightPurple;
       p {
         color: white;
+        padding-top: 30px;
         font-size: 30px;
       }
     }
@@ -181,6 +165,7 @@ export default {
       }
       &__watch {
         margin-top: 45px;
+        width: 100%;
         p {
           font-size: 20px;
         }
@@ -206,6 +191,7 @@ export default {
       }
       &__watch {
         margin-top: 10px;
+        width: 100%;
         p {
           font-size: 16px;
         }
