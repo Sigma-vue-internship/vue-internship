@@ -16,13 +16,13 @@
         title="Popular actors" 
         route="/celebrity/"
         :elements="celebrities" 
-        :changePage="changeCelebritiesPage"
+        :changePage="changeElementsPage('celebrities')"
       />
       <MediaList 
         title="Popular movies" 
         route="/movie/"
         :elements="movies" 
-        :changePage="changeMoviesPage"
+        :changePage="changeElementsPage('movies')"
       />
     </div>
   </div>
@@ -59,7 +59,29 @@ export default {
         return;
       }
     },
-    async changeCelebritiesPage() {
+    async changeElementsPage(type) {
+      if(type === "celebtity") {
+        try {
+          this.celebritiesPage++;
+          const response = await this.$store.dispatch("changeCelebritiesPage", this.celebritiesPage);
+          const { data } = response;
+          this.celebrities = this.celebrities.concat(data.results);
+        } catch (error) {
+          console.log(error);
+        }
+      } else if(type === "movies") {
+        try {
+          this.moviesPage++;
+          const response = await this.$store.dispatch("changeMoviesPage", this.moviesPage);
+          const { data } = response;
+          this.movies = this.movies.concat(data.results);
+        } catch(error) {
+          console.log(error);
+        }
+      }
+      
+    },
+    /* async changeCelebritiesPage() {
       try {
         this.celebritiesPage++;
         const response = await this.$store.dispatch("changeCelebritiesPage", this.celebritiesPage);
@@ -78,7 +100,7 @@ export default {
       } catch(error) {
         console.log(error);
       }
-    }
+    } */
   },
   async created() {
     try {

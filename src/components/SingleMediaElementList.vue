@@ -2,8 +2,8 @@
   <li>
     <b-card
       text-variant="white"
-      :img-src="'https://image.tmdb.org/t/p/w185/' + imgPath"
-      :title="name"
+      :img-src="'https://image.tmdb.org/t/p/w185/' + img"
+      :title="caption"
       class="element"
     >
     </b-card>
@@ -16,23 +16,16 @@ export default {
   props: {
     element: Object
   },
-  data() {
-    return {
-      imgPath: "",
-      name: ""
-    }
-  },
-  mounted() {
-    if('profile_path' in this.element){
-      this.imgPath = this.element.profile_path;
-    } else if('poster_path' in this.element){
-      this.imgPath = this.element.poster_path;
-    }
-
-    if('name' in this.element){
-      this.name = this.element.name;
-    } else if('title' in this.element){
-      this.name = this.element.title;
+  computed: {
+    img(){
+      return ('profile_path' in this.element) ? this.element.profile_path
+        : ('poster_path' in this.element) ? this.element.poster_path
+          : "";
+    },
+    caption(){
+      return ('name' in this.element) ? this.element.name
+        : ('title' in this.element) ? this.element.title
+          : "";
     }
   }
 }
