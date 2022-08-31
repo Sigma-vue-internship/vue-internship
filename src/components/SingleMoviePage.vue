@@ -4,7 +4,7 @@
       <div class="movie__poster col-lg-4">
         <img
           class="movie__poster-img img-fluid"
-          :src="'https://image.tmdb.org/t/p/w300/' + movie.poster_path"
+          :src="posterPath"
           alt="movie poster"
         />
         <div class="movie-raiting">
@@ -87,6 +87,11 @@ export default {
         return "rgb(150, 255, 80)";
       }
       return null;
+    },
+    posterPath() {
+      return this.movie.poster_path
+        ? "https://image.tmdb.org/t/p/w300/" + this.movie.poster_path
+        : "https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png";
     },
     movieRaiting() {
       return this.movie.vote_average;
