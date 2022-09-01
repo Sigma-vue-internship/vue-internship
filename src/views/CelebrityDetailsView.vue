@@ -1,10 +1,20 @@
 <template>
   <div class="celebrity-profile__back">
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
-    <div v-else class="celebrity-profile">
-      <div class="row celebrity-profile__container py-4">
-        <div class="celebrity-profile__image-container col-lg-4 px-5">
-          <div class="px-4">
+    <div
+      v-else
+      class="
+        container
+        d-flex
+        flex-column
+        align-items-center
+        justify-content-center
+        px-2
+      "
+    >
+      <div class="row gx-0 py-4">
+        <div class="celebrity-profile__image-container py-4 col-lg-5 col-xl-5">
+          <div class="d-flex flex-column px-2">
             <img
               class="celebrity-profile__image img-fluid"
               :src="selectedImg ? selectedImg : profilePath"
@@ -17,9 +27,11 @@
                 :value="celebrityRaiting"
                 max="250"
               />
-              <div class="movie-raiting__info">
-                <h4 class="movie-raiting__title">Popularity</h4>
-                <p class="movie-raiting__number">{{ celebrityRaiting }}</p>
+              <div class="movie-raiting__info row text-center">
+                <h4 class="movie-raiting__title col-lg-5">Popularity</h4>
+                <p class="movie-raiting__number col-lg-4">
+                  {{ celebrityRaiting }}
+                </p>
               </div>
             </div>
           </div>
@@ -34,7 +46,7 @@
           </div>
         </div>
 
-        <div class="celebrity-profile__info col-lg-6">
+        <div class="celebrity-profile__info col-lg-7 col-xl-7">
           <h1 class="celebrity-profile__name">{{ celebrity.name }}</h1>
           <p><strong> Birthday: </strong>{{ celebrity.birthday }}</p>
           <p>
@@ -193,45 +205,40 @@ export default {
 </script>
 
 <style lang="scss">
-.celebrity-profile {
+.celebrity-profile__back {
   background-color: rgba(63, 30, 121, 0.158);
-  .celebrity-profile__info {
-    position: relative;
-    padding: 40px 40px 80px 40px;
-    background-color: rgba(74, 36, 141, 0.316);
-    box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
-    border-radius: 10px;
-    color: white;
+}
+.celebrity-profile__info {
+  position: relative;
+  padding: 40px 40px 80px 40px;
+  background-color: rgba(74, 36, 141, 0.316);
+  box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
+  border-radius: 10px;
+  color: white;
 
-    .celebrity-profile__bio-name {
-      font-size: 22px;
-      margin: 20px 0 20px 0;
-    }
-    .celebrity-profile__show-more-btn {
-      position: absolute;
-      right: 50px;
-    }
-    .celebrity-profile__bio {
-      padding: 10px;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: inset 0px 0px 21px 0px rgb(0, 0, 0);
-      transition: max-height cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
-    }
-    .bio--active {
-      max-height: 700px;
-    }
+  .celebrity-profile__bio-name {
+    font-size: 22px;
+    margin: 20px 0 20px 0;
+  }
+  .celebrity-profile__show-more-btn {
+    position: absolute;
+    right: 50px;
+  }
+  .celebrity-profile__bio {
+    padding: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0px 0px 21px 0px rgb(0, 0, 0);
+    transition: max-height cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
+  }
+  .bio--active {
+    max-height: 700px;
   }
 }
 .movie-raiting {
   margin: 0 auto;
   margin-top: 20px;
   width: 90%;
-}
-@media (max-width: 768px) {
-  .movie-raiting {
-    width: 100%;
-  }
 }
 .movie-raiting__bar {
   width: 100%;
@@ -249,15 +256,9 @@ export default {
 .movie-raiting__title {
   font-size: 1.2rem;
 }
-.celebrity-profile__container {
-  margin: 0;
-  justify-content: center;
-}
 .celebrity-profile__image-container {
   display: flex;
   justify-content: center;
-  flex-basis: 40%;
-
   .celebrity-profile__preview-container {
     display: flex;
     flex-direction: column;
@@ -267,7 +268,6 @@ export default {
   .celebrity-profile__image {
     box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
     align-self: flex-start;
-    min-width: 220px;
     width: 300px;
     border-radius: 10px;
     display: block;
