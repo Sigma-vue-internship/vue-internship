@@ -2,7 +2,9 @@
   <li>
     <b-card
       text-variant="white"
-      :img-src="'https://image.tmdb.org/t/p/w185/' + img"
+      :img-src="img 
+        ? 'https://image.tmdb.org/t/p/w185/' + img 
+        : 'https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png'"
       :title="caption"
       class="element"
     >
@@ -34,9 +36,9 @@ export default {
 <style scoped lang="scss">
   @import "../assets/scss/variables.scss";
   .element {
-    height: 360px;
-    width: 200px;
-    margin-right: 25px;
+    height: $cardHeight; 
+    width: $cardWidth;
+    margin-right: 15px;
     border-radius: 0;
     border: 0;
     background: transparent;
@@ -49,36 +51,28 @@ export default {
     height: 60px;
     overflow: hidden;
   }
-
-  @media (max-width: 992px) and (min-width: 376px) {
+  @media (max-width: 1400px) and (min-width: 991px) {
     .element {
-      height: 269px;
-      width: 150px;
-      margin-right: 15px;
-    }
-    .card-title {
-      height: 40px;
-      font-size: 16px;
-    }
-    .card-img, .card-img-bottom { 
-      border-radius: 0;
-      border: 7px solid rgb(97, 47, 183);
+      height: $cardHeight*0.85;
+      width: $cardWidth*0.85;
     }
   }
-
-  @media (max-width: 375px) {
+  @media (max-width: 990px) and (min-width: 768px) {
     .element {
-      height: 185px;
-      width: 100px;
-      margin-right: 12px;
+      height: $cardHeight*0.79;
+      width: $cardWidth*0.79;
     }
-    .card-title {
-      height: 30px;
-      font-size: 12px;
+  }
+  @media (max-width: 767px) and (min-width: 576px) {
+    .element {
+      height: $cardHeight*0.78;
+      width: $cardWidth*0.78;
     }
-    .card-img, .card-img-bottom { 
-      border-radius: 0;
-      border: 5px solid rgb(97, 47, 183);
+  }
+  @media (max-width: 575px) {
+    .element {
+      height: $cardHeight*0.70;
+      width: $cardWidth*0.70;
     }
   }
 </style>

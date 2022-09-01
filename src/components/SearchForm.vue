@@ -1,45 +1,30 @@
 <template>
   <div class="search-form__container container">
     <div>
-      <div
-        class="
-          search-form
-          d-grid
-          gap-2
-          d-sm-flex
-          justify-content-sm-center
-          mb-2
-        "
-      >
+      <div class="search-form">
         <div class="jumbotron">
           <h1 class="display-4" v-if="mode !== 'preview'">Find media</h1>
-          <div class="d-flex search-form__filters">
+          <div class="d-grid d-sm-flex justify-content-sm-center search-form__filters">
             <b-form-input
               v-model="searchQuery"
-              placeholder="Search for media"
+              placeholder="Type movie or actor title here"
               @keyup.enter="emitFindMedia"
+              class="my-2 input-lg"
             ></b-form-input>
             <b-form-input
               v-if="selected"
               v-model="searchByValue"
               :placeholder="selected"
               @keyup.enter="emitFindMedia"
+              class="my-2 input-lg"
             ></b-form-input>
-          </div>
-          <hr class="my-4" />
-          <div class="d-flex justify-content-between">
-            <p class="search-form__filters-info">
-              This is a multi-search, here you can find movies or actors
-            </p>
-            <p class="lead px-2">
-              <button
+            <button
                 type="button"
                 @click="emitFindMedia"
-                class="btn btn-dark btn-lg px-4 search-btn"
+                class="btn btn-dark px-4 search-btn my-2"
               >
                 Search
               </button>
-            </p>
           </div>
         </div>
       </div>

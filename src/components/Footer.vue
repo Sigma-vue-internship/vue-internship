@@ -1,14 +1,86 @@
 <template>
     <div class="container">
-        <footer>
-            <b-nav align="center" tabs>
-                <b-nav-item href="#">Support</b-nav-item>
-                <b-nav-item href="#">Features</b-nav-item>
-                <b-nav-item href="#">Privacy</b-nav-item>
-                <b-nav-item href="#">FAQ</b-nav-item>
-                <b-nav-item href="#">About</b-nav-item>
-            </b-nav>
-            <p class="text-center text-muted">© 2022 Sigma Software</p>
+        <footer class="pt-5 px-5">
+            <div class="row">
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Support</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Home</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Conditions of Use</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">For developers</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Features</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Press Room</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">About us</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Pricing</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Privacy</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Advertising</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Site Index</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-5 offset-md-1 mb-3">
+                    <form>
+                        <h5>Subscribe to our newsletter</h5>
+                        <p>Monthly digest of what's new and exciting from us.</p>
+                        <div class="d-flex flex-column flex-sm-row w-100 gap-2">
+                            <label for="newsletter" class="visually-hidden">Email address</label>
+                            <input id="newsletter" type="text" class="form-control" placeholder="Email address">
+                            <button class="btn btn-dark" type="button">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                <p>© 2022 Sigma, Inc. All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/facebook.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/instagram.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/youtube.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/linkedin.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
         </footer>
     </div>
 </template>
@@ -22,17 +94,12 @@ export default {
 <style scoped lang="scss">
     .container {
         min-width: 100%;
-        height: 150px;
-        bottom: 0;
         background-color: rgb(58, 56, 56);
     }
-    .nav-link, .nav-link:focus, .nav-link:hover {
+    h5 {
         color: white;
     }
     p {
-        padding-top: 10px;
-    }
-    footer {
-        padding-top: 20px;
+        color: rgb(184, 184, 184);
     }
 </style>

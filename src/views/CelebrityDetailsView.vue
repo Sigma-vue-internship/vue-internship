@@ -2,7 +2,7 @@
   <div class="celebrity-profile__back">
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <div v-else class="celebrity-profile">
-      <div class="row celebrity-profile__container py-4">
+      <div class="row celebrity-profile__container">
         <div class="celebrity-profile__image-container col-lg-4 px-5 py-2">
           <div class="px-4">
             <img
