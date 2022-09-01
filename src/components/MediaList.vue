@@ -12,7 +12,7 @@
           @click.native="routeToElementPage(element.id)"
         />
       </ul>
-      <div v-intersection="changePage"></div>
+      <div v-if="changePage" v-intersection="changePage"></div>
     </div>
   </div>
 </template>

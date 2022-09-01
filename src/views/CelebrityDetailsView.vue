@@ -71,11 +71,10 @@
         </div>
       </div>
       <MediaList
-        v-if="popularCelebrities.length"
-        title="Popular actors"
-        route="/celebrity/"
-        :elements="popularCelebrities"
-        :changePage="loadMorePopular"
+        v-if="celebrityMovies.length"
+        title="Actor's movies"
+        route="/movie/"
+        :elements="celebrityMovies"
       />
     </div>
   </div>
@@ -95,20 +94,11 @@ export default {
       prevIndex: null,
       resImagesData: null,
       resPopularCelebrities: null,
-      popularCelebrities: [],
-      currentPopularPage: 1,
+      celebrityMovies: [],
       isLoading: false,
     };
   },
   methods: {
-    async loadMorePopular() {
-      this.currentPopularPage += 1;
-      const { data } = await this.$store.dispatch(
-        "changeCelebritiesPage",
-        this.currentPopularPage
-      );
-      this.popularCelebrities = [...this.popularCelebrities, ...data.results];
-    },
     selectImg(imgUrl, i) {
       if (this.celebrityImages[i] === this.profilePath) {
         this.selectedImg = "";
@@ -155,8 +145,11 @@ export default {
         "getCelebrityImages",
         this.$route.params.id
       );
-      const { data } = await this.$store.dispatch("getCelebrities");
-      this.popularCelebrities = data.results;
+      const { data } = await this.$store.dispatch(
+        "getCelebrityMovies",
+        this.$route.params.id
+      );
+      this.celebrityMovies = data.cast;
     },
   },
   computed: {
