@@ -1,16 +1,16 @@
 <template>
-  <div class="w-100">
-    <b-nav class="p-2 justify-content-between">
-      <b-navbar-brand class="d-flex align-self-center mx-4" to="/"
+  <div class="w-100 p-2">
+      <b-nav class="container justify-content-between">
+        <b-navbar-brand class="d-flex align-self-center mx-4" to="/"
         >Moviedesk</b-navbar-brand
-      >
-      <div class="d-flex">
-        <b-nav-item to="/">Home</b-nav-item>
-        <b-nav-item to="/search">Search</b-nav-item>
-        <b-nav-item to="/user/login">Login</b-nav-item>
-      </div>
-    </b-nav>
-  </div>
+        >
+        <div class="d-flex">
+          <b-nav-item to="/">Home</b-nav-item>
+          <b-nav-item to="/search">Search</b-nav-item>
+          <b-nav-item to="/user/login">Login</b-nav-item>
+        </div>
+      </b-nav>
+    </div>
 </template>
 
 <style lang="scss" scoped>
