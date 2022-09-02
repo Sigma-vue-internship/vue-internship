@@ -1,6 +1,6 @@
 <template>
-    <div class="container">
-        <footer class="pt-5 px-5">
+      <footer class="pt-5 px-5">
+          <div class="container">
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">
                     <h5>Support</h5>
@@ -80,8 +80,8 @@
                     </li>
                 </ul>
             </div>
-        </footer>
-    </div>
+          </div>
+      </footer>
 </template>
 
 <script>
@@ -111,7 +111,7 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/variables.scss";
-    .container {
+    footer {
         min-width: 100%;
         background-color: $darkPurple;
     }
