@@ -22,15 +22,24 @@
 <script>
 export default {
   props: ["celebrityRating", "movieRating"],
+  data() {
+    return {
+      colors: [
+        'rgb(255, 80, 80)',
+        'rgb(252, 255, 80)',
+        'rgb(150, 255, 80)'
+      ],
+    }
+  },
   computed: {
     celebrityRatingColor() {
       switch (true) {
         case this.celebrityRating < 100:
-          return "rgb(255, 80, 80)";
+          return this.colors[0];
         case this.celebrityRating >= 100 && this.celebrityRating < 175:
-          return "rgb(252, 255, 80)";
+          return this.colors[1];
         case this.celebrityRating >= 175:
-          return "rgb(150, 255, 80)";
+          return this.colors[2];
         default:
           return null;
       }
@@ -38,11 +47,11 @@ export default {
     movieRatingColor() {
       switch (true) {
         case this.movieRating < 4:
-          return "rgb(255, 80, 80)";
+          return this.colors[0];
         case this.movieRating >= 4 && this.movieRating < 6:
-          return "rgb(252, 255, 80)";
+          return this.colors[1];
         case this.movieRating >= 6:
-          return "rgb(150, 255, 80)";
+          return this.colors[2];
         default:
           return null;
       }

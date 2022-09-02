@@ -1,9 +1,9 @@
 <template>
   <div class="w-100 p-2">
       <b-nav class="container justify-content-between">
-        <b-navbar-brand class="d-flex align-self-center mx-4" to="/"
-        >Moviedesk</b-navbar-brand
-        >
+        <b-navbar-brand class="d-flex align-self-center mx-4" to="/">
+          Moviedesk
+        </b-navbar-brand>
         <div class="d-flex">
           <b-nav-item to="/">Home</b-nav-item>
           <b-nav-item to="/search">Search</b-nav-item>
@@ -14,15 +14,15 @@
 </template>
 
 <style lang="scss" scoped>
-.navbar-brand {
-  font-weight: bold;
-  font-size: 18px;
-}
-.nav-link {
-  font-weight: 400;
-  color: rgba(255, 255, 255, 1);
-}
-a.nav-link.router-link-exact-active.router-link-active {
-  color: rgb(63, 123, 252);
-}
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .nav-link {
+    font-weight: 400;
+    color: rgba(255, 255, 255, 1);
+  }
+  a.nav-link.router-link-exact-active.router-link-active {
+    color: rgb(63, 123, 252);
+  }
 </style>
