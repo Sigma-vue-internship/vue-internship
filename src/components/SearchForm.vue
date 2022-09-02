@@ -2,9 +2,53 @@
   <div class="search-form__container container">
     <div>
       <div class="search-form">
-        <div class="jumbotron">
-          <h1 class="display-4" v-if="mode !== 'preview'">Find media</h1>
-          <div class="d-grid d-sm-flex justify-content-sm-center search-form__filters input-group-lg">
+        <div v-if="mode !== 'preview'" class="jumbotron">
+          <h1 class="display-4">Find media</h1>
+          <div
+            class="
+              d-grid d-sm-flex
+              justify-content-sm-center
+              search-form__filters
+              input-group-lg
+            "
+          >
+            <b-form-input
+              v-model="searchQuery"
+              placeholder="Search for media"
+              @keyup.enter="emitFindMedia"
+            ></b-form-input>
+            <b-form-input
+              v-if="selected"
+              v-model="searchByValue"
+              :placeholder="selected"
+              @keyup.enter="emitFindMedia"
+            ></b-form-input>
+          </div>
+          <hr class="my-4" />
+          <div class="d-flex justify-content-between">
+            <p class="search-form__filters-info">
+              This is a multi-search, here you can find movies or actors
+            </p>
+            <p class="lead px-2">
+              <button
+                type="button"
+                @click="emitFindMedia"
+                class="btn btn-dark btn-lg px-4 search-btn"
+              >
+                Search
+              </button>
+            </p>
+          </div>
+        </div>
+        <div v-if="mode === 'preview'" class="jumbotron">
+          <div
+            class="
+              d-grid d-sm-flex
+              justify-content-sm-center
+              search-form__filters
+              input-group-lg
+            "
+          >
             <b-form-input
               v-model="searchQuery"
               placeholder="Type movie or actor title here"
@@ -19,19 +63,18 @@
               class="my-2 input-lg"
             ></b-form-input>
             <button
-                type="button"
-                @click="emitFindMedia"
-                class="btn btn-dark px-4 search-btn my-2"
-              >
-                Search
-              </button>
+              type="button"
+              @click="emitFindMedia"
+              class="btn btn-dark px-4 search-btn my-2"
+            >
+              Search
+            </button>
           </div>
         </div>
       </div>
-      <div class="radio__container">
+      <div v-if="mode !== 'preview'" class="radio__container">
         <b-form-group
           class="radio-group__container"
-          v-if="mode !== 'preview'"
           label="Please select an option"
         >
           <b-form-radio-group
@@ -152,8 +195,8 @@ export default {
 .search-form {
   width: 100%;
   .btn {
-    background-color: rgba(26, 11, 53, 0.682)!important;
-    border-color:rgba(0, 0, 0, 0.316)!important;
+    background-color: rgba(26, 11, 53, 0.682) !important;
+    border-color: rgba(0, 0, 0, 0.316) !important;
   }
 }
 .search-form__container {
