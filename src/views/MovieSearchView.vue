@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMedia="findMedia" class="mt-5" />
+    <SearchForm :mode="'optional'" @findMedia="findMediaElements" class="mt-5" />
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <ul class="search__results-list" v-if="searchMedia.length">
       <li v-for="media in searchMedia" :key="media.uuid">
@@ -24,17 +24,25 @@
     </notifications>
     <div
       v-show="searchMedia.length && !isLoading"
-      v-intersection="loadMoreMedia"
+      v-intersection="loadMoreMediaElements"
     ></div>
   </div>
 </template>
 
 <script>
-import SearchForm from "@/components/SearchForm.vue";
-import SingleMovieSearch from "@/components/SingleMovieSearch.vue";
-import SpinnerLoader from "@/components/SpinnerLoader.vue";
-import SingleCelebritySearch from "@/components/SingleCelebritySearch.vue";
+import { mapActions } from "vuex";
+import SearchForm from "@/components/common/SearchForm";
+import SingleMovieSearch from "@/components/movie/SingleMovieSearch";
+import SpinnerLoader from "@/components/common/SpinnerLoader";
+import SingleCelebritySearch from "@/components/celebrity/SingleCelebritySearch";
 export default {
+  name: "MovieSearchView",
+  components: {
+    SearchForm,
+    SingleMovieSearch,
+    SpinnerLoader,
+    SingleCelebritySearch,
+  },
   data() {
     return {
       searchMedia: [],
@@ -45,14 +53,12 @@ export default {
       isLoading: false,
     };
   },
-  components: {
-    SearchForm,
-    SingleMovieSearch,
-    SpinnerLoader,
-    SingleCelebritySearch,
-  },
   methods: {
-    async loadMoreMedia() {
+    ...mapActions([
+      "loadMoreMedia",
+      "findMedia"
+    ]),
+    async loadMoreMediaElements() {
       const routeSearchData = { ...this.$route.query };
       this.currentPage += 1;
       if (this.currentPage <= this.totalPages) {
@@ -60,10 +66,7 @@ export default {
         try {
           this.isLoading = true;
 
-          const res = await this.$store.dispatch(
-            "loadMoreMedia",
-            routeSearchData
-          );
+          const res = await this.loadMoreMedia(routeSearchData);
           const updatedMedia = res.data.results;
           this.searchMedia = [...this.searchMedia, ...updatedMedia];
           this.isLoading = false;
@@ -73,7 +76,7 @@ export default {
         }
       }
     },
-    async findMedia(searchData) {
+    async findMediaElements(searchData) {
       if (searchData.searchBy) {
         this.$router
           .push({
@@ -84,11 +87,10 @@ export default {
               searchByValue: searchData.searchByValue,
             },
           })
-          //
           .catch(() => {});
         try {
           this.isLoading = true;
-          this.resData = await this.$store.dispatch("findMedia", searchData);
+          this.resData = await this.findMedia(searchData);
           if (this.resData.data.results.length === 0) {
             this.$notify({
               group: "empty-search",
@@ -116,7 +118,7 @@ export default {
           .catch(() => {});
         try {
           this.isLoading = true;
-          this.resData = await this.$store.dispatch("findMedia", searchData);
+          this.resData = await this.findMedia(searchData);
           if (this.resData.data.results.length === 0) {
             this.$notify({
               group: "empty-search",
@@ -141,10 +143,7 @@ export default {
     if (this.routeSearchData.searchQuery && !this.searchMedia.length) {
       try {
         this.isLoading = true;
-        this.resData = await this.$store.dispatch(
-          "findMedia",
-          this.routeSearchData
-        );
+        this.resData = await this.findMedia(this.routeSearchData);
         if (this.resData.data.results.length === 0) {
           this.$notify({
             group: "empty-search",

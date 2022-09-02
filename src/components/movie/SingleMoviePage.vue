@@ -35,18 +35,25 @@
 </template>
 
 <script>
-import Carousel from "./Carousel.vue";
-import Rating from "./Rating.vue";
+import { mapActions } from "vuex";
+import Carousel from "@/components/common/Carousel";
+import Rating from "@/components/common/Rating";
 export default {
+  name: "SingleMoviePage",
+  components: { 
+    Carousel, 
+    Rating
+  },
+  props: {
+    movie: Object,
+  },
   data() {
     return {
       movieImgRes: null,
-    };
+    }
   },
-  components: { Carousel, Rating },
-  name: "SingleMoviePage",
-  props: {
-    movie: Object,
+  methods: {
+    ...mapActions(["getMovieImages"]),
   },
   computed: {
     imgUrls() {
@@ -71,10 +78,7 @@ export default {
   },
   async created() {
     try {
-      this.movieImgRes = await this.$store.dispatch(
-        "getMovieImages",
-        this.movie.id
-      );
+      this.movieImgRes = await this.getMovieImages(this.movie.id);
     } catch (e) {
       console.log(e);
     }
@@ -83,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
 .movie-carousel {
   padding: 0;
 }

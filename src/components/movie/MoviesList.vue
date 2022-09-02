@@ -10,16 +10,22 @@
         @click.native="routeToMovie(movie.id)"
       />
     </ul>
-    <PaginationWrapper @changePage="changePage" :totalRows=totalRows />
+    <PaginationWrapper @changePage="changeCurrentPage" :totalRows=totalRows />
   </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import SingleMovieElementList from "./SingleMovieElementList";
-import PaginationWrapper from "../components/PaginationWrapper";
-import SpinnerLoader from "./SpinnerLoader";
+import PaginationWrapper from "@/components/common/PaginationWrapper";
+import SpinnerLoader from "@/components/common/SpinnerLoader";
 export default {
   name: "MoviesList",
+  components: {
+    SingleMovieElementList,
+    PaginationWrapper,
+    SpinnerLoader
+  },
   data() {
     return {
       movies: [],
@@ -27,19 +33,18 @@ export default {
       isLoading: false
     }
   },
-  components: {
-    SingleMovieElementList,
-    PaginationWrapper,
-    SpinnerLoader
-  },
   methods: {
+    ...mapActions([
+      "changePage",
+      "getMovies"
+    ]),
     routeToMovie(id) {
       this.$router.push({ path: `/movie/${id}` });
     },
-    async changePage(page) {
+    async changeCurrentPage(page) {
       try {
         this.isLoading = true;
-        const response = await this.$store.dispatch("changePage", page);
+        const response = await this.changePage(page);
         const { data } = response;
         this.movies = data.results;
         this.isLoading = false;
@@ -51,7 +56,7 @@ export default {
   },
   async created() {
     try {
-      const response = await this.$store.dispatch("getMovies");
+      const response = await this.getMovies();
       const { data } = response;
       this.movies = data.results;
     } catch(error) {
@@ -62,7 +67,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
   .moviesList {
     background-color: rgb(34, 34, 34);
     @include flex-center(column);

@@ -35,8 +35,12 @@
 </template>
 
 <script>
-import Rating from "./Rating.vue";
+import Rating from "@/components/common/Rating.vue";
 export default {
+  name: "SingleCelebritySearch",
+  components: { 
+    Rating
+  },
   props: {
     celebrity: {
       type: Object,
@@ -59,7 +63,6 @@ export default {
       return Math.floor(this.celebrity.popularity);
     },
   },
-  components: { Rating },
 };
 </script>
 

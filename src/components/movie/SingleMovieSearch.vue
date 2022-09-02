@@ -31,8 +31,12 @@
 </template>
 
 <script>
-import Rating from "./Rating.vue";
+import Rating from "@/components/common/Rating";
 export default {
+  name: "SingleMovieSearch",
+  components: { 
+    Rating 
+  },
   props: {
     movie: {
       type: Object,
@@ -54,7 +58,6 @@ export default {
       this.$router.push(`/movie/${id}`);
     },
   },
-  components: { Rating },
 };
 </script>
 

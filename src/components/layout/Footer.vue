@@ -60,22 +60,42 @@
                 <ul class="list-unstyled d-flex">
                     <li class="ms-3">
                         <a href="#" class="bi">
-                            <img src="../assets/facebook.png" width="24" height="24"/>
+                            <font-awesome-icon 
+                                :icon="{ prefix: 'fab', iconName: 'facebook' }" 
+                                size="lg" 
+                                color="white" 
+                                class="icons"
+                            />
                         </a>
                     </li>
                     <li class="ms-3">
                         <a href="#" class="bi">
-                            <img src="../assets/instagram.png" width="24" height="24"/>
+                            <font-awesome-icon 
+                                :icon="{ prefix: 'fab', iconName: 'instagram' }" 
+                                size="lg" 
+                                color="white" 
+                                class="icons"
+                            />
                         </a>
                     </li>
                     <li class="ms-3">
                         <a href="#" class="bi">
-                            <img src="../assets/youtube.png" width="24" height="24"/>
+                            <font-awesome-icon 
+                                :icon="{ prefix: 'fab', iconName: 'youtube' }" 
+                                size="lg" 
+                                color="white"
+                                class="icons" 
+                            />
                         </a>
                     </li>
                     <li class="ms-3">
                         <a href="#" class="bi">
-                            <img src="../assets/linkedin.png" width="24" height="24"/>
+                            <font-awesome-icon 
+                                :icon="{ prefix: 'fab', iconName: 'linkedin' }" 
+                                size="lg" 
+                                color="white" 
+                                class="icons"
+                            />
                         </a>
                     </li>
                 </ul>
@@ -85,10 +105,10 @@
 </template>
 
 <script>
-import SearchForm from "../components/SearchForm";
+import SearchForm from "@/components/common/SearchForm";
 export default {
     name: "Footer",
-    components: {
+    components: { 
         SearchForm
     },
     methods: {
@@ -110,7 +130,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
     footer {
         min-width: 100%;
         background-color: $darkPurple;
@@ -124,5 +144,8 @@ export default {
     .searchForm {
         background-color: transparent;
         padding: 0;
+    }
+    .icons:hover {
+        color: gray;
     }
 </style>

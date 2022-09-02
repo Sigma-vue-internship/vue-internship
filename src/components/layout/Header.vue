@@ -5,10 +5,11 @@
 </template>
 
 <script>
-import Navbar from "./Navbar.vue";
+import Navbar from "./Navbar";
 export default {
-  components: {
-    Navbar,
+  name: "Header",
+  components: { 
+    Navbar
   },
 };
 </script>
