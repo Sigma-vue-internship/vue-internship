@@ -8,7 +8,7 @@
         <div class="main__overlay"></div>
       </div>
       <div class="text-center">
-        <div class="main__watch py-3">
+        <div class="main__watch py-4">
           <h4>Find movie or actor info</h4>
           <SearchForm
               :mode="'preview'"
@@ -31,7 +31,6 @@
           route="/movie/"
           :elements="movies"
           :changePage="changeMoviesPage"
-          class="pb-5"
       />
     </section>
   </div>
