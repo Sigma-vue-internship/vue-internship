@@ -84,6 +84,7 @@
 import SpinnerLoader from "../components/SpinnerLoader.vue";
 import vueShowMoreText from "vue-show-more-text";
 import MediaList from "../components/MediaList.vue";
+import { mapActions } from "vuex";
 export default {
   components: { SpinnerLoader, vueShowMoreText, MediaList },
   data() {
@@ -99,6 +100,11 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      "findSingleCelebrity",
+      "getCelebrityImages",
+      "getCelebrityMovies",
+    ]),
     selectImg(imgUrl, i) {
       if (this.celebrityImages[i] === this.profilePath) {
         this.selectedImg = "";
@@ -118,37 +124,10 @@ export default {
       this.prevSelectedImg = imgUrl;
     },
     showHideBio() {},
-    setRouteWatcher() {
-      this.$watch(
-        () => this.$route.params,
-        async () => {
-          this.isLoading = true;
-          this.selectedImg = "";
-          this.resData = await this.$store.dispatch(
-            "findSingleCelebrity",
-            this.$route.params.id
-          );
-          this.resImagesData = await this.$store.dispatch(
-            "getCelebrityImages",
-            this.$route.params.id
-          );
-          this.isLoading = false;
-        }
-      );
-    },
     async getCelebrityData() {
-      this.resData = await this.$store.dispatch(
-        "findSingleCelebrity",
-        this.$route.params.id
-      );
-      this.resImagesData = await this.$store.dispatch(
-        "getCelebrityImages",
-        this.$route.params.id
-      );
-      const { data } = await this.$store.dispatch(
-        "getCelebrityMovies",
-        this.$route.params.id
-      );
+      this.resData = await this.findSingleCelebrity(this.$route.params.id);
+      this.resImagesData = await this.getCelebrityImages(this.$route.params.id);
+      const { data } = await this.getCelebrityMovies(this.$route.params.id);
       this.celebrityMovies = data.cast;
     },
   },
@@ -192,7 +171,6 @@ export default {
   async created() {
     try {
       this.isLoading = true;
-      await this.setRouteWatcher();
       await this.getCelebrityData();
       this.isLoading = false;
     } catch (e) {

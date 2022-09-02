@@ -26,10 +26,25 @@ const routes = [
     component: () => import("../views/CelebrityDetailsView.vue"),
   },
   {
-    path: "/user/:id",
+    path: "/user",
     name: "user",
-    component: () => import("../views/User/ProfileView"),
+    component: () => import("../views/User/UserView"),
     children: [
+      {
+        path: "signup",
+        name: "signup",
+        component: () => import("../views/User/SignupView"),
+      },
+      {
+        path: "login",
+        name: "login",
+        component: () => import("../views/User/LoginView"),
+      },
+      {
+        path: "favorites",
+        name: "favorites",
+        component: () => import("../views/User/FavoritesView"),
+      },
       {
         path: "favorites",
         name: "favorites",
