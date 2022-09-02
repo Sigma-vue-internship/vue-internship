@@ -24,9 +24,11 @@ axiosInstance.interceptors.request.use((config) => {
 
 Vue.use(BootstrapVue);
 Vue.use(VueAxios, axiosInstance);
-store.axios = axiosInstance;
 Vue.use(Notifications);
 Vue.use(withUUID);
+
+store.axios = axiosInstance;
+
 directives.forEach((directive) => {
   Vue.directive(directive.name, directive);
 });

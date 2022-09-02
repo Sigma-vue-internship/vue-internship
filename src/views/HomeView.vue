@@ -56,15 +56,12 @@ export default {
   methods: {
     async findMedia(searchData) {
       if (searchData) {
-        this.$router
-            .push({
-              path: "/search",
-              query: {
-                searchQuery: searchData.searchQuery,
-              },
-            })
-            .catch(() => {});
-        return;
+        this.$router.push({
+          path: "/search",
+          query: {
+            searchQuery: searchData.searchQuery,
+          },
+        })
       }
     },
     async changeCelebritiesPage() {
