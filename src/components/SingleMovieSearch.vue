@@ -93,6 +93,9 @@ export default {
   .movie-result .card-text {
     display: none;
   }
+  .movie-result .card-title {
+    font-size: 18px;
+  }
 }
 .movie-raiting {
   width: 30%;

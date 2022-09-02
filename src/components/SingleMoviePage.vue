@@ -1,7 +1,7 @@
 <template>
-  <div class="movie__container p-5">
-    <div class="row movie">
-      <div class="movie__poster col-lg-4">
+  <div class="container p-5">
+    <div class="row gx-0 justify-content-between">
+      <div class="movie__poster col-lg-4 col-xl-3">
         <img
           class="movie__poster-img img-fluid"
           :src="posterPath"
@@ -20,7 +20,7 @@
           />
         </div>
       </div>
-      <div class="movie__info col-lg-7">
+      <div class="movie__info col-lg-7 col-xl-8">
         <h1>{{ movie.title }}</h1>
         <span class="movie__tagline" v-if="movie.tagline">{{
           movie.tagline
@@ -39,14 +39,8 @@
         </b-button>
       </div>
     </div>
-    <div
-      v-if="imgUrls && imgUrls.length"
-      class="row justify-content-end p-1 my-4"
-    >
-      <Carousel
-        class="col-lg-7 movie-carousel col-lg-7-p-4"
-        :imgUrls="imgUrls"
-      />
+    <div v-if="imgUrls && imgUrls.length" class="row my-4 gx-0">
+      <Carousel class="col-lg-12 movie-carousel" :imgUrls="imgUrls" />
     </div>
   </div>
 </template>
@@ -112,13 +106,8 @@ export default {
 
 <style lang="scss">
 @import "../assets/scss/variables.scss";
-.movie {
-  display: flex;
-  justify-content: space-around;
-}
 .movie-carousel {
   padding: 0;
-  margin-right: 1.8%;
 }
 @media (max-width: 992px) {
   .movie-carousel {
