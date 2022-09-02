@@ -1,0 +1,32 @@
+@import "./variables.scss";
+
+@media (max-width: 1400px) and (min-width: 991px) {
+    .element {
+      height: $cardHeight*0.85!important;
+      width: $cardWidth*0.85!important;
+    }
+}
+@media (max-width: 990px) and (min-width: 768px) {
+    .element {
+        height: $cardHeight*0.79!important;
+        width: $cardWidth*0.79!important;
+    }
+}
+@media (max-width: 767px) and (min-width: 576px) {
+    .element {
+        height: $cardHeight*0.78!important;
+        width: $cardWidth*0.78!important;
+    }
+}
+@media (max-width: 575px) and (min-width: 376px) {
+    .element {
+        height: $cardHeight*0.70!important;
+        width: $cardWidth*0.70!important;
+    }
+}
+@media (max-width: 375px) {
+    .element {
+        height: $cardHeight*0.71!important;
+        width: $cardWidth*0.71!important;
+    }
+}

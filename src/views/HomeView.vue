@@ -1,30 +1,39 @@
 <template>
   <div class="main">
-    <div class="main__home">
-      <div class="main__caption">
-        <div class="main__logo">
-          <div class="main__name">
-            <h1>Moviedesk</h1>
-          </div>
+    <div class="text-white">
+      <div class="main__top">
+        <div class="main__name text-center py-3">
+          <h1>Moviedesk</h1>
         </div>
-        <div class="main__watch">
-          <p>Watch films online</p>
-          <SearchForm :mode="'preview'" @findMedia="findMedia" />
+        <div class="main__overlay"></div>
+      </div>
+      <div class="text-center">
+        <div class="main__watch py-3">
+          <h4>Find movie or actor info</h4>
+          <SearchForm
+              :mode="'preview'"
+              @findMedia="findMedia"
+              class="main__searchForm"
+          />
         </div>
       </div>
-      <MediaList
-        title="Popular actors"
-        route="/celebrity/"
-        :elements="celebrities"
-        :changePage="changeCelebritiesPage"
-      />
-      <MediaList
-        title="Popular movies"
-        route="/movie/"
-        :elements="movies"
-        :changePage="changeMoviesPage"
-      />
     </div>
+    <section class="px-2 text-center container">
+      <MediaList
+          title="Popular actors"
+          route="/celebrity/"
+          :elements="celebrities"
+          :changePage="changeCelebritiesPage"
+          class="pt-3"
+      />
+      <MediaList
+          title="Popular movies"
+          route="/movie/"
+          :elements="movies"
+          :changePage="changeMoviesPage"
+          class="pb-5"
+      />
+    </section>
   </div>
 </template>
 
@@ -35,37 +44,34 @@ export default {
   name: "HomeView",
   components: {
     SearchForm,
-    MediaList,
+    MediaList
   },
   data() {
     return {
       celebrities: [],
       celebritiesPage: 1,
       movies: [],
-      moviesPage: 1,
-    };
+      moviesPage: 1
+    }
   },
   methods: {
     async findMedia(searchData) {
       if (searchData) {
         this.$router
-          .push({
-            path: "/search",
-            query: {
-              searchQuery: searchData.searchQuery,
-            },
-          })
-          .catch(() => {});
+            .push({
+              path: "/search",
+              query: {
+                searchQuery: searchData.searchQuery,
+              },
+            })
+            .catch(() => {});
         return;
       }
     },
     async changeCelebritiesPage() {
       try {
         this.celebritiesPage++;
-        const response = await this.$store.dispatch(
-          "changeCelebritiesPage",
-          this.celebritiesPage
-        );
+        const response = await this.$store.dispatch("changeCelebritiesPage", this.celebritiesPage);
         const { data } = response;
         this.celebrities = this.celebrities.concat(data.results);
       } catch (error) {
@@ -75,13 +81,10 @@ export default {
     async changeMoviesPage() {
       try {
         this.moviesPage++;
-        const response = await this.$store.dispatch(
-          "changeMoviesPage",
-          this.moviesPage
-        );
+        const response = await this.$store.dispatch("changeMoviesPage", this.moviesPage);
         const { data } = response;
         this.movies = this.movies.concat(data.results);
-      } catch (error) {
+      } catch(error) {
         console.log(error);
       }
     },
@@ -98,110 +101,48 @@ export default {
       const response = await this.$store.dispatch("getMovies");
       const { data } = response;
       this.movies = data.results;
-    } catch (error) {
+    } catch(error) {
       console.log(error);
     }
   },
-};
+}
 </script>
 
 <style scoped lang="scss">
 @import "../assets/scss/variables.scss";
 .main {
-  @include flex-center(column);
-  text-align: center;
-  &__home {
-    width: 100%;
-  }
-  &__caption {
-    height: 950px;
-    border-radius: $borderRadius;
-    @include flex-center(column);
-    flex-wrap: nowrap;
-  }
-  &__logo {
-    margin-top: 25px;
-    background-image: url(../assets/hero_image.png);
-    width: 100%;
-    height: 750px;
-    @include flex-center(column);
-    border-top-left-radius: $borderRadius;
-    border-top-right-radius: $borderRadius;
+  &__top {
+    background-image: url(../assets/poster.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+    position: relative;
   }
   &__name {
-    height: 200px;
-    background-color: rgba(122, 63, 224, 0.537);
-    width: 100%;
-    @include flex-center(column);
+    background-color:rgba(122, 63, 224, 0.537);
     h1 {
-      font-size: 70px;
-      font-weight: lighter;
-      color: white;
+      position: relative;
+      z-index: 3;
     }
+  }
+  &__overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
+    opacity: 0.5;
+    z-index: 1;
   }
   &__watch {
-    width: 1100px;
-    height: 240px;
-    border-bottom-left-radius: $borderRadius;
-    border-bottom-right-radius: $borderRadius;
     background-color: $lightPurple;
-    p {
-      color: white;
-      padding-top: 30px;
-      font-size: 30px;
-    }
   }
-}
-@media (max-width: 992px) and (min-width: 376px) {
-  .main {
-    &__home {
-      width: 100%;
-    }
-    &__caption {
-      height: 650px;
-    }
-    &__logo {
-      height: 450px;
-    }
-    &__name {
-      height: 150px;
-      h1 {
-        font-size: 50px;
-      }
-    }
-    &__watch {
-      margin-top: 45px;
-      width: 100%;
-      p {
-        font-size: 20px;
-      }
-    }
-  }
-}
-@media (max-width: 375px) {
-  .main {
-    &__home {
-      width: 100%;
-    }
-    &__caption {
-      height: 450px;
-    }
-    &__logo {
-      height: 250px;
-    }
-    &__name {
-      height: 100px;
-      h1 {
-        font-size: 35px;
-      }
-    }
-    &__watch {
-      margin-top: 10px;
-      width: 100%;
-      p {
-        font-size: 16px;
-      }
-    }
+  &__searchForm {
+    max-width: 800px;
   }
 }
 </style>

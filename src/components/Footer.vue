@@ -1,38 +1,128 @@
 <template>
-    <div class="container">
-        <footer>
-            <b-nav align="center" tabs>
-                <b-nav-item href="#">Support</b-nav-item>
-                <b-nav-item href="#">Features</b-nav-item>
-                <b-nav-item href="#">Privacy</b-nav-item>
-                <b-nav-item href="#">FAQ</b-nav-item>
-                <b-nav-item href="#">About</b-nav-item>
-            </b-nav>
-            <p class="text-center text-muted">© 2022 Sigma Software</p>
-        </footer>
-    </div>
+      <footer class="pt-5 px-5">
+          <div class="container">
+            <div class="row">
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Support</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Home</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Conditions of Use</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">For developers</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Features</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Press Room</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">About us</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Pricing</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2 mb-3">
+                    <h5>Privacy</h5>
+                    <ul class="nav flex-column">
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Advertising</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Site Index</a>
+                        </li>
+                        <li class="nav-item mb-2">
+                            <a href="#" class="nav-link p-0 text-muted">Privacy Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-5 offset-md-1 mb-3">
+                    <form>
+                        <h5>Find movie or actor info</h5>
+                            <SearchForm
+                                :mode="'preview'"
+                                @findMedia="findMedia"
+                                class="searchForm"
+                            />
+                    </form>
+                </div>
+            </div>
+            <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+                <p>© 2022 Sigma, Inc. All rights reserved.</p>
+                <ul class="list-unstyled d-flex">
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/facebook.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/instagram.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/youtube.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                    <li class="ms-3">
+                        <a href="#" class="bi">
+                            <img src="../assets/linkedin.png" width="24" height="24"/>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+          </div>
+      </footer>
 </template>
 
 <script>
+import SearchForm from "../components/SearchForm";
 export default {
-    name: "Footer"
+    name: "Footer",
+    components: {
+        SearchForm
+    },
+    methods: {
+        async findMedia(searchData) {
+            if (searchData) {
+                this.$router
+                    .push({
+                    path: "/search",
+                    query: {
+                        searchQuery: searchData.searchQuery,
+                    },
+                    })
+                    .catch(() => {});
+                return;
+            }
+        },
+    }
 }
 </script>
 
 <style scoped lang="scss">
-    .container {
+@import "../assets/scss/variables.scss";
+    footer {
         min-width: 100%;
-        height: 150px;
-        bottom: 0;
-        background-color: rgb(58, 56, 56);
+        background-color: $darkPurple;
     }
-    .nav-link, .nav-link:focus, .nav-link:hover {
+    h5 {
         color: white;
     }
     p {
-        padding-top: 10px;
+        color: rgb(184, 184, 184);
     }
-    footer {
-        padding-top: 20px;
+    .searchForm {
+        background-color: transparent;
+        padding: 0;
     }
 </style>
