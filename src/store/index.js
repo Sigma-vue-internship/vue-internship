@@ -13,11 +13,11 @@ export default new Vuex.Store({
       { searchQuery, searchBy = null, searchByValue = null }
     ) {
       if (!searchBy || !searchByValue) {
-        return this.axios.get(`/3/search/multi`, {
+        return this.axios.get(`search/multi`, {
           params: { query: searchQuery, page: 1 },
         });
       }
-      return this.axios.get(`/3/search/multi`, {
+      return this.axios.get(`search/multi`, {
         params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
       });
     },
@@ -26,16 +26,16 @@ export default new Vuex.Store({
       { searchQuery, searchBy = null, searchByValue = null, page }
     ) {
       if (!searchBy || !searchByValue) {
-        return this.axios.get(`/3/search/multi`, {
+        return this.axios.get(`search/multi`, {
           params: { query: searchQuery, page },
         });
       }
-      return this.axios.get(`/3/search/multi`, {
+      return this.axios.get(`search/multi`, {
         params: { query: searchQuery, [searchBy]: searchByValue, page },
       });
     },
     async findSingleCelebrity(context, celebrityId) {
-      return this.axios.get(`/3/person/${celebrityId}`);
+      return this.axios.get(`person/${celebrityId}`);
     },
 
     async getCelebrities() {
@@ -45,7 +45,7 @@ export default new Vuex.Store({
         },
       };
       try {
-        return await this.axios.get("/3/person/popular", options);
+        return await this.axios.get("person/popular", options);
       } catch (error) {
         console.error(error);
       }
@@ -58,7 +58,7 @@ export default new Vuex.Store({
       };
       try {
         return await this.axios.get(
-          `/3/person/${celebrityId}/movie_credits`,
+          `person/${celebrityId}/movie_credits`,
           options
         );
       } catch (error) {
@@ -72,16 +72,16 @@ export default new Vuex.Store({
         },
       };
       try {
-        return await this.axios.get("/3/person/popular", options);
+        return await this.axios.get("person/popular", options);
       } catch (error) {
         console.error(error);
       }
     },
     async getCelebrityImages(_, celebrityId) {
-      return this.axios.get(`/3/person/${celebrityId}/images`);
+      return this.axios.get(`person/${celebrityId}/images`);
     },
     async getMovieImages(_, movieId) {
-      return this.axios.get(`/3/movie/${movieId}/images`);
+      return this.axios.get(`movie/${movieId}/images`);
     },
     async getMovies() {
       const options = {
@@ -90,7 +90,7 @@ export default new Vuex.Store({
         },
       };
       try {
-        return await this.axios.get("/3/movie/popular", options);
+        return await this.axios.get("movie/popular", options);
       } catch (error) {
         console.error(error);
       }
@@ -102,14 +102,14 @@ export default new Vuex.Store({
         },
       };
       try {
-        return await this.axios.get("/3/movie/popular", options);
+        return await this.axios.get("movie/popular", options);
       } catch (error) {
         console.error(error);
       }
     },
     async getMovie(_, id) {
       try {
-        return await this.axios.get(`/3/movie/${id}`);
+        return await this.axios.get(`movie/${id}`);
       } catch (error) {
         console.error(error);
       }

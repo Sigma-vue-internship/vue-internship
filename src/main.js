@@ -10,7 +10,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
 import directives from "./directives";
 const axiosInstance = axios.create({
-  baseURL: "https://api.themoviedb.org",
+  baseURL: "https://api.themoviedb.org/3/",
 });
 
 axiosInstance.interceptors.request.use((config) => {

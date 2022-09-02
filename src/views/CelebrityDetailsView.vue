@@ -7,35 +7,25 @@
         container
         d-flex
         flex-column
-        align-items-center
+        align-items-between
         justify-content-center
         px-2
       "
     >
-      <div class="row gx-0 py-4">
-        <div class="celebrity-profile__image-container py-4 col-lg-5 col-xl-5">
+      <div class="row gx-0 py-4 d-flex">
+        <div class="celebrity-profile__image-container col-lg-5 col-xl-5">
           <div class="d-flex flex-column px-2">
             <img
               class="celebrity-profile__image img-fluid"
               :src="selectedImg ? selectedImg : profilePath"
               alt="celebrity profile image"
             />
-            <div class="movie-raiting">
-              <progress
-                class="movie-raiting__bar"
-                :style="{ accentColor: celebrityRaitingColor }"
-                :value="celebrityRaiting"
-                max="250"
-              />
-              <div class="movie-raiting__info row text-center">
-                <h4 class="movie-raiting__title col-lg-5">Popularity</h4>
-                <p class="movie-raiting__number col-lg-4">
-                  {{ celebrityRaiting }}
-                </p>
-              </div>
-            </div>
+            <Rating v-if="celebrityRating" :celebrityRating="celebrityRating" />
           </div>
-          <div class="celebrity-profile__preview-container">
+          <div
+            v-if="celebrityImages.length"
+            class="celebrity-profile__preview-container"
+          >
             <img
               v-for="(celImg, i) in celebrityImages"
               :key="`celelebrity_img ${i}`"
@@ -85,8 +75,9 @@ import SpinnerLoader from "../components/SpinnerLoader.vue";
 import vueShowMoreText from "vue-show-more-text";
 import MediaList from "../components/MediaList.vue";
 import { mapActions } from "vuex";
+import Rating from "../components/Rating.vue";
 export default {
-  components: { SpinnerLoader, vueShowMoreText, MediaList },
+  components: { SpinnerLoader, vueShowMoreText, MediaList, Rating },
   data() {
     return {
       resData: null,
@@ -150,22 +141,10 @@ export default {
     profilePath() {
       return this.celebrity.profile_path
         ? "https://image.tmdb.org/t/p/w300/" + this.celebrity.profile_path
-        : "https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png";
+        : "https://dummyimage.com/300x450/000/00ff8c";
     },
-    celebrityRaiting() {
-      return this.celebrity.popularity;
-    },
-    celebrityRaitingColor() {
-      if (this.celebrityRaiting < 100) {
-        return "rgb(255, 80, 80)";
-      }
-      if (this.celebrityRaiting >= 100 && this.celebrityRaiting < 175) {
-        return "rgb(252, 255, 80)";
-      }
-      if (this.celebrityRaiting >= 175) {
-        return "rgb(150, 255, 80)";
-      }
-      return null;
+    celebrityRating() {
+      return Math.floor(this.celebrity.popularity);
     },
   },
   async created() {
@@ -212,30 +191,9 @@ export default {
     max-height: 700px;
   }
 }
-.movie-raiting {
-  margin: 0 auto;
-  margin-top: 20px;
-  width: 90%;
-}
-.movie-raiting__bar {
-  width: 100%;
-  height: 20px;
-}
-.movie-raiting__info {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  color: white;
-}
-.movie-raiting__number {
-  font-size: 1rem;
-}
-.movie-raiting__title {
-  font-size: 1.2rem;
-}
 .celebrity-profile__image-container {
   display: flex;
-  justify-content: center;
+  margin-bottom: 20px;
   .celebrity-profile__preview-container {
     display: flex;
     flex-direction: column;
@@ -266,6 +224,11 @@ export default {
     &:last-of-type {
       margin-bottom: 0;
     }
+  }
+}
+@media (max-width: 992px) {
+  .celebrity-profile__image-container {
+    justify-content: center;
   }
 }
 </style>

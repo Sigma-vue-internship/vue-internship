@@ -4,7 +4,6 @@
     no-animation
     style="box-shadow: 8px 8px 24px 0px rgb(0, 0, 0)"
   >
-    <!-- Text slides with image -->
     <b-carousel-slide
       v-for="(url, i) in imgUrls"
       :key="i"
@@ -26,5 +25,11 @@ export default {
 <style lang="scss">
 .carousel-inner .carousel-item img {
   border-radius: 10px;
+}
+.carousel-control-prev {
+  justify-content: flex-start;
+}
+.carousel-control-next {
+  justify-content: flex-end;
 }
 </style>
