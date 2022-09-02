@@ -44,7 +44,7 @@ export default {
 <style scoped lang="scss">
 @import "../assets/scss/variables.scss";
 .scroll {
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   padding-left: 0;
 }
