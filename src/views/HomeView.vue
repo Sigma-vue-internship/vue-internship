@@ -31,6 +31,7 @@
         route="/movie/"
         :elements="movies" 
         :changePage="changeMoviesPage"
+        class="pb-5"
       />
     </section>
   </div>
@@ -112,6 +113,10 @@ export default {
 .main {
   &__top {
     background-image: url(../assets/poster.jpg);
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
     padding-top: 6rem;
     padding-bottom: 6rem;
     position: relative;

@@ -46,13 +46,12 @@
                 </div>
                 <div class="col-md-5 offset-md-1 mb-3">
                     <form>
-                        <h5>Subscribe to our newsletter</h5>
-                        <p>Monthly digest of what's new and exciting from us.</p>
-                        <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                            <label for="newsletter" class="visually-hidden">Email address</label>
-                            <input id="newsletter" type="text" class="form-control" placeholder="Email address">
-                            <button class="btn btn-dark" type="button">Subscribe</button>
-                        </div>
+                        <h5>Find movie or actor info</h5>
+                            <SearchForm
+                                :mode="'preview'"
+                                @findMedia="findMedia"
+                                class="searchForm"
+                            />
                     </form>
                 </div>
             </div>
@@ -86,20 +85,44 @@
 </template>
 
 <script>
+import SearchForm from "../components/SearchForm";
 export default {
-    name: "Footer"
+    name: "Footer",
+    components: {
+        SearchForm
+    },
+    methods: {
+        async findMedia(searchData) {
+            if (searchData) {
+                this.$router
+                    .push({
+                    path: "/search",
+                    query: {
+                        searchQuery: searchData.searchQuery,
+                    },
+                    })
+                    .catch(() => {});
+                return;
+            }
+        },
+    }
 }
 </script>
 
 <style scoped lang="scss">
+@import "../assets/scss/variables.scss";
     .container {
         min-width: 100%;
-        background-color: rgb(58, 56, 56);
+        background-color: $darkPurple;
     }
     h5 {
         color: white;
     }
     p {
         color: rgb(184, 184, 184);
+    }
+    .searchForm {
+        background-color: transparent;
+        padding: 0;
     }
 </style>

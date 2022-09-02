@@ -4,7 +4,7 @@
       <div class="search-form">
         <div class="jumbotron">
           <h1 class="display-4" v-if="mode !== 'preview'">Find media</h1>
-          <div class="d-grid d-sm-flex justify-content-sm-center search-form__filters">
+          <div class="d-grid d-sm-flex justify-content-sm-center search-form__filters input-group-lg">
             <b-form-input
               v-model="searchQuery"
               placeholder="Type movie or actor title here"
