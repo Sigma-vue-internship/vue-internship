@@ -5,7 +5,7 @@
         :img-src="
           celebrity.profile_path
             ? 'https://image.tmdb.org/t/p/w185/' + celebrity.profile_path
-            : 'https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png'
+            : 'https://dummyimage.com/185x280/000/00ff8c'
         "
         img-alt="Card image"
         img-width="185"
@@ -14,17 +14,8 @@
         class="mb-3"
       >
         <b-card-title>{{ celebrity.name }}</b-card-title>
-        <div class="movie-raiting">
-          <progress
-            class="movie-raiting__bar"
-            :style="{ accentColor: celebrityRaitingColor }"
-            :value="celebrityRaiting"
-            max="250"
-          />
-          <div class="movie-raiting__info">
-            <h4 class="movie-raiting__title">Popularity</h4>
-            <p class="movie-raiting__number">{{ celebrityRaiting }}</p>
-          </div>
+        <div class="rating">
+          <Rating :celebrityRating="celebrityRating" />
         </div>
         <b-card-text
           ><strong>Known for:</strong>
@@ -44,6 +35,7 @@
 </template>
 
 <script>
+import Rating from "./Rating.vue";
 export default {
   props: {
     celebrity: {
@@ -63,22 +55,11 @@ export default {
         this.celebrity.known_for.map((movie) => movie.title).join(", ")
       );
     },
-    celebrityRaiting() {
-      return this.celebrity.popularity;
-    },
-    celebrityRaitingColor() {
-      if (this.celebrityRaiting < 100) {
-        return "rgb(255, 80, 80)";
-      }
-      if (this.celebrityRaiting >= 100 && this.celebrityRaiting < 175) {
-        return "rgb(252, 255, 80)";
-      }
-      if (this.celebrityRaiting >= 175) {
-        return "rgb(150, 255, 80)";
-      }
-      return null;
+    celebrityRating() {
+      return Math.floor(this.celebrity.popularity);
     },
   },
+  components: { Rating },
 };
 </script>
 
@@ -88,6 +69,15 @@ export default {
   --bs-card-color: white;
   cursor: pointer;
 }
+.celebrity-result .rating {
+  width: 30%;
+}
+@media (max-width: 992px) {
+  .celebrity-result .rating {
+    width: 60%;
+  }
+}
+
 @media (max-width: 450px) {
   .celebrity-result .card-text {
     display: none;
@@ -95,32 +85,5 @@ export default {
   .celebrity-result .card-title {
     font-size: 18px;
   }
-  .movie-raiting__title {
-    display: none;
-  }
-}
-.movie-raiting {
-  width: 30%;
-}
-@media (max-width: 768px) {
-  .movie-raiting {
-    width: 100%;
-  }
-}
-.movie-raiting__bar {
-  width: 100%;
-  height: 20px;
-}
-.movie-raiting__info {
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  color: white;
-}
-.movie-raiting__number {
-  font-size: 1rem;
-}
-.movie-raiting__title {
-  font-size: 1.2rem;
 }
 </style>

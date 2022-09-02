@@ -84,12 +84,12 @@ export default {
               searchByValue: searchData.searchByValue,
             },
           })
+          //
           .catch(() => {});
         try {
           this.isLoading = true;
           this.resData = await this.$store.dispatch("findMedia", searchData);
           if (this.resData.data.results.length === 0) {
-            console.log(1);
             this.$notify({
               group: "empty-search",
               classes: "search-notification",

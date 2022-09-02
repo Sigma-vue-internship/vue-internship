@@ -3,12 +3,14 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5 col-xl-4">
-          <div class="login-wrap py-5">
+          <div class="login-wrap">
             <div
               class="img d-flex align-items-center justify-content-center"
             ></div>
             <h3 class="text-center mb-0">Welcome</h3>
-            <p class="text-center">Sign in by entering the information below</p>
+            <p class="text-center welcome-info">
+              Sign in by entering the information below
+            </p>
             <form action="#" class="login-form">
               <div class="form-group">
                 <div
@@ -46,14 +48,10 @@
                   type="submit"
                   class="btn form-control btn-primary rounded submit px-3"
                 >
-                  Get Started
+                  Login
                 </button>
               </div>
             </form>
-            <div class="w-100 text-center mt-4 text">
-              <p class="mb-0">Don't have an account?</p>
-              <a href="#">Sign Up</a>
-            </div>
           </div>
         </div>
       </div>
@@ -67,11 +65,14 @@ export default {};
 
 <style lang="scss" scoped>
 @import "../../assets/scss/variables.scss";
+.welcome-info {
+  margin-bottom: 20px;
+}
 .forgot-msg {
   margin-bottom: 20px;
 }
 .ftco-section {
-  padding: 7em 0;
+  padding: 3em 0;
   text-decoration: none;
 }
 .ftco-section a {
@@ -94,7 +95,8 @@ export default {};
 //COVER BG
 .img {
   background-size: cover;
-  background-image: url("../../assets/m_logo.png");
+  background-image: url("../../assets/m_logo_white.png");
+  background-color: transparent;
   background-repeat: no-repeat;
   background-position: center center;
 }
@@ -103,8 +105,7 @@ export default {};
   position: relative;
   background: $darkPurple;
   border-radius: 5px;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding: 40px 40px 60px 40px;
   -webkit-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
   -moz-box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);
   box-shadow: 0px 10px 34px -15px rgba(0, 0, 0, 0.24);

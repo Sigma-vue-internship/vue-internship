@@ -7,18 +7,7 @@
           :src="posterPath"
           alt="movie poster"
         />
-        <div class="movie-raiting">
-          <div class="movie-raiting__info">
-            <h2 class="movie-raiting__title">Movie raiting</h2>
-            <p class="movie-raiting__number">{{ movieRaiting }}</p>
-          </div>
-          <progress
-            class="movie-raiting__bar"
-            :style="{ accentColor: movieRaitingColor }"
-            :value="movieRaiting"
-            max="10"
-          />
-        </div>
+        <Rating :movieRating="movieRating" />
       </div>
       <div class="movie__info col-lg-7 col-xl-8">
         <h1>{{ movie.title }}</h1>
@@ -47,13 +36,14 @@
 
 <script>
 import Carousel from "./Carousel.vue";
+import Rating from "./Rating.vue";
 export default {
   data() {
     return {
       movieImgRes: null,
     };
   },
-  components: { Carousel },
+  components: { Carousel, Rating },
   name: "SingleMoviePage",
   props: {
     movie: Object,
@@ -70,25 +60,13 @@ export default {
           .splice(0, 5)
       );
     },
-    movieRaitingColor() {
-      if (this.movieRaiting < 4) {
-        return "rgb(255, 80, 80)";
-      }
-      if (this.movieRaiting >= 4 && this.movieRaiting < 6) {
-        return "rgb(252, 255, 80)";
-      }
-      if (this.movieRaiting >= 6) {
-        return "rgb(150, 255, 80)";
-      }
-      return null;
-    },
     posterPath() {
       return this.movie.poster_path
         ? "https://image.tmdb.org/t/p/w300/" + this.movie.poster_path
-        : "https://d3aa3603f5de3f81cb9fdaa5c591a84d5723e3cb.hosting4cdn.com/wp-content/uploads/2020/11/404-poster-not-found-CG17701-1.png";
+        : "https://dummyimage.com/300x450/000/00ff8c";
     },
-    movieRaiting() {
-      return this.movie.vote_average;
+    movieRating() {
+      return Math.floor(this.movie.vote_average);
     },
   },
   async created() {
@@ -121,28 +99,7 @@ export default {
   padding-bottom: 20px;
   .movie__poster-img {
     box-shadow: 8px 8px 24px 0px rgb(0 0 0);
-    margin-bottom: 40px;
     border-radius: 10px;
-  }
-  .movie-raiting {
-    width: 60%;
-  }
-  .movie-raiting__bar {
-    width: 100%;
-    height: 30px;
-  }
-  .movie-raiting__info {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    text-align: end;
-    color: white;
-  }
-  .movie-raiting__number {
-    font-size: 1rem;
-  }
-  .movie-raiting__title {
-    font-size: 1.2rem;
   }
 }
 .movie__info {
