@@ -61,6 +61,7 @@ export default {
 <style lang="scss">
 .movie-result .rating {
   width: 30%;
+  margin-bottom: 15px;
 }
 @media (max-width: 992px) {
   .movie-result .rating {

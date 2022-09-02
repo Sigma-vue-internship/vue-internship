@@ -12,7 +12,7 @@
     />
     <div class="movie-raiting__info row text-center">
       <h4 class="movie-raiting__title col-md-6 col-lg-5">Rating</h4>
-      <p class="movie-raiting__number col-md-6 col-lg-3">
+      <p class="movie-raiting__number col-md-6 col-lg-4">
         {{ celebrityRating ? celebrityRating : movieRating }}
       </p>
     </div>
@@ -75,12 +75,14 @@ export default {
 .movie-raiting__number {
   text-align: end;
   font-size: 1rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 .movie-raiting__title {
   text-align: start;
   font-size: 1.2rem;
 }
-@media (max-width: 992px) {
+@media (max-width: 768px) {
   .movie-raiting__number {
     text-align: center;
   }
@@ -88,7 +90,7 @@ export default {
     text-align: center;
   }
 }
-@media (max-width: 450px) {
+@media (max-width: 768px) {
   .movie-raiting__title {
     display: none;
   }

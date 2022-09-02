@@ -9,12 +9,15 @@
         flex-column
         align-items-between
         justify-content-center
-        px-2
+        p-4
       "
     >
       <div class="row gx-0 py-4 d-flex">
-        <div class="celebrity-profile__image-container col-lg-5 col-xl-5">
-          <div class="d-flex flex-column px-2">
+        <div
+          class="celebrity-profile__image-container col-lg-5 col-xl-5"
+          :class="{ 'justify-content-center': !celebrityImages.length }"
+        >
+          <div class="d-flex flex-column px-4">
             <img
               class="celebrity-profile__image img-fluid"
               :src="selectedImg ? selectedImg : profilePath"
@@ -29,7 +32,7 @@
             <img
               v-for="(celImg, i) in celebrityImages"
               :key="`celelebrity_img ${i}`"
-              class="celebrity-profile__preview-img"
+              class="celebrity-profile__preview-img img-fluid"
               :src="celImg"
               @click="selectImg(celImg, i)"
             />
@@ -208,12 +211,12 @@ export default {
     display: block;
   }
   .celebrity-profile__preview-img {
-    width: 85px;
+    width: 125px;
     margin-bottom: 10px;
     border-radius: 10px;
     opacity: 0.7;
     box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
-
+    cursor:pointer;
     transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 500ms,
       opacity cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
     &:hover {

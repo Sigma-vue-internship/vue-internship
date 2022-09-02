@@ -3,13 +3,16 @@
     <div class="text-start text-white w-100 py-3">
       <h2>{{ title }}</h2>
     </div>
-    <b-container class="scroll d-flex flex-row">
+    <b-container
+      class="scroll d-flex flex-row"
+      :class="{ scroll: elements.length }"
+    >
       <ul class="list d-flex flex-row" v-if="elements.length">
         <SingleMediaElementList
-            :element="element"
-            v-for="element in elements"
-            :key="element.uuid"
-            @click.native="routeToElementPage(element.id)"
+          :element="element"
+          v-for="element in elements"
+          :key="element.uuid"
+          @click.native="routeToElementPage(element.id)"
         />
       </ul>
       <div v-if="changePage" v-intersection="changePage"></div>
@@ -25,17 +28,17 @@ export default {
     title: String,
     elements: Array,
     changePage: Function,
-    route: String
+    route: String,
   },
   components: {
-    SingleMediaElementList
+    SingleMediaElementList,
   },
   methods: {
     routeToElementPage(id) {
       this.$router.push({ path: `${this.route}${id}` });
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -58,6 +61,6 @@ export default {
   -webkit-box-shadow: inset 0 0 6px $lightPurple;
 }
 .list {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 </style>

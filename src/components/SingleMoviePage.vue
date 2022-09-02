@@ -1,35 +1,38 @@
 <template>
-  <div class="container p-5">
-    <div class="row gx-0 justify-content-between">
-      <div class="movie__poster col-lg-4 col-xl-3">
-        <img
-          class="movie__poster-img img-fluid"
-          :src="posterPath"
-          alt="movie poster"
-        />
-        <Rating :movieRating="movieRating" />
+  <div>
+    <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
+    <div class="container p-5">
+      <div v-if="!isLoading" class="row gx-0 justify-content-between">
+        <div class="movie__poster col-lg-4 col-xl-3">
+          <img
+            class="movie__poster-img img-fluid"
+            :src="posterPath"
+            alt="movie poster"
+          />
+          <Rating :movieRating="movieRating" />
+        </div>
+        <div class="movie__info col-lg-7 col-xl-8">
+          <h1>{{ movie.title }}</h1>
+          <span class="movie__tagline" v-if="movie.tagline">{{
+            movie.tagline
+          }}</span>
+          <p>
+            <strong>Genres:</strong>
+            {{ movie.genres.map((genre) => genre.name).join(", ") }}
+          </p>
+          <p><strong>Language:</strong> {{ movie.original_language }}</p>
+          <p><strong>Status:</strong> {{ movie.status }}</p>
+          <p><strong>Release date:</strong> {{ movie.release_date }}</p>
+          <p><strong>Runtime:</strong> {{ movie.runtime }}</p>
+          <p class="movie__overview">{{ movie.overview }}</p>
+          <b-button v-if="movie.homepage" :href="movie.homepage" variant="dark">
+            Go to the movie site
+          </b-button>
+        </div>
       </div>
-      <div class="movie__info col-lg-7 col-xl-8">
-        <h1>{{ movie.title }}</h1>
-        <span class="movie__tagline" v-if="movie.tagline">{{
-          movie.tagline
-        }}</span>
-        <p>
-          <strong>Genres:</strong>
-          {{ movie.genres.map((genre) => genre.name).join(", ") }}
-        </p>
-        <p><strong>Language:</strong> {{ movie.original_language }}</p>
-        <p><strong>Status:</strong> {{ movie.status }}</p>
-        <p><strong>Release date:</strong> {{ movie.release_date }}</p>
-        <p><strong>Runtime:</strong> {{ movie.runtime }}</p>
-        <p class="movie__overview">{{ movie.overview }}</p>
-        <b-button v-if="movie.homepage" :href="movie.homepage" variant="dark">
-          Go to the movie site
-        </b-button>
+      <div v-if="imgUrls && imgUrls.length && !isLoading" class="row my-4 gx-0">
+        <Carousel class="col-lg-12 movie-carousel" :imgUrls="imgUrls" />
       </div>
-    </div>
-    <div v-if="imgUrls && imgUrls.length" class="row my-4 gx-0">
-      <Carousel class="col-lg-12 movie-carousel" :imgUrls="imgUrls" />
     </div>
   </div>
 </template>
@@ -37,13 +40,15 @@
 <script>
 import Carousel from "./Carousel.vue";
 import Rating from "./Rating.vue";
+import SpinnerLoader from "./SpinnerLoader.vue";
 export default {
   data() {
     return {
       movieImgRes: null,
+      isLoading: false,
     };
   },
-  components: { Carousel, Rating },
+  components: { Carousel, Rating, SpinnerLoader },
   name: "SingleMoviePage",
   props: {
     movie: Object,
@@ -71,11 +76,15 @@ export default {
   },
   async created() {
     try {
+      this.isLoading = true;
       this.movieImgRes = await this.$store.dispatch(
         "getMovieImages",
         this.movie.id
       );
+      this.isLoading = false;
     } catch (e) {
+      this.isLoading = false;
+
       console.log(e);
     }
   },
