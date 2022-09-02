@@ -49,13 +49,13 @@ export default {
   height: 30px;
 }
 .scroll::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px $lightPurple;
+  -webkit-box-shadow: inset 0 0 6px black;
   border-radius: 20px;
 }
 .scroll::-webkit-scrollbar-thumb {
   border-radius: 20px;
-  background-color: $darkPurple;
-  -webkit-box-shadow: inset 0 0 6px $lightPurple;
+  background-color: $lightGreen;
+  -webkit-box-shadow: inset 0 0 6px black;
 }
 .list {
   padding-left: 0 !important;

@@ -11,29 +11,30 @@
         <div class="main__watch py-3">
           <h4>Find movie or actor info</h4>
           <SearchForm
-              :mode="'preview'"
-              @findMedia="findMedia"
-              class="main__searchForm"
+            :mode="'preview'"
+            @findMedia="findMedia"
+            class="main__searchForm"
           />
         </div>
       </div>
     </div>
     <section class="px-2 text-center container">
       <MediaList
-          title="Popular actors"
-          route="/celebrity/"
-          :elements="celebrities"
-          :changePage="changeCelebritiesPage"
-          class="pt-3"
+        title="Popular actors"
+        route="/celebrity/"
+        :elements="celebrities"
+        :changePage="changeCelebritiesPage"
+        class="pt-3"
       />
       <MediaList
-          title="Popular movies"
-          route="/movie/"
-          :elements="movies"
-          :changePage="changeMoviesPage"
-          class="pb-5"
+        title="Popular movies"
+        route="/movie/"
+        :elements="movies"
+        :changePage="changeMoviesPage"
+        class="pb-5"
       />
     </section>
+    <div class="main__bg"></div>
   </div>
 </template>
 
@@ -44,34 +45,37 @@ export default {
   name: "HomeView",
   components: {
     SearchForm,
-    MediaList
+    MediaList,
   },
   data() {
     return {
       celebrities: [],
       celebritiesPage: 1,
       movies: [],
-      moviesPage: 1
-    }
+      moviesPage: 1,
+    };
   },
   methods: {
     async findMedia(searchData) {
       if (searchData) {
         this.$router
-            .push({
-              path: "/search",
-              query: {
-                searchQuery: searchData.searchQuery,
-              },
-            })
-            .catch(() => {});
+          .push({
+            path: "/search",
+            query: {
+              searchQuery: searchData.searchQuery,
+            },
+          })
+          .catch(() => {});
         return;
       }
     },
     async changeCelebritiesPage() {
       try {
         this.celebritiesPage++;
-        const response = await this.$store.dispatch("changeCelebritiesPage", this.celebritiesPage);
+        const response = await this.$store.dispatch(
+          "changeCelebritiesPage",
+          this.celebritiesPage
+        );
         const { data } = response;
         this.celebrities = this.celebrities.concat(data.results);
       } catch (error) {
@@ -81,10 +85,13 @@ export default {
     async changeMoviesPage() {
       try {
         this.moviesPage++;
-        const response = await this.$store.dispatch("changeMoviesPage", this.moviesPage);
+        const response = await this.$store.dispatch(
+          "changeMoviesPage",
+          this.moviesPage
+        );
         const { data } = response;
         this.movies = this.movies.concat(data.results);
-      } catch(error) {
+      } catch (error) {
         console.log(error);
       }
     },
@@ -101,16 +108,22 @@ export default {
       const response = await this.$store.dispatch("getMovies");
       const { data } = response;
       this.movies = data.results;
-    } catch(error) {
+    } catch (error) {
       console.log(error);
     }
   },
-}
+};
 </script>
 
 <style scoped lang="scss">
 @import "../assets/scss/variables.scss";
 .main {
+  background-image: linear-gradient(
+    110.1deg,
+    rgba(30, 2, 83, 1) 44.2%,
+    rgba(198, 55, 160, 1) 138.2%
+  );
+
   &__top {
     background-image: url(../assets/poster.jpg);
     -webkit-background-size: cover;
@@ -122,7 +135,7 @@ export default {
     position: relative;
   }
   &__name {
-    background-color:rgba(122, 63, 224, 0.537);
+    background-color: rgba(122, 63, 224, 0.537);
     h1 {
       position: relative;
       z-index: 3;
@@ -140,6 +153,9 @@ export default {
   }
   &__watch {
     background-color: $lightPurple;
+    -webkit-box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
+    -moz-box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
+    box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
   }
   &__searchForm {
     max-width: 800px;
