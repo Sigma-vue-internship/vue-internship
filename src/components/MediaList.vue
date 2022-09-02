@@ -3,10 +3,7 @@
     <div class="text-start text-white w-100 py-3">
       <h2>{{ title }}</h2>
     </div>
-    <b-container
-      class="scroll d-flex flex-row"
-      :class="{ scroll: elements.length }"
-    >
+    <b-container class="scroll d-flex flex-row">
       <ul class="list d-flex flex-row" v-if="elements.length">
         <SingleMediaElementList
           :element="element"
