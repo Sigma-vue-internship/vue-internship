@@ -6,10 +6,10 @@
     <b-container class="scroll d-flex flex-row">
       <ul class="list d-flex flex-row" v-if="elements.length">
         <SingleMediaElementList
-          :element="element"
-          v-for="element in elements"
-          :key="element.uuid"
-          @click.native="routeToElementPage(element.id)"
+            :element="element"
+            v-for="element in elements"
+            :key="element.uuid"
+            @click.native="routeToElementPage(element.id)"
         />
       </ul>
       <div v-if="changePage" v-intersection="changePage"></div>
@@ -40,24 +40,24 @@ export default {
 
 <style scoped lang="scss">
 @import "../assets/scss/variables.scss";
-  .scroll {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    padding-left: 0;
-  }
-  .scroll::-webkit-scrollbar {
-    height: 30px;
-  }
-  .scroll::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px $lightPurple; 
-    border-radius: 20px;
-  }
-  .scroll::-webkit-scrollbar-thumb {
-    border-radius: 20px;
-    background-color: $darkPurple;
-    -webkit-box-shadow: inset 0 0 6px $lightPurple; 
-  }
-  .list {
-    padding-left: 0!important;
-  }
+.scroll {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  padding-left: 0;
+}
+.scroll::-webkit-scrollbar {
+  height: 30px;
+}
+.scroll::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px $lightPurple;
+  border-radius: 20px;
+}
+.scroll::-webkit-scrollbar-thumb {
+  border-radius: 20px;
+  background-color: $darkPurple;
+  -webkit-box-shadow: inset 0 0 6px $lightPurple;
+}
+.list {
+  padding-left: 0!important;
+}
 </style>

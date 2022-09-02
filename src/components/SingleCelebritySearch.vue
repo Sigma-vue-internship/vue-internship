@@ -88,6 +88,17 @@ export default {
   --bs-card-color: white;
   cursor: pointer;
 }
+@media (max-width: 450px) {
+  .celebrity-result .card-text {
+    display: none;
+  }
+  .celebrity-result .card-title {
+    font-size: 18px;
+  }
+  .movie-raiting__title {
+    display: none;
+  }
+}
 .movie-raiting {
   width: 30%;
 }

@@ -7,7 +7,7 @@
       <div class="d-flex">
         <b-nav-item to="/">Home</b-nav-item>
         <b-nav-item to="/search">Search</b-nav-item>
-        <b-nav-item to="/user/signup">Sign up</b-nav-item>
+        <b-nav-item to="/user/login">Login</b-nav-item>
       </div>
     </b-nav>
   </div>

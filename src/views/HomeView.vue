@@ -1,37 +1,37 @@
 <template>
   <div class="main">
     <div class="text-white">
-      <div class="main__top"> 
+      <div class="main__top">
         <div class="main__name text-center py-3">
           <h1>Moviedesk</h1>
         </div>
-        <div class="main__overlay"></div> 
+        <div class="main__overlay"></div>
       </div>
-      <div class="text-center"> 
+      <div class="text-center">
         <div class="main__watch py-3">
           <h4>Find movie or actor info</h4>
           <SearchForm
-            :mode="'preview'"
-            @findMedia="findMedia"
-            class="main__searchForm"
+              :mode="'preview'"
+              @findMedia="findMedia"
+              class="main__searchForm"
           />
         </div>
       </div>
     </div>
     <section class="px-2 text-center container">
-      <MediaList 
-        title="Popular actors" 
-        route="/celebrity/"
-        :elements="celebrities" 
-        :changePage="changeCelebritiesPage"
-        class="pt-3"
+      <MediaList
+          title="Popular actors"
+          route="/celebrity/"
+          :elements="celebrities"
+          :changePage="changeCelebritiesPage"
+          class="pt-3"
       />
-      <MediaList 
-        title="Popular movies" 
-        route="/movie/"
-        :elements="movies" 
-        :changePage="changeMoviesPage"
-        class="pb-5"
+      <MediaList
+          title="Popular movies"
+          route="/movie/"
+          :elements="movies"
+          :changePage="changeMoviesPage"
+          class="pb-5"
       />
     </section>
   </div>
@@ -129,12 +129,12 @@ export default {
     }
   }
   &__overlay {
-    position: absolute;     
-    height: 100%;   
-    width: 100%;   
-    top: 0;   
-    left: 0;   
-    background-color: rgb(0, 0, 0);   
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgb(0, 0, 0);
     opacity: 0.5;
     z-index: 1;
   }
