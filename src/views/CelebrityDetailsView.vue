@@ -64,10 +64,11 @@
         </div>
       </div>
       <MediaList
-        v-if="celebrityMovies.length"
+        v-if="allMovies.length"
         title="Actor's movies"
         route="/movie/"
         :elements="celebrityMovies"
+        :changePage="loadMoreMovies"
       />
     </div>
   </div>
@@ -89,6 +90,8 @@ export default {
       prevIndex: null,
       resImagesData: null,
       resPopularCelebrities: null,
+      allMovies: [],
+      elementsNum: 0,
       celebrityMovies: [],
       isLoading: false,
     };
@@ -99,6 +102,13 @@ export default {
       "getCelebrityImages",
       "getCelebrityMovies",
     ]),
+    loadMoreMovies() {
+      this.elementsNum += 20;
+      this.celebrityMovies = [
+        ...this.celebrityMovies,
+        ...this.allMovies.slice(this.celebrityMovies.length, this.elementsNum),
+      ];
+    },
     selectImg(imgUrl, i) {
       if (this.celebrityImages[i] === this.profilePath) {
         this.selectedImg = "";
@@ -122,7 +132,8 @@ export default {
       this.resData = await this.findSingleCelebrity(this.$route.params.id);
       this.resImagesData = await this.getCelebrityImages(this.$route.params.id);
       const { data } = await this.getCelebrityMovies(this.$route.params.id);
-      this.celebrityMovies = data.cast;
+      this.allMovies = data.cast;
+      this.loadMoreMovies();
     },
   },
   computed: {
@@ -216,7 +227,7 @@ export default {
     border-radius: 10px;
     opacity: 0.7;
     box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
-    cursor:pointer;
+    cursor: pointer;
     transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 500ms,
       opacity cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
     &:hover {
