@@ -38,20 +38,28 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import Carousel from "@/components/common/Carousel";
 import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
 export default {
+  name: "SingleMoviePage",
+  components: { 
+    Carousel, 
+    Rating,
+    SpinnerLoader
+  },
+  props: {
+    movie: Object,
+  },
   data() {
     return {
       movieImgRes: null,
       isLoading: false,
     };
   },
-  components: { Carousel, Rating, SpinnerLoader },
-  name: "SingleMoviePage",
-  props: {
-    movie: Object,
+  methods: {
+    ...mapActions(["getMovieImages"]),
   },
   computed: {
     imgUrls() {
@@ -77,10 +85,7 @@ export default {
   async created() {
     try {
       this.isLoading = true;
-      this.movieImgRes = await this.$store.dispatch(
-        "getMovieImages",
-        this.movie.id
-      );
+      this.movieImgRes = await this.getMovieImages(this.movie.id);
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;

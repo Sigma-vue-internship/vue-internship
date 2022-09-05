@@ -37,6 +37,10 @@
 <script>
 import Rating from "@/components/common/Rating";
 export default {
+  name: "SingleCelebritySearch",
+  components: { 
+    Rating
+  },
   props: {
     celebrity: {
       type: Object,
@@ -59,7 +63,6 @@ export default {
       return Math.floor(this.celebrity.popularity);
     },
   },
-  components: { Rating },
 };
 </script>
 

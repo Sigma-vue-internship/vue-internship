@@ -21,14 +21,14 @@
 import SingleMediaElementList from "./SingleMediaElementList";
 export default {
   name: "MediaList",
+  components: { 
+    SingleMediaElementList
+  },
   props: {
     title: String,
     elements: Array,
     changePage: Function,
     route: String,
-  },
-  components: {
-    SingleMediaElementList,
   },
   methods: {
     routeToElementPage(id) {

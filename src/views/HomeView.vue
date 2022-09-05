@@ -23,14 +23,14 @@
         title="Popular actors"
         route="/celebrity/"
         :elements="celebrities"
-        :changePage="changeCelebritiesPage"
+        :changePage="() => { return changeCurrentPage('celebrities')}"
         class="pt-3"
       />
       <MediaList
         title="Popular movies"
         route="/movie/"
         :elements="movies"
-        :changePage="changeMoviesPage"
+        :changePage="() => { return changeCurrentPage('movies')}"
         class="pb-5"
       />
     </section>
@@ -39,13 +39,14 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import SearchForm from "@/components/common/SearchForm";
 import MediaList from "@/components/media/MediaList";
 export default {
   name: "HomeView",
   components: {
     SearchForm,
-    MediaList,
+    MediaList
   },
   data() {
     return {
@@ -56,6 +57,10 @@ export default {
     };
   },
   methods: {
+    ...mapActions([
+      "changeMediaPage",
+      "getMedia"
+    ]),
     async findMedia(searchData) {
       if (searchData) {
         this.$router
@@ -69,28 +74,21 @@ export default {
         return;
       }
     },
-    async changeCelebritiesPage() {
+    async changeCurrentPage(type) {
       try {
-        this.celebritiesPage++;
-        const response = await this.$store.dispatch(
-          "changeCelebritiesPage",
-          this.celebritiesPage
-        );
-        const { data } = response;
-        this.celebrities = this.celebrities.concat(data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async changeMoviesPage() {
-      try {
-        this.moviesPage++;
-        const response = await this.$store.dispatch(
-          "changeMoviesPage",
-          this.moviesPage
-        );
-        const { data } = response;
-        this.movies = this.movies.concat(data.results);
+        if(type === "celebrities") {
+          this.celebritiesPage++;
+          const obj = { type:type, page:this.celebritiesPage }
+          const response = await this.changeMediaPage(obj);
+          const { data } = response;
+          this.celebrities = this.celebrities.concat(data.results);
+        } else if(type === "movies") {
+          this.moviesPage++;
+          const obj = { type:type, page:this.celebritiesPage }
+          const response = await this.changeMediaPage(obj);
+          const { data } = response;
+          this.movies = this.movies.concat(data.results);
+        } 
       } catch (error) {
         console.log(error);
       }
@@ -98,14 +96,14 @@ export default {
   },
   async created() {
     try {
-      const response = await this.$store.dispatch("getCelebrities");
+      const response = await this.getMedia("celebrities");
       const { data } = response;
       this.celebrities = data.results;
     } catch (error) {
       console.log(error);
     }
     try {
-      const response = await this.$store.dispatch("getMovies");
+      const response = await this.getMedia("movies");
       const { data } = response;
       this.movies = data.results;
     } catch (error) {
