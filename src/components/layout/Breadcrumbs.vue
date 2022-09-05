@@ -5,7 +5,7 @@
       v-for="(crumb, i) in breadCrumbs"
       :key="`${crumb.label} ${i}`"
       :to="crumb.to"
-      :active="i === breadCrumbs.length - 1 ? true : false"
+      :active="i === breadCrumbs.length - 1"
       >{{ crumb.label }}</b-breadcrumb-item
     >
   </b-breadcrumb>
@@ -37,7 +37,9 @@ export default {
     }
   }
   .active {
-    color: $lightGreen;
+    span {
+      color: $lightGreen;
+    }
   }
 }
 </style>
