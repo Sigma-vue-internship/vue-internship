@@ -9,7 +9,7 @@
         flex-column
         align-items-between
         justify-content-center
-        p-4
+        py-4
       "
     >
       <div class="row gx-0 py-4 d-flex">
@@ -173,9 +173,6 @@ export default {
 <style lang="scss">
 .celebrity__rating {
   margin: 0 auto;
-}
-.celebrity-profile__back {
-  background-color: rgba(63, 30, 121, 0.158);
 }
 .celebrity-profile__info {
   position: relative;

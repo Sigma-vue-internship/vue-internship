@@ -1,16 +1,19 @@
 <template>
   <li>
-    <b-card
-      text-variant="white"
-      :img-src="
+    <div class="card">
+      <img 
+      class="card-img-top"
+      alt="Card img"
+      :src="
         imgPath
           ? 'https://image.tmdb.org/t/p/w185/' + imgPath
           : 'https://dummyimage.com/300x450/000/00ff8c'
-      "
-      :title="captionElement"
-      class="element"
-    >
-    </b-card>
+        "
+      />
+      <div class="card-body">
+        <h5 class="card-title">{{ captionElement }}</h5>
+      </div>
+    </div>
   </li>
 </template>
 
@@ -42,26 +45,27 @@ export default {
 <style scoped lang="scss">
 @import "../../assets/scss/variables.scss";
 @import "../../assets/scss/carusel-responsive.scss";
-.element {
-  height: $cardHeight;
-  width: $cardWidth;
-  margin-right: 15px;
-  border-radius: 0;
-  border: 0;
+.card {
   background: transparent;
+  border: none;
+  color: white;
+  margin-right: 15px;
 }
 .card-img,
-.card-img-bottom {
+.card-img-top {
   border: 10px solid rgb(97, 47, 183);
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.69);
   cursor: pointer;
   transition: border cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
+  height: $imgHeight;
+  width: $imgWidth;
+  border-radius: 5px;
   &:hover {
     border-color: $lightGreen;
   }
 }
 .card-title {
-  height: 60px;
+  height: 50px;
   overflow: hidden;
 }
 </style>

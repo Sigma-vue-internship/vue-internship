@@ -3,8 +3,8 @@ $lightPurple: rgb(97, 47, 183);
 $lightGreen:  rgb(153, 255, 153);
 $darkPurple: rgba(97, 47, 183, 0.316);
 $borderRadius: 10px;
-$cardHeight: 360px;
-$cardWidth: 200px;
+$imgHeight: 290px;
+$imgWidth: 200px;
 
 @mixin flex-center($direction) {
     display: flex;
@@ -12,9 +12,4 @@ $cardWidth: 200px;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-}
-
-@mixin paginationButton {
-    background-color: $darkGray;
-    color: white;
 }
