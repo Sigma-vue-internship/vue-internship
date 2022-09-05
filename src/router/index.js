@@ -21,30 +21,25 @@ const routes = [
     component: () => import("../views/MovieView.vue"),
   },
   {
+    path: "/verified",
+    name: "verified",
+    component: () => import("../views/User/VerifiedView.vue"),
+  },
+  {
     path: "/celebrity/:id",
     name: "celebrity",
     component: () => import("../views/CelebrityDetailsView.vue"),
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/User/LoginView"),
   },
   {
     path: "/user",
     name: "user",
     component: () => import("../views/User/UserView"),
     children: [
-      {
-        path: "signup",
-        name: "signup",
-        component: () => import("../views/User/SignupView"),
-      },
-      {
-        path: "login",
-        name: "login",
-        component: () => import("../views/User/LoginView"),
-      },
-      {
-        path: "favorites",
-        name: "favorites",
-        component: () => import("../views/User/FavoritesView"),
-      },
       {
         path: "favorites",
         name: "favorites",

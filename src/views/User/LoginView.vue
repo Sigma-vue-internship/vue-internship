@@ -11,7 +11,15 @@
             <p class="text-center welcome-info">
               Sign in by entering the information below
             </p>
-            <form action="#" class="login-form">
+            <div v-if="disableForm" class="form-disabler">
+              <p class="form-disabler__info">
+                Before login please approve your account on
+                <a class="form-disabler__link" @click="createRequestToken"
+                  >TMDB</a
+                >
+              </p>
+            </div>
+            <form action="#" @submit.prevent="loginUser" class="login-form">
               <div class="form-group">
                 <div
                   class="icon d-flex align-items-center justify-content-center"
@@ -20,6 +28,8 @@
                 </div>
                 <input
                   type="text"
+                  :disabled="disableForm ? true : false"
+                  v-model="user.username"
                   class="form-control"
                   placeholder="Username"
                   required=""
@@ -32,6 +42,8 @@
                   <span class="fa fa-lock"></span>
                 </div>
                 <input
+                  v-model="user.password"
+                  :disabled="disableForm ? true : false"
                   type="password"
                   class="form-control"
                   placeholder="Password"
@@ -46,7 +58,8 @@
               <div class="form-group">
                 <button
                   type="submit"
-                  class="btn form-control btn-primary rounded submit px-3"
+                  :disabled="disableForm ? true : false"
+                  class="submit-btn btn form-control btn-primary rounded px-3"
                 >
                   Login
                 </button>
@@ -60,11 +73,85 @@
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      user: {
+        username: "",
+        password: "",
+        request_token: "",
+      },
+      disableForm: true,
+    };
+  },
+  methods: {
+    ...mapActions(["getRequestToken", "createSessionToken"]),
+    async createRequestToken() {
+      const { data } = await this.getRequestToken();
+      localStorage.setItem("requestToken", data.request_token);
+
+      window.location.replace(
+        `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=${process.env.VUE_APP_APPROVED_URL}`
+      );
+    },
+    async loginUser() {
+      this.user.request_token = localStorage.getItem("requestToken");
+      if (this.user.request_token) return this.createSessionToken(this.user);
+    },
+  },
+  created() {
+    const isRequestTokenExists =
+      localStorage.getItem("requestToken") !== "undefined";
+    if (!isRequestTokenExists) {
+      this.disableForm = false;
+      return;
+    }
+    if (isRequestTokenExists) {
+      this.disableForm = true;
+      return;
+    }
+    this.disableForm = true;
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/variables.scss";
+.submit-btn {
+  z-index: 0;
+  --bs-btn-disabled-opacity: 1;
+}
+.form-disabler {
+  position: absolute;
+  backdrop-filter: blur(2px);
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  &__info {
+    color: white;
+    background: rgba(0, 0, 0, 0.418);
+    font-size: 18px;
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &__link {
+    cursor: pointer;
+    transition: color cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
+
+    &:hover {
+      color: rgb(236, 92, 255);
+    }
+  }
+}
 .welcome-info {
   margin-bottom: 20px;
 }
@@ -116,7 +203,7 @@ export default {};
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-  p {
+  .welcome-info {
     color: rgba(255, 255, 255, 0.5);
   }
   .img {
@@ -126,10 +213,6 @@ export default {};
     margin: 0 auto;
     margin-bottom: 20px;
   }
-}
-
-.form-group {
-  position: relative;
 }
 
 //FORM CONTROL
