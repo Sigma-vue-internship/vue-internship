@@ -7,8 +7,8 @@
 
 <script>
 import { mapActions } from "vuex";
-import SpinnerLoader from "@/components/common/SpinnerLoader";
-import SingleMoviePage from "@/components/movie/SingleMoviePage";
+import SpinnerLoader from "../components/common/SpinnerLoader";
+import SingleMoviePage from "../components/movie/SingleMoviePage";
 export default {
   name: "MovieView",
   components: {

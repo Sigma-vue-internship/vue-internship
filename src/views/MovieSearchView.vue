@@ -31,10 +31,10 @@
 
 <script>
 import { mapActions } from "vuex";
-import SearchForm from "@/components/common/SearchForm";
-import SingleMovieSearch from "@/components/movie/SingleMovieSearch";
-import SpinnerLoader from "@/components/common/SpinnerLoader";
-import SingleCelebritySearch from "@/components/celebrity/SingleCelebritySearch";
+import SearchForm from "../components/common/SearchForm";
+import SingleMovieSearch from "../components/movie/SingleMovieSearch";
+import SpinnerLoader from "../components/common/SpinnerLoader";
+import SingleCelebritySearch from "../components/celebrity/SingleCelebritySearch";
 export default {
   name: "MovieSearchView",
   components: {

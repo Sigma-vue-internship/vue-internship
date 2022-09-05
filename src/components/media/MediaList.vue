@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/variables.scss";
+@import "../../assets/scss/variables.scss";
 .scroll {
   overflow-x: auto;
   overflow-y: hidden;
