@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="celebrity-result container">
+    <div class="celebrity-result container px-5">
       <b-card
         :img-src="
           celebrity.profile_path
@@ -38,8 +38,8 @@
 import Rating from "@/components/common/Rating";
 export default {
   name: "SingleCelebritySearch",
-  components: { 
-    Rating
+  components: {
+    Rating,
   },
   props: {
     celebrity: {

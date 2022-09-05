@@ -9,9 +9,9 @@
   </div>
 </template>
 <script>
-import Header from "@/components/Header";
-import Footer from "./components/Footer.vue";
-import Breadcrumbs from "./components/Breadcrumbs.vue";
+import Footer from "./components/layout/Footer.vue";
+import Breadcrumbs from "./components/layout/Breadcrumbs.vue";
+import Header from "./components/layout/Header.vue";
 export default {
   name: "App",
   components: {

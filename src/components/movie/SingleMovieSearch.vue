@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="movie-result container">
+    <div class="movie-result container px-5">
       <b-card
         :img-src="
           movie.poster_path
@@ -34,8 +34,8 @@
 import Rating from "@/components/common/Rating";
 export default {
   name: "SingleMovieSearch",
-  components: { 
-    Rating 
+  components: {
+    Rating,
   },
   props: {
     movie: {
