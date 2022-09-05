@@ -58,17 +58,17 @@
             <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
                 <p>© 2022 Sigma, Inc. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
-                    <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                    <li>
+                        <a href="#" class="bi icon-facebook icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                        <a href="#" class="bi icon-youtube icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                        <a href="#" class="bi icon-instagram icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                        <a href="#" class="bi icon-linkedin icons"></a>
                     </li>
                 </ul>
             </div>
@@ -102,19 +102,32 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/scss/variables.scss";
+@import "../../assets/scss/variables.scss";
     footer {
-        min-width: 100%;
-        background-color: $darkPurple;
-    }
-    h5 {
+      min-width: 100%;
+      background-color: $darkPurple;
+
+      .icons {
+        color: #513f7a;
+        font-size: 25px;
+
+        &:hover {
+          color: #9f8fc3;
+        }
+      }
+      h5 {
         color: white;
-    }
-    p {
+      }
+      p {
         color: rgb(184, 184, 184);
-    }
-    .searchForm {
+      }
+      .searchForm {
         background-color: transparent;
         padding: 0;
+      }
+
+      .border-top {
+        border-top-color: #4c3e6b !important;
+      }
     }
 </style>

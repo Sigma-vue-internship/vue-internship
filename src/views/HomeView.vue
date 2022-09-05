@@ -40,8 +40,8 @@
 
 <script>
 import { mapActions } from "vuex";
-import SearchForm from "@/components/common/SearchForm";
-import MediaList from "@/components/media/MediaList";
+import SearchForm from "../components/common/SearchForm";
+import MediaList from "../components/media/MediaList";
 export default {
   name: "HomeView",
   components: {

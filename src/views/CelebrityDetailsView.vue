@@ -79,9 +79,9 @@
 <script>
 import { mapActions } from "vuex";
 import vueShowMoreText from "vue-show-more-text";
-import SpinnerLoader from "@/components/common/SpinnerLoader";
-import MediaList from "@/components/media/MediaList";
-import Rating from "@/components/common/Rating";
+import SpinnerLoader from "../components/common/SpinnerLoader";
+import MediaList from "../components/media/MediaList";
+import Rating from "../components/common/Rating";
 export default {
   name: "CelebrityDetailsView",
   components: { 
