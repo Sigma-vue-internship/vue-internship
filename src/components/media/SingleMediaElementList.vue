@@ -64,8 +64,8 @@ export default {
     border-color: $lightGreen;
   }
 }
-.card-title {
-  height: 50px;
+.card-body {
+  height: 60px;
   overflow: hidden;
 }
 </style>
