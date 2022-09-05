@@ -64,11 +64,10 @@
         </div>
       </div>
       <MediaList
-        v-if="allMovies.length"
+        v-if="celebrityMovies.length"
         title="Actor's movies"
         route="/movie/"
         :elements="celebrityMovies"
-        :changePage="loadMoreMovies"
       />
     </div>
   </div>
@@ -90,9 +89,8 @@ export default {
       prevIndex: null,
       resImagesData: null,
       resPopularCelebrities: null,
-      allMovies: [],
-      elementsNum: 0,
       celebrityMovies: [],
+      maxMovieToShow: 20,
       isLoading: false,
     };
   },
@@ -102,13 +100,6 @@ export default {
       "getCelebrityImages",
       "getCelebrityMovies",
     ]),
-    loadMoreMovies() {
-      this.elementsNum += 20;
-      this.celebrityMovies = [
-        ...this.celebrityMovies,
-        ...this.allMovies.slice(this.celebrityMovies.length, this.elementsNum),
-      ];
-    },
     selectImg(imgUrl, i) {
       if (this.celebrityImages[i] === this.profilePath) {
         this.selectedImg = "";
@@ -131,9 +122,8 @@ export default {
     async getCelebrityData() {
       this.resData = await this.findSingleCelebrity(this.$route.params.id);
       this.resImagesData = await this.getCelebrityImages(this.$route.params.id);
-      const { data } = await this.getCelebrityMovies(this.$route.params.id);
-      this.allMovies = data.cast;
-      this.loadMoreMovies();
+      const { data: { cast } } = await this.getCelebrityMovies(this.$route.params.id);
+      this.celebrityMovies = cast.slice(0, this.maxMovieToShow);
     },
   },
   computed: {
