@@ -35,7 +35,7 @@
               class="celebrity-profile__preview-img img-fluid"
               :src="celImg"
               @click="selectImg(celImg, i)"
-            />
+             alt=""/>
           </div>
         </div>
 
@@ -58,7 +58,6 @@
               additional-content-css="font-size:16px;"
               additional-content-expanded-css="font-size:16px;"
               additional-anchor-css="font-size: 16px;"
-              @click="showHideBio"
             />
           </p>
         </div>
@@ -83,14 +82,14 @@ export default {
   components: { SpinnerLoader, vueShowMoreText, MediaList, Rating },
   data() {
     return {
-      resData: null,
+      celebrity: null,
       selectedImg: "",
       prevSelectedImg: "",
       prevIndex: null,
       resImagesData: null,
       resPopularCelebrities: null,
       celebrityMovies: [],
-      maxMovieToShow: 20,
+      maxMoviesToShow: 25,
       isLoading: false,
     };
   },
@@ -118,18 +117,15 @@ export default {
       this.prevIndex = i;
       this.prevSelectedImg = imgUrl;
     },
-    showHideBio() {},
     async getCelebrityData() {
-      this.resData = await this.findSingleCelebrity(this.$route.params.id);
+      const { data }  = await this.findSingleCelebrity(this.$route.params.id);
+      this.celebrity = data;
       this.resImagesData = await this.getCelebrityImages(this.$route.params.id);
       const { data: { cast } } = await this.getCelebrityMovies(this.$route.params.id);
-      this.celebrityMovies = cast.slice(0, this.maxMovieToShow);
+      this.celebrityMovies = cast.length > this.maxMoviesToShow ?  cast.slice(0, this.maxMoviesToShow) : cast;
     },
   },
   computed: {
-    celebrity() {
-      return this.resData.data;
-    },
     celebrityImages() {
       if (this.resImagesData) {
         let [, , ...celebrityImages] = this.resImagesData.data.profiles;
@@ -158,7 +154,7 @@ export default {
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;
-      console.log(e);
+      console.error(e);
     }
   },
 };
@@ -172,7 +168,7 @@ export default {
   position: relative;
   padding: 40px 40px 80px 40px;
   background-color: rgba(74, 36, 141, 0.316);
-  box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
+  box-shadow: 8px 8px 24px 0 rgb(0, 0, 0);
   border-radius: 10px;
   color: white;
 
@@ -188,7 +184,7 @@ export default {
     padding: 10px;
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: inset 0px 0px 21px 0px rgb(0, 0, 0);
+    box-shadow: inset 0 0 21px 0 rgb(0, 0, 0);
     transition: max-height cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
   }
   .bio--active {
@@ -205,7 +201,7 @@ export default {
     padding-right: 10px;
   }
   .celebrity-profile__image {
-    box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
+    box-shadow: 8px 8px 24px 0 rgb(0, 0, 0);
     align-self: flex-start;
     width: 300px;
     border-radius: 10px;
@@ -216,7 +212,7 @@ export default {
     margin-bottom: 10px;
     border-radius: 10px;
     opacity: 0.7;
-    box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
+    box-shadow: 8px 8px 24px 0 rgb(0, 0, 0);
     cursor: pointer;
     transition: transform cubic-bezier(0.165, 0.84, 0.44, 1) 500ms,
       opacity cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
