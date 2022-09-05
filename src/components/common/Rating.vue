@@ -21,6 +21,7 @@
 
 <script>
 export default {
+  name: "Rating",
   props: ["celebrityRating", "movieRating"],
   data() {
     return {

@@ -49,6 +49,7 @@
 
 <script>
 export default {
+  name: "Navbar",
   data() {
     return {
       isMenuOpen: false,
@@ -63,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/scss/variables.scss";
+@import "../../assets/scss/variables.scss";
 .navbar__burger {
   height: 0;
   transition: height cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;

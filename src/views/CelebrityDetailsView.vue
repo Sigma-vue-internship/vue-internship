@@ -74,13 +74,19 @@
 </template>
 
 <script>
-import SpinnerLoader from "../components/SpinnerLoader.vue";
-import vueShowMoreText from "vue-show-more-text";
-import MediaList from "../components/MediaList.vue";
 import { mapActions } from "vuex";
-import Rating from "../components/Rating.vue";
+import vueShowMoreText from "vue-show-more-text";
+import SpinnerLoader from "../components/common/SpinnerLoader";
+import MediaList from "../components/media/MediaList";
+import Rating from "../components/common/Rating";
 export default {
-  components: { SpinnerLoader, vueShowMoreText, MediaList, Rating },
+  name: "CelebrityDetailsView",
+  components: { 
+    SpinnerLoader, 
+    vueShowMoreText, 
+    MediaList, 
+    Rating 
+  },
   data() {
     return {
       celebrity: null,

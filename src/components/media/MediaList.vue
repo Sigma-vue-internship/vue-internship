@@ -21,14 +21,14 @@
 import SingleMediaElementList from "./SingleMediaElementList";
 export default {
   name: "MediaList",
+  components: { 
+    SingleMediaElementList
+  },
   props: {
     title: String,
     elements: Array,
     changePage: Function,
     route: String,
-  },
-  components: {
-    SingleMediaElementList,
   },
   methods: {
     routeToElementPage(id) {
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/variables.scss";
+@import "../../assets/scss/variables.scss";
 .scroll {
   overflow-x: auto;
   overflow-y: hidden;

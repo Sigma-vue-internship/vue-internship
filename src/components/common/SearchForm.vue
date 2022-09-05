@@ -103,6 +103,7 @@
 
 <script>
 export default {
+  name: "SearchForm",
   props: {
     mode: {
       type: String,
