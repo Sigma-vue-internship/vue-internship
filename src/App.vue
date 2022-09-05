@@ -1,15 +1,16 @@
 <template>
   <div id="app">
-    <Header />
-    <b-card no-body class="router pb-5">
-      <router-view />
-    </b-card>
-    <Footer />
+    <Header/>
+    <div no-body className="router">
+      <router-view/>
+    </div>
+    <Footer/>
   </div>
 </template>
 <script>
 import Header from "@/components/Header";
 import Footer from "./components/Footer.vue";
+
 export default {
   name: "App",
   components: {
@@ -27,23 +28,32 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
 }
+
 body {
   --bs-body-bg: #121416;
   padding-top: 4.5rem;
 }
+
 ul,
 ol {
   margin: 0;
   padding: 0;
   list-style: none;
 }
+
 html,
 body,
 #app {
-  height: 100%;
+  height: 100vh;
+  /* padding-top: 8px; */
 }
+
 .router {
   min-height: 100%;
-  background-color: #121416 !important;
+  background-image: linear-gradient(
+      110.1deg,
+      rgba(30, 2, 83, 1) 44.2%,
+      rgba(198, 55, 160, 1) 138.2%
+  );
 }
 </style>
