@@ -30,10 +30,10 @@
 </template>
 
 <script>
-import SearchForm from "@/components/SearchForm.vue";
-import SingleMovieSearch from "@/components/SingleMovieSearch.vue";
-import SpinnerLoader from "@/components/SpinnerLoader.vue";
-import SingleCelebritySearch from "@/components/SingleCelebritySearch.vue";
+import SearchForm from "@/components/common/SearchForm";
+import SingleMovieSearch from "@/components/movie/SingleMovieSearch";
+import SpinnerLoader from "@/components/common/SpinnerLoader";
+import SingleCelebritySearch from "@/components/celebrity/SingleCelebritySearch";
 export default {
   data() {
     return {

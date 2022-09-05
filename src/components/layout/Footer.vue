@@ -59,24 +59,16 @@
                 <p>© 2022 Sigma, Inc. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <img src="../assets/facebook.png" width="24" height="24"/>
-                        </a>
+                        <a href="#" class="bi"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <img src="../assets/instagram.png" width="24" height="24"/>
-                        </a>
+                        <a href="#" class="bi"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <img src="../assets/youtube.png" width="24" height="24"/>
-                        </a>
+                        <a href="#" class="bi"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <img src="../assets/linkedin.png" width="24" height="24"/>
-                        </a>
+                        <a href="#" class="bi"></a>
                     </li>
                 </ul>
             </div>
@@ -85,7 +77,7 @@
 </template>
 
 <script>
-import SearchForm from "../components/SearchForm";
+import SearchForm from "@/components/common/SearchForm";
 export default {
     name: "Footer",
     components: {
@@ -110,7 +102,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
     footer {
         min-width: 100%;
         background-color: $darkPurple;

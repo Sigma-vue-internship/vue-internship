@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import Rating from "./Rating.vue";
+import Rating from "@/components/common/Rating";
 export default {
   props: {
     celebrity: {
