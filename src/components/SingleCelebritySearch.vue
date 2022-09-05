@@ -71,6 +71,7 @@ export default {
 }
 .celebrity-result .rating {
   width: 30%;
+  margin-bottom: 15px;
 }
 @media (max-width: 992px) {
   .celebrity-result .rating {

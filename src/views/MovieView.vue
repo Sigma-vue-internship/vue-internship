@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="movie-view">
     <SpinnerLoader :isLoading="isLoading" v-if="isLoading" />
     <SingleMoviePage :movie="movie" v-else />
   </div>
@@ -13,17 +13,20 @@ export default {
   data() {
     return {
       movie: {},
-      isLoading: false
-    }
+      isLoading: false,
+    };
   },
   components: {
     SingleMoviePage,
-    SpinnerLoader
+    SpinnerLoader,
   },
   async created() {
     try {
       this.isLoading = true;
-      const response = await this.$store.dispatch("getMovie", this.$route.params.id);
+      const response = await this.$store.dispatch(
+        "getMovie",
+        this.$route.params.id
+      );
       const { data } = response;
       this.movie = data;
       this.isLoading = false;
@@ -31,9 +34,6 @@ export default {
       console.log(error);
       this.isLoading = false;
     }
-  }
+  },
 };
 </script>
-
-<style>
-</style>

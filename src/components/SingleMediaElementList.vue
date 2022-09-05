@@ -1,12 +1,14 @@
 <template>
   <li>
     <b-card
-        text-variant="white"
-        :img-src="imgPath
-        ? 'https://image.tmdb.org/t/p/w185/' + imgPath
-        : 'https://dummyimage.com/300x450/000/00ff8c'"
-        :title="captionElement"
-        class="element"
+      text-variant="white"
+      :img-src="
+        imgPath
+          ? 'https://image.tmdb.org/t/p/w185/' + imgPath
+          : 'https://dummyimage.com/300x450/000/00ff8c'
+      "
+      :title="captionElement"
+      class="element"
     >
     </b-card>
   </li>
@@ -16,21 +18,25 @@
 export default {
   name: "SingleMediaElementList",
   props: {
-    element: Object
+    element: Object,
   },
   computed: {
-    imgPath(){
-      return ('profile_path' in this.element) ? this.element.profile_path
-          : ('poster_path' in this.element) ? this.element.poster_path
-              : "";
+    imgPath() {
+      return "profile_path" in this.element
+        ? this.element.profile_path
+        : "poster_path" in this.element
+        ? this.element.poster_path
+        : "";
     },
-    captionElement(){
-      return ('name' in this.element) ? this.element.name
-          : ('title' in this.element) ? this.element.title
-              : "";
-    }
-  }
-}
+    captionElement() {
+      return "name" in this.element
+        ? this.element.name
+        : "title" in this.element
+        ? this.element.title
+        : "";
+    },
+  },
+};
 </script>
 
 <style scoped lang="scss">
@@ -47,7 +53,12 @@ export default {
 .card-img,
 .card-img-bottom {
   border: 10px solid rgb(97, 47, 183);
-  box-shadow: 0px 0px 12px 0px rgba(0,0,0,0.75);
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
+  cursor: pointer;
+  transition: border cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
+  &:hover {
+    border-color: $lightGreen;
+  }
 }
 .card-title {
   height: 60px;

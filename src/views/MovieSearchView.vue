@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMedia="findMedia" class="mt-5" />
+    <SearchForm :mode="'optional'" @findMedia="findMedia" class="py-5" />
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <ul class="search__results-list" v-if="searchMedia.length">
       <li v-for="media in searchMedia" :key="media.uuid">

@@ -6,10 +6,10 @@
     <b-container class="scroll d-flex flex-row">
       <ul class="list d-flex flex-row" v-if="elements.length">
         <SingleMediaElementList
-            :element="element"
-            v-for="element in elements"
-            :key="element.uuid"
-            @click.native="routeToElementPage(element.id)"
+          :element="element"
+          v-for="element in elements"
+          :key="element.uuid"
+          @click.native="routeToElementPage(element.id)"
         />
       </ul>
       <div v-if="changePage" v-intersection="changePage"></div>
@@ -25,23 +25,23 @@ export default {
     title: String,
     elements: Array,
     changePage: Function,
-    route: String
+    route: String,
   },
   components: {
-    SingleMediaElementList
+    SingleMediaElementList,
   },
   methods: {
     routeToElementPage(id) {
       this.$router.push({ path: `${this.route}${id}` });
     },
-  }
-}
+  },
+};
 </script>
 
 <style scoped lang="scss">
 @import "../assets/scss/variables.scss";
 .scroll {
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
   padding-left: 0;
 }
@@ -49,15 +49,17 @@ export default {
   height: 30px;
 }
 .scroll::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px $lightPurple;
+  box-shadow: inset 0 0 6px black;
+  -webkit-box-shadow: inset 0 0 6px black;
   border-radius: 20px;
 }
 .scroll::-webkit-scrollbar-thumb {
   border-radius: 20px;
-  background-color: $darkPurple;
-  -webkit-box-shadow: inset 0 0 6px $lightPurple;
+  background-color: $lightGreen;
+  box-shadow: inset 0 0 6px black;
+  -webkit-box-shadow: inset 0 0 6px black;
 }
 .list {
-  padding-left: 0!important;
+  padding-left: 0 !important;
 }
 </style>
