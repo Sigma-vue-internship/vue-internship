@@ -23,7 +23,11 @@
               :src="selectedImg ? selectedImg : profilePath"
               alt="celebrity profile image"
             />
-            <Rating v-if="celebrityRating" :celebrityRating="celebrityRating" />
+            <Rating
+              class="celebrity__rating"
+              v-if="celebrityRating"
+              :celebrityRating="celebrityRating"
+            />
           </div>
           <div
             v-if="celebrityImages.length"
@@ -175,6 +179,9 @@ export default {
 </script>
 
 <style lang="scss">
+.celebrity__rating {
+  margin: 0 auto;
+}
 .celebrity-profile__back {
   background-color: rgba(63, 30, 121, 0.158);
 }

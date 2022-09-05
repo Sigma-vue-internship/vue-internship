@@ -1,5 +1,5 @@
 <template>
-  <div class="movie-raiting">
+  <div v-if="movieRating" class="movie-raiting">
     <progress
       class="movie-raiting__bar"
       :style="{
@@ -12,7 +12,7 @@
     />
     <div class="movie-raiting__info row text-center">
       <h4 class="movie-raiting__title col-md-6 col-lg-5">Rating</h4>
-      <p class="movie-raiting__number col-md-6 col-lg-4">
+      <p class="movie-raiting__number col-lg-4">
         {{ celebrityRating ? celebrityRating : movieRating }}
       </p>
     </div>
@@ -56,7 +56,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 auto;
+  // margin: 0 auto;
   margin-top: 20px;
   width: 90%;
 }
@@ -82,7 +82,7 @@ export default {
   text-align: start;
   font-size: 1.2rem;
 }
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .movie-raiting__number {
     text-align: center;
   }
@@ -90,7 +90,7 @@ export default {
     text-align: center;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .movie-raiting__title {
     display: none;
   }
