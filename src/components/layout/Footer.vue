@@ -104,25 +104,30 @@ export default {
 <style scoped lang="scss">
 @import "../../assets/scss/variables.scss";
     footer {
-        min-width: 100%;
-        background-color: $darkPurple;
-    }
-    h5 {
+      min-width: 100%;
+      background-color: $darkPurple;
+
+      .icons {
+        color: #513f7a;
+        font-size: 25px;
+
+        &:hover {
+          color: #9f8fc3;
+        }
+      }
+      h5 {
         color: white;
-    }
-    p {
+      }
+      p {
         color: rgb(184, 184, 184);
-    }
-    .searchForm {
+      }
+      .searchForm {
         background-color: transparent;
         padding: 0;
-    }
-    .icons {
-        text-decoration: none;
-        color: white;
-        font-size: 25px;
-    }
-    .icons:hover {
-        color: gray;
+      }
+
+      .border-top {
+        border-top-color: #4c3e6b !important;
+      }
     }
 </style>
