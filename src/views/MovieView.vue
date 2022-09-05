@@ -6,6 +6,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
 import SingleMoviePage from "@/components/movie/SingleMoviePage";
 export default {
@@ -20,13 +21,13 @@ export default {
       isLoading: false,
     };
   },
+  methods: {
+    ...mapActions(["getMovie"]),
+  },
   async created() {
     try {
       this.isLoading = true;
-      const response = await this.$store.dispatch(
-        "getMovie",
-        this.$route.params.id
-      );
+      const response = await this.getMovie(this.$route.params.id);
       const { data } = response;
       this.movie = data;
       this.isLoading = false;
