@@ -228,10 +228,6 @@ export default {};
   }
 }
 
-/* Style the checkmark/indicator */
-.checkbox-wrap .checkmark:after {
-}
-
 .checkbox-primary {
   color: $lightPurple;
   input:checked ~ .checkmark:after {
