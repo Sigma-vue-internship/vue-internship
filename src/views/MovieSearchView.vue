@@ -35,6 +35,13 @@ import SingleMovieSearch from "@/components/movie/SingleMovieSearch";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
 import SingleCelebritySearch from "@/components/celebrity/SingleCelebritySearch";
 export default {
+  name: "MovieSearchView",
+  components: {
+    SearchForm,
+    SingleMovieSearch,
+    SpinnerLoader,
+    SingleCelebritySearch
+  },
   data() {
     return {
       searchMedia: [],
@@ -44,12 +51,6 @@ export default {
       routeSearchData: null,
       isLoading: false,
     };
-  },
-  components: {
-    SearchForm,
-    SingleMovieSearch,
-    SpinnerLoader,
-    SingleCelebritySearch,
   },
   methods: {
     async loadMoreMedia() {

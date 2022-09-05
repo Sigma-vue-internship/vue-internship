@@ -45,7 +45,7 @@ export default {
   name: "HomeView",
   components: {
     SearchForm,
-    MediaList,
+    MediaList
   },
   data() {
     return {

@@ -10,15 +10,15 @@ import SpinnerLoader from "@/components/common/SpinnerLoader";
 import SingleMoviePage from "@/components/movie/SingleMoviePage";
 export default {
   name: "MovieView",
+  components: {
+    SingleMoviePage,
+    SpinnerLoader
+  },
   data() {
     return {
       movie: {},
       isLoading: false,
     };
-  },
-  components: {
-    SingleMoviePage,
-    SpinnerLoader,
   },
   async created() {
     try {

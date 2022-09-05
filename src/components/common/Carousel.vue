@@ -14,6 +14,7 @@
 
 <script>
 export default {
+  name: "Carousel",
   props: {
     imgUrls: {
       type: Array,
