@@ -58,17 +58,17 @@
             <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
                 <p>© 2022 Sigma, Inc. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
-                    <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                    <li>
+                        <a href="#" class="bi icon-facebook icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                        <a href="#" class="bi icon-youtube icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                        <a href="#" class="bi icon-instagram icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi"></a>
+                        <a href="#" class="bi icon-linkedin icons"></a>
                     </li>
                 </ul>
             </div>
@@ -116,5 +116,13 @@ export default {
     .searchForm {
         background-color: transparent;
         padding: 0;
+    }
+    .icons {
+        text-decoration: none;
+        color: white;
+        font-size: 25px;
+    }
+    .icons:hover {
+        color: gray;
     }
 </style>
