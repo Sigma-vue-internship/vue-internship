@@ -59,45 +59,17 @@
                 <p>© 2022 Sigma, Inc. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <font-awesome-icon 
-                                :icon="{ prefix: 'fab', iconName: 'facebook' }" 
-                                size="lg" 
-                                color="white" 
-                                class="icons"
-                            />
-                        </a>
+                        <a href="#" class="bi icon-facebook icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <font-awesome-icon 
-                                :icon="{ prefix: 'fab', iconName: 'instagram' }" 
-                                size="lg" 
-                                color="white" 
-                                class="icons"
-                            />
-                        </a>
+                        <a href="#" class="bi icon-youtube icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <font-awesome-icon 
-                                :icon="{ prefix: 'fab', iconName: 'youtube' }" 
-                                size="lg" 
-                                color="white"
-                                class="icons" 
-                            />
-                        </a>
+                        <a href="#" class="bi icon-instagram icons"></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi">
-                            <font-awesome-icon 
-                                :icon="{ prefix: 'fab', iconName: 'linkedin' }" 
-                                size="lg" 
-                                color="white" 
-                                class="icons"
-                            />
-                        </a>
-                    </li>
+                        <a href="#" class="bi icon-linkedin icons"></a>
+                   </li>
                 </ul>
             </div>
           </div>
@@ -144,6 +116,10 @@ export default {
     .searchForm {
         background-color: transparent;
         padding: 0;
+    }
+    .icons {
+        text-decoration: none;
+        color: white;
     }
     .icons:hover {
         color: gray;

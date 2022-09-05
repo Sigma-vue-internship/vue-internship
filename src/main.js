@@ -6,15 +6,10 @@ import store from "./store";
 import axios from "axios";
 import VueAxios from "vue-axios";
 import withUUID from "vue-uuid";
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFacebook } from '@fortawesome/free-brands-svg-icons'
-import { faInstagram } from '@fortawesome/free-brands-svg-icons'
-import { faLinkedin } from '@fortawesome/free-brands-svg-icons'
-import { faYoutube } from '@fortawesome/free-brands-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { BootstrapVue } from "bootstrap-vue";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "../src/assets/css/fontello.css";
 import directives from "./directives";
 const axiosInstance = axios.create({
   baseURL: "https://api.themoviedb.org/3/",
@@ -34,8 +29,6 @@ Vue.use(BootstrapVue);
 Vue.use(VueAxios, axiosInstance);
 Vue.use(Notifications);
 Vue.use(withUUID);
-library.add(faFacebook, faInstagram, faLinkedin, faYoutube);
-Vue.component('font-awesome-icon', FontAwesomeIcon);
 directives.forEach((directive) => {
   Vue.directive(directive.name, directive);
 });
