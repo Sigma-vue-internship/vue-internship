@@ -14,16 +14,45 @@ const routes = [
     path: "/search",
     name: "search",
     component: () => import("../views/MovieSearchView.vue"),
+    meta: {
+      breadCrumb: [
+        { label: "Home", to: { name: "home" } },
+        { label: "Search", to: { name: "search" } },
+      ],
+    },
   },
   {
     path: "/movie/:id",
     name: "movie",
     component: () => import("../views/MovieView.vue"),
+    meta: {
+      breadCrumb(route) {
+        const movieId = route.params.id;
+        return [
+          { label: "Home", to: { name: "home" } },
+          { label: "Search", to: { name: "search" } },
+          { label: "Movie", to: { name: "movie", params: { id: movieId } } },
+        ];
+      },
+    },
   },
   {
     path: "/celebrity/:id",
     name: "celebrity",
     component: () => import("../views/CelebrityDetailsView.vue"),
+    meta: {
+      breadCrumb(route) {
+        const celebrityId = route.params.id;
+        return [
+          { label: "Home", to: { name: "home" } },
+          { label: "Search", to: { name: "search" } },
+          {
+            label: "Celebrity",
+            to: { name: "celebrity", params: { id: celebrityId } },
+          },
+        ];
+      },
+    },
   },
   {
     path: "/user",

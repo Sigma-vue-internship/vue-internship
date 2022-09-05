@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMedia="findMedia" class="py-5" />
+    <SearchForm :mode="'optional'" @findMedia="findMedia" class="px-5" />
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <ul class="search__results-list" v-if="searchMedia.length">
       <li v-for="media in searchMedia" :key="media.uuid">
@@ -35,6 +35,12 @@ import SingleMovieSearch from "@/components/SingleMovieSearch.vue";
 import SpinnerLoader from "@/components/SpinnerLoader.vue";
 import SingleCelebritySearch from "@/components/SingleCelebritySearch.vue";
 export default {
+  components: {
+    SearchForm,
+    SingleMovieSearch,
+    SpinnerLoader,
+    SingleCelebritySearch,
+  },
   data() {
     return {
       searchMedia: [],
@@ -44,12 +50,6 @@ export default {
       routeSearchData: null,
       isLoading: false,
     };
-  },
-  components: {
-    SearchForm,
-    SingleMovieSearch,
-    SpinnerLoader,
-    SingleCelebritySearch,
   },
   methods: {
     async loadMoreMedia() {

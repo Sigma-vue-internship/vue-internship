@@ -1,7 +1,7 @@
 <template>
   <div>
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
-    <div class="container p-5">
+    <div class="container px-5">
       <div v-if="!isLoading" class="row gx-0 justify-content-between">
         <div class="movie__poster col-lg-4 col-xl-3">
           <img

@@ -2,6 +2,7 @@
   <div id="app">
     <Header />
     <div no-body class="router">
+      <Breadcrumbs />
       <router-view />
     </div>
     <Footer />
@@ -10,11 +11,13 @@
 <script>
 import Header from "@/components/Header";
 import Footer from "./components/Footer.vue";
+import Breadcrumbs from "./components/Breadcrumbs.vue";
 export default {
   name: "App",
   components: {
     Header,
     Footer,
+    Breadcrumbs,
   },
 };
 </script>
