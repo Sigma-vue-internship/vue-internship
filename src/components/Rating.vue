@@ -22,32 +22,37 @@
 <script>
 export default {
   props: ["celebrityRating", "movieRating"],
+  data() {
+    return {
+      colors: [
+        '#FF5050FF',
+        '#FCFF50FF',
+        '#96FF50FF'
+      ],
+    }
+  },
   computed: {
     celebrityRatingColor() {
-      switch (true) {
-        case this.celebrityRating < 100:
-          return "rgb(255, 80, 80)";
-        case this.celebrityRating >= 100 && this.celebrityRating < 175:
-          return "rgb(252, 255, 80)";
-        case this.celebrityRating >= 175:
-          return "rgb(150, 255, 80)";
-        default:
-          return null;
-      }
+      return this.setRatingColor('celebrityRating', 100, 175);
     },
     movieRatingColor() {
+      return this.setRatingColor('movieRating', 4, 6);
+    },
+  },
+  methods: {
+    setRatingColor(type, val1, val2) {
       switch (true) {
-        case this.movieRating < 4:
-          return "rgb(255, 80, 80)";
-        case this.movieRating >= 4 && this.movieRating < 6:
-          return "rgb(252, 255, 80)";
-        case this.movieRating >= 6:
-          return "rgb(150, 255, 80)";
+        case this[type] < val1:
+          return this.colors[0];
+        case this[type] >= val1 && this[type] < val2:
+          return this.colors[1];
+        case this[type] >= val2:
+          return this.colors[2];
         default:
           return null;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

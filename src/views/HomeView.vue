@@ -11,27 +11,27 @@
         <div class="main__watch py-3">
           <h4>Find movie or actor info</h4>
           <SearchForm
-            :mode="'preview'"
-            @findMedia="findMedia"
-            class="main__searchForm"
+              :mode="'preview'"
+              @findMedia="findMedia"
+              class="main__searchForm"
           />
         </div>
       </div>
     </div>
     <section class="px-2 text-center container">
       <MediaList
-        title="Popular actors"
-        route="/celebrity/"
-        :elements="celebrities"
-        :changePage="changeCelebritiesPage"
-        class="pt-3"
+          title="Popular actors"
+          route="/celebrity/"
+          :elements="celebrities"
+          :changePage="changeCelebritiesPage"
+          class="pt-3"
       />
       <MediaList
-        title="Popular movies"
-        route="/movie/"
-        :elements="movies"
-        :changePage="changeMoviesPage"
-        class="pb-5"
+          title="Popular movies"
+          route="/movie/"
+          :elements="movies"
+          :changePage="changeMoviesPage"
+          class="pb-5"
       />
     </section>
     <div class="main__bg"></div>
@@ -59,13 +59,13 @@ export default {
     async findMedia(searchData) {
       if (searchData) {
         this.$router
-          .push({
-            path: "/search",
-            query: {
-              searchQuery: searchData.searchQuery,
-            },
-          })
-          .catch(() => {});
+            .push({
+              path: "/search",
+              query: {
+                searchQuery: searchData.searchQuery,
+              },
+            })
+            .catch(() => {});
         return;
       }
     },
@@ -73,8 +73,8 @@ export default {
       try {
         this.celebritiesPage++;
         const response = await this.$store.dispatch(
-          "changeCelebritiesPage",
-          this.celebritiesPage
+            "changeCelebritiesPage",
+            this.celebritiesPage
         );
         const { data } = response;
         this.celebrities = this.celebrities.concat(data.results);
@@ -86,8 +86,8 @@ export default {
       try {
         this.moviesPage++;
         const response = await this.$store.dispatch(
-          "changeMoviesPage",
-          this.moviesPage
+            "changeMoviesPage",
+            this.moviesPage
         );
         const { data } = response;
         this.movies = this.movies.concat(data.results);
@@ -119,9 +119,9 @@ export default {
 @import "../assets/scss/variables.scss";
 .main {
   background-image: linear-gradient(
-    110.1deg,
-    rgba(30, 2, 83, 1) 44.2%,
-    rgba(198, 55, 160, 1) 138.2%
+          110.1deg,
+          rgba(30, 2, 83, 1) 44.2%,
+          rgba(198, 55, 160, 1) 138.2%
   );
 
   &__top {
@@ -162,3 +162,4 @@ export default {
   }
 }
 </style>
+

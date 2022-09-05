@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <div no-body class="router">
+    <b-card no-body class="router pb-5">
       <router-view />
-    </div>
+    </b-card>
     <Footer />
   </div>
 </template>
@@ -40,15 +40,10 @@ ol {
 html,
 body,
 #app {
-  height: 100vh;
-  /* padding-top: 8px; */
+  height: 100%;
 }
 .router {
   min-height: 100%;
-  background-image: linear-gradient(
-    110.1deg,
-    rgba(30, 2, 83, 1) 44.2%,
-    rgba(198, 55, 160, 1) 138.2%
-  );
+  background-color: #121416 !important;
 }
 </style>

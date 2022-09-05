@@ -3,16 +3,16 @@
     <b-nav class="navbar p-2 px-4 navbar-light amber lighten-4 mb-1">
       <b-navbar-brand class="navbar-brand" to="/">Moviedesk</b-navbar-brand>
       <button
-        class="navbar-toggler first-button"
-        type="button"
-        @click="showHideMenu"
+          class="navbar-toggler first-button"
+          type="button"
+          @click="showHideMenu"
       >
         <div :class="isMenuOpen ? 'animated-icon1 open' : 'animated-icon1'">
           <span></span><span></span><span></span>
         </div>
       </button>
       <div
-        :class="
+          :class="
           isMenuOpen
             ? 'navbar-collapse d-flex justify-content-end navbar__burger navbar__open'
             : 'navbar-collapse d-flex justify-content-end navbar__burger'
@@ -38,9 +38,9 @@
           <li>
             <b-nav-item to="/search">Search</b-nav-item>
           </li>
-          <li>
-            <b-nav-item to="/login">Login</b-nav-item>
-          </li>
+<!--          <li>-->
+<!--            <b-nav-item to="/login">Login</b-nav-item>-->
+<!--          </li>-->
         </ul>
       </div>
     </b-nav>
