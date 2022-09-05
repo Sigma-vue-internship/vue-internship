@@ -38,9 +38,9 @@
 </template>
 
 <script>
-import Carousel from "./Carousel.vue";
-import Rating from "./Rating.vue";
-import SpinnerLoader from "./SpinnerLoader.vue";
+import Carousel from "@/components/common/Carousel";
+import Rating from "@/components/common/Rating";
+import SpinnerLoader from "@/components/common/SpinnerLoader";
 export default {
   data() {
     return {
@@ -92,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/scss/variables.scss";
+@import "@/assets/scss/variables.scss";
 .movie-carousel {
   padding: 0;
 }

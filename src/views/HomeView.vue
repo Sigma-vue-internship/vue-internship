@@ -39,8 +39,8 @@
 </template>
 
 <script>
-import SearchForm from "@/components/SearchForm";
-import MediaList from "@/components/MediaList";
+import SearchForm from "@/components/common/SearchForm";
+import MediaList from "@/components/media/MediaList";
 export default {
   name: "HomeView",
   components: {
