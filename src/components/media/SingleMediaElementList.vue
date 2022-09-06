@@ -1,13 +1,13 @@
 <template>
   <li>
     <div class="card">
-      <img 
-      class="card-img-top"
-      alt="Card img"
-      :src="
-        imgPath
-          ? 'https://image.tmdb.org/t/p/w185/' + imgPath
-          : 'https://dummyimage.com/300x450/000/00ff8c'
+      <img
+        class="card-img-top"
+        alt="Card img"
+        :src="
+          imgPath
+            ? 'https://image.tmdb.org/t/p/w185/' + imgPath
+            : 'https://dummyimage.com/300x450/000/00ff8c'
         "
       />
       <div class="card-body">
@@ -25,18 +25,16 @@ export default {
   },
   computed: {
     imgPath() {
-      return "profile_path" in this.element
-        ? this.element.profile_path
-        : "poster_path" in this.element
-        ? this.element.poster_path
-        : "";
+      if ("profile_path" in this.element) {
+        return this.element.profile_path;
+      }
+      return this.element.poster_path;
     },
     captionElement() {
-      return "name" in this.element
-        ? this.element.name
-        : "title" in this.element
-        ? this.element.title
-        : "";
+      if ("name" in this.element) {
+        return this.element.name;
+      }
+      return this.element.title;
     },
   },
 };
@@ -54,7 +52,7 @@ export default {
 .card-img,
 .card-img-top {
   border: 10px solid rgb(97, 47, 183);
-  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.69);
+  box-shadow: 0px 0px 4px 1px rgba(0, 0, 0, 0.69);
   cursor: pointer;
   transition: border cubic-bezier(0.165, 0.84, 0.44, 1) 500ms;
   height: $imgHeight;

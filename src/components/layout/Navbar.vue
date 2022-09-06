@@ -102,9 +102,6 @@ export default {
   -moz-transition: 0.25s ease-in-out;
   -o-transition: 0.25s ease-in-out;
   transition: 0.25s ease-in-out;
-}
-
-.animated-icon1 span {
   background: $lightGreen;
 }
 
