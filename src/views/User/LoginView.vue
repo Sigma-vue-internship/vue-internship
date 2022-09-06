@@ -190,18 +190,19 @@ export default {};
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  input:checked ~ .checkmark:after {
+    display: block;
+    content: "\f14a";
+    color: rgba(0, 0, 0, 0.2);
+  }
 }
-
-/* Hide the browser's default checkbox */
-.checkbox-wrap input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-}
-
-/* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 0;
@@ -218,14 +219,6 @@ export default {};
 }
 
 /* Show the checkmark when checked */
-.checkbox-wrap {
-  input:checked ~ .checkmark:after {
-    display: block;
-    content: "\f14a";
-    color: rgba(0, 0, 0, 0.2);
-  }
-}
-
 .checkbox-primary {
   color: $lightPurple;
   input:checked ~ .checkmark:after {
