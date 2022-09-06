@@ -1,6 +1,10 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMedia="findMedia" class="px-5" />
+    <SearchForm
+      :mode="'optional'"
+      @findMedia="findMediaElements"
+      class="px-5"
+    />
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <ul class="search__results-list" v-if="searchMedia.length">
       <li v-for="media in searchMedia" :key="media.uuid">
@@ -133,7 +137,36 @@ export default {
       }
     },
   },
+  watch: {
+    $route: {
+      async handler(newRoute) {
+        this.routeSearchData = { ...newRoute.query };
+        this.currentPage = 1;
+        if (this.routeSearchData.searchQuery) {
+          console.log("Movie search route handler: ", 1);
+          try {
+            this.isLoading = true;
+            this.resData = await this.findMedia(this.routeSearchData);
+            if (this.resData.data.results.length === 0) {
+              this.$notify({
+                group: "empty-search",
+                classes: "search-notification",
+              });
+            }
+            this.searchMedia = this.resData.data.results;
+            this.totalPages = this.resData.data.total_pages;
+            this.isLoading = false;
+          } catch (e) {
+            console.log(e);
+            this.isLoading = false;
+          }
+        }
+      },
+      deep: true,
+    },
+  },
   async created() {
+    console.log("Movie search created: ", 1);
     this.routeSearchData = { ...this.$route.query };
     this.currentPage = 1;
     if (this.routeSearchData.searchQuery && !this.searchMedia.length) {

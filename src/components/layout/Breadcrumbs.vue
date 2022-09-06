@@ -1,5 +1,5 @@
 <template>
-  <b-breadcrumb class="container px-5 py-3" v-if="breadCrumbs">
+  <b-breadcrumb class="container px-5 py-3" v-if="breadCrumbs.length">
     <b-breadcrumb-item
       class="breadcrumb"
       v-for="(crumb, i) in breadCrumbs"
@@ -13,12 +13,41 @@
 
 <script>
 export default {
-  computed: {
-    breadCrumbs() {
-      if (typeof this.$route.meta.breadCrumb === "function") {
-        return this.$route.meta.breadCrumb.call(this, this.$route);
-      }
-      return this.$route.meta.breadCrumb;
+  data() {
+    return {
+      breadCrumbs: [],
+      maxCrumbs: 5,
+    };
+  },
+  watch: {
+    $route: {
+      handler({ meta: { breadCrumb }, fullPath }, prevRoute) {
+        if (fullPath === "/") {
+          this.breadCrumbs = [];
+          return;
+        }
+        this.breadCrumbs.forEach((crumb, i) => {
+          if (crumb.to === fullPath) {
+            this.breadCrumbs = this.breadCrumbs.filter(
+              (crumb, _, arr) => arr.indexOf(crumb) < i
+            );
+            return;
+          }
+        });
+        if (
+          prevRoute.fullPath === "/" &&
+          fullPath !== "/" &&
+          prevRoute.meta.breadCrumb
+        ) {
+          const prevRouteLabel = prevRoute.meta.breadCrumb[0].label;
+          const prevRoutePath = prevRoute.fullPath;
+          this.breadCrumbs.push({ label: prevRouteLabel, to: prevRoutePath });
+        }
+        this.breadCrumbs.push({ label: breadCrumb[0].label, to: fullPath });
+        if (this.breadCrumbs.length === this.maxCrumbs)
+          this.breadCrumbs.shift();
+      },
+      deep: true,
     },
   },
 };

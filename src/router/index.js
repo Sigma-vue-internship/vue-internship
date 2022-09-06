@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 Vue.use(VueRouter);
 
@@ -8,17 +7,17 @@ const routes = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: () => import("../views/HomeView.vue"),
+    meta: {
+      breadCrumb: [{ label: "Home" }],
+    },
   },
   {
     path: "/search",
     name: "search",
     component: () => import("../views/MovieSearchView.vue"),
     meta: {
-      breadCrumb: [
-        { label: "Home", to: { name: "home" } },
-        { label: "Search", to: { name: "search" } },
-      ],
+      breadCrumb: [{ label: "Search" }],
     },
   },
   {
@@ -26,14 +25,7 @@ const routes = [
     name: "movie",
     component: () => import("../views/MovieView.vue"),
     meta: {
-      breadCrumb(route) {
-        const movieId = route.params.id;
-        return [
-          { label: "Home", to: { name: "home" } },
-          { label: "Search", to: { name: "search" } },
-          { label: "Movie", to: { name: "movie", params: { id: movieId } } },
-        ];
-      },
+      breadCrumb: [{ label: "Movie" }],
     },
   },
   {
@@ -41,17 +33,11 @@ const routes = [
     name: "celebrity",
     component: () => import("../views/CelebrityDetailsView.vue"),
     meta: {
-      breadCrumb(route) {
-        const celebrityId = route.params.id;
-        return [
-          { label: "Home", to: { name: "home" } },
-          { label: "Search", to: { name: "search" } },
-          {
-            label: "Celebrity",
-            to: { name: "celebrity", params: { id: celebrityId } },
-          },
-        ];
-      },
+      breadCrumb: [
+        {
+          label: "Celebrity",
+        },
+      ],
     },
   },
   {
