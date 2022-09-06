@@ -17,7 +17,10 @@ const routes = [
     name: "search",
     component: () => import("../views/MovieSearchView.vue"),
     meta: {
-      breadCrumb: [{ label: "Search" }],
+      breadCrumb: [
+        { label: "Home", to: { name: "home" } },
+        { label: "Search", to: { name: "search" } },
+      ],
     },
   },
   {
@@ -25,7 +28,14 @@ const routes = [
     name: "movie",
     component: () => import("../views/MovieView.vue"),
     meta: {
-      breadCrumb: [{ label: "Movie" }],
+      breadCrumb(route) {
+        const movieId = route.params.id;
+        return [
+          { label: "Home", to: { name: "home" } },
+          { label: "Search", to: { name: "search" } },
+          { label: "Movie", to: { name: "movie", params: { id: movieId } } },
+        ];
+      },
     },
   },
   {
@@ -33,11 +43,17 @@ const routes = [
     name: "celebrity",
     component: () => import("../views/CelebrityDetailsView.vue"),
     meta: {
-      breadCrumb: [
-        {
-          label: "Celebrity",
-        },
-      ],
+      breadCrumb(route) {
+        const celebrityId = route.params.id;
+        return [
+          { label: "Home", to: { name: "home" } },
+          { label: "Search", to: { name: "search" } },
+          {
+            label: "Celebrity",
+            to: { name: "celebrity", params: { id: celebrityId } },
+          },
+        ];
+      },
     },
   },
   {
