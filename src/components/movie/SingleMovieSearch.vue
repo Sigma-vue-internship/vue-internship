@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     redirectToMovie(id) {
-      this.$router.push(`/movie/${id}`);
+      this.$router.push(`/movie/${id}`).catch(() => {});
     },
   },
 };

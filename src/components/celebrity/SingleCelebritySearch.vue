@@ -49,7 +49,7 @@ export default {
   },
   methods: {
     redirectToMovie(id) {
-      this.$router.push(`/celebrity/${id}`);
+      this.$router.push(`/celebrity/${id}`).catch(() => {});
     },
   },
   computed: {

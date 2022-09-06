@@ -1,5 +1,5 @@
 <template>
-  <b-breadcrumb class="container px-5 py-3" v-if="breadCrumbs">
+  <b-breadcrumb class="container px-3 py-3" v-if="breadCrumbs">
     <b-breadcrumb-item
       class="breadcrumb"
       v-for="(crumb, i) in breadCrumbs"
@@ -24,7 +24,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import "../assets/scss/variables.scss";
+@import "../../assets/scss/variables.scss";
 .breadcrumb {
   --bs-breadcrumb-margin-bottom: 0;
   --bs-breadcrumb-divider-color: 0;

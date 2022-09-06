@@ -143,7 +143,6 @@ export default {
         this.routeSearchData = { ...newRoute.query };
         this.currentPage = 1;
         if (this.routeSearchData.searchQuery) {
-          console.log("Movie search route handler: ", 1);
           try {
             this.isLoading = true;
             this.resData = await this.findMedia(this.routeSearchData);
@@ -166,7 +165,6 @@ export default {
     },
   },
   async created() {
-    console.log("Movie search created: ", 1);
     this.routeSearchData = { ...this.$route.query };
     this.currentPage = 1;
     if (this.routeSearchData.searchQuery && !this.searchMedia.length) {
