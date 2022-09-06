@@ -1,5 +1,5 @@
 <template>
-  <div class="container pb-3 d-flex flex-column align-items-center">
+  <div class="container pt-5 d-flex flex-column align-items-center">
     <div class="text-start text-white w-100 py-3">
       <h2>{{ title }}</h2>
     </div>
@@ -21,7 +21,7 @@
 import SingleMediaElementList from "./SingleMediaElementList";
 export default {
   name: "MediaList",
-  components: { 
+  components: {
     SingleMediaElementList
   },
   props: {

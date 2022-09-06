@@ -110,6 +110,7 @@ export default {
       .icons {
         color: #513f7a;
         font-size: 25px;
+        text-decoration: none;
 
         &:hover {
           color: #9f8fc3;

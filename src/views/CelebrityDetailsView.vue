@@ -81,11 +81,11 @@ import MediaList from "../components/media/MediaList";
 import Rating from "../components/common/Rating";
 export default {
   name: "CelebrityDetailsView",
-  components: { 
-    SpinnerLoader, 
-    vueShowMoreText, 
-    MediaList, 
-    Rating 
+  components: {
+    SpinnerLoader,
+    vueShowMoreText,
+    MediaList,
+    Rating,
   },
   data() {
     return {

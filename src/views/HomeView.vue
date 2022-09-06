@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main pb-4">
     <div class="text-white">
       <div class="main__top">
         <div class="main__name text-center py-3">
@@ -20,18 +20,17 @@
     </div>
     <section class="px-2 text-center container">
       <MediaList
-        title="Popular actors"
-        route="/celebrity/"
-        :elements="celebrities"
-        :changePage="() => { return changeCurrentPage('celebrities')}"
-        class="pt-3"
-      />
-      <MediaList
         title="Popular movies"
         route="/movie/"
         :elements="movies"
         :changePage="() => { return changeCurrentPage('movies')}"
-        class="pb-5"
+      />
+      <MediaList
+        title="Popular actors"
+        route="/celebrity/"
+        :elements="celebrities"
+        :changePage="() => { return changeCurrentPage('celebrities')}"
+        class="pb-4"
       />
     </section>
     <div class="main__bg"></div>
@@ -56,59 +55,45 @@ export default {
       moviesPage: 1,
     };
   },
+  async created() {
+    await this.loadData('movies');
+    await this.loadData('celebrities');
+  },
   methods: {
     ...mapActions([
       "changeMediaPage",
       "getMedia"
     ]),
-    async findMedia(searchData) {
-      if (searchData) {
-        this.$router
-          .push({
-            path: "/search",
-            query: {
-              searchQuery: searchData.searchQuery,
-            },
-          })
-          .catch(() => {});
-        return;
-      }
-    },
-    async changeCurrentPage(type) {
+    async loadData(type) {
       try {
-        if(type === "celebrities") {
-          this.celebritiesPage++;
-          const obj = { type:type, page:this.celebritiesPage }
-          const response = await this.changeMediaPage(obj);
-          const { data } = response;
-          this.celebrities = this.celebrities.concat(data.results);
-        } else if(type === "movies") {
-          this.moviesPage++;
-          const obj = { type:type, page:this.celebritiesPage }
-          const response = await this.changeMediaPage(obj);
-          const { data } = response;
-          this.movies = this.movies.concat(data.results);
-        } 
+        const response = await this.getMedia(type);
+        const { data: { results } } = response;
+        this[type] = results;
       } catch (error) {
         console.log(error);
       }
     },
-  },
-  async created() {
-    try {
-      const response = await this.getMedia("celebrities");
-      const { data } = response;
-      this.celebrities = data.results;
-    } catch (error) {
-      console.log(error);
-    }
-    try {
-      const response = await this.getMedia("movies");
-      const { data } = response;
-      this.movies = data.results;
-    } catch (error) {
-      console.log(error);
-    }
+    async findMedia(searchData) {
+      if (searchData) {
+        this.$router.push({
+          path: "/search",
+          query: {
+            searchQuery: searchData.searchQuery,
+          },
+        });
+      }
+    },
+    async changeCurrentPage(type) {
+      try {
+        this[`${type}Page`]++;
+        const obj = { type, page: this[`${type}Page`] }
+        const response = await this.changeMediaPage(obj);
+        const { data } = response;
+        this[type] = this[type].concat(data.results);
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };
 </script>
