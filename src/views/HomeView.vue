@@ -23,13 +23,21 @@
         title="Popular movies"
         route="/movie/"
         :elements="movies"
-        :changePage="() => { return changeCurrentPage('movies')}"
+        :changePage="
+          () => {
+            return changeCurrentPage('movies');
+          }
+        "
       />
       <MediaList
         title="Popular actors"
         route="/celebrity/"
         :elements="celebrities"
-        :changePage="() => { return changeCurrentPage('celebrities')}"
+        :changePage="
+          () => {
+            return changeCurrentPage('celebrities');
+          }
+        "
         class="pb-4"
       />
     </section>
@@ -45,7 +53,7 @@ export default {
   name: "HomeView",
   components: {
     SearchForm,
-    MediaList
+    MediaList,
   },
   data() {
     return {
@@ -56,18 +64,17 @@ export default {
     };
   },
   async created() {
-    await this.loadData('movies');
-    await this.loadData('celebrities');
+    await this.loadData("movies");
+    await this.loadData("celebrities");
   },
   methods: {
-    ...mapActions([
-      "changeMediaPage",
-      "getMedia"
-    ]),
+    ...mapActions(["changeMediaPage", "getMedia"]),
     async loadData(type) {
       try {
         const response = await this.getMedia(type);
-        const { data: { results } } = response;
+        const {
+          data: { results },
+        } = response;
         this[type] = results;
       } catch (error) {
         console.log(error);
@@ -75,18 +82,20 @@ export default {
     },
     async findMedia(searchData) {
       if (searchData) {
-        this.$router.push({
-          path: "/search",
-          query: {
-            searchQuery: searchData.searchQuery,
-          },
-        });
+        this.$router
+          .push({
+            path: "/search",
+            query: {
+              searchQuery: searchData.searchQuery,
+            },
+          })
+          .catch(() => {});
       }
     },
     async changeCurrentPage(type) {
       try {
         this[`${type}Page`]++;
-        const obj = { type, page: this[`${type}Page`] }
+        const obj = { type, page: this[`${type}Page`] };
         const response = await this.changeMediaPage(obj);
         const { data } = response;
         this[type] = this[type].concat(data.results);

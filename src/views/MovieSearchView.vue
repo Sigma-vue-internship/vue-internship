@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchForm :mode="'optional'" @findMedia="findMediaElements" class="py-5" />
+    <SearchForm :mode="'optional'" @findMedia="findMediaElements" class="p-3" />
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <ul class="search__results-list" v-if="searchMedia.length">
       <li v-for="media in searchMedia" :key="media.uuid">
@@ -41,7 +41,7 @@ export default {
     SearchForm,
     SingleMovieSearch,
     SpinnerLoader,
-    SingleCelebritySearch
+    SingleCelebritySearch,
   },
   data() {
     return {
@@ -54,10 +54,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions([
-      "loadMoreMedia",
-      "findMedia"
-    ]),
+    ...mapActions(["loadMoreMedia", "findMedia"]),
     async loadMoreMediaElements() {
       const routeSearchData = { ...this.$route.query };
       this.currentPage += 1;
@@ -134,6 +131,33 @@ export default {
           this.isLoading = false;
         }
       }
+    },
+  },
+  watch: {
+    $route: {
+      async handler(newRoute) {
+        this.routeSearchData = { ...newRoute.query };
+        this.currentPage = 1;
+        if (this.routeSearchData.searchQuery) {
+          try {
+            this.isLoading = true;
+            this.resData = await this.findMedia(this.routeSearchData);
+            if (this.resData.data.results.length === 0) {
+              this.$notify({
+                group: "empty-search",
+                classes: "search-notification",
+              });
+            }
+            this.searchMedia = this.resData.data.results;
+            this.totalPages = this.resData.data.total_pages;
+            this.isLoading = false;
+          } catch (e) {
+            console.log(e);
+            this.isLoading = false;
+          }
+        }
+      },
+      deep: true,
     },
   },
   async created() {
