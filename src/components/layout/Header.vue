@@ -1,5 +1,5 @@
 <template>
-<b-navbar toggleable="lg" type="dark" variant="dark" class="fixed-top">
+  <b-navbar toggleable="lg" type="dark" variant="dark" class="fixed-top">
     <div class="container">
       <Navbar />
     </div>
@@ -15,6 +15,3 @@ export default {
   },
 };
 </script>
-
-<style>
-</style>
