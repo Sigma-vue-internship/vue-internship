@@ -3,6 +3,12 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+const options = {
+  params: {
+    page: 1,
+  },
+};
+
 export default new Vuex.Store({
   state: {
     movies: [],
@@ -53,11 +59,6 @@ export default new Vuex.Store({
       return this.axios.get(`person/${celebrityId}`);
     },
     async getCelebrityMovies(_, celebrityId) {
-      const options = {
-        params: {
-          page: 1,
-        },
-      };
       try {
         return await this.axios.get(
           `person/${celebrityId}/movie_credits`,
@@ -80,24 +81,22 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getMedia({ commit }, type) {
-      const options = {
-        params: {
-          page: 1,
-        },
-      };
+    async getMovies({ commit }) {
       try {
-        if(type === "movies") {
-          const response = await this.axios.get("movie/popular", options);
-          const { data: { results } } = response;
-          commit("SET_MOVIES", results);
-          return await this.axios.get("movie/popular", options);
-        } else if(type === "celebrities") {
-          const response = await this.axios.get("person/popular", options);
-          const { data: { results } } = response;
-          commit("SET_CELEBRITIES", results);
-          return await this.axios.get("movie/popular", options);
-        }
+        const response = await this.axios.get("movie/popular", options);
+        const { data: { results } } = response;
+        commit("SET_MOVIES", results);
+        return await this.axios.get("movie/popular", options);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getActors({ commit }) {
+      try {
+        const response = await this.axios.get("person/popular", options);
+        const { data: { results } } = response;
+        commit("SET_CELEBRITIES", results);
+        return await this.axios.get("movie/popular", options);
       } catch (error) {
         console.error(error);
       }

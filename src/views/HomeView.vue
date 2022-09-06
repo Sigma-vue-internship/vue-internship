@@ -63,22 +63,25 @@ export default {
       moviesPage: 1,
     };
   },
-  async created() {
-    await this.loadData("movies");
-    await this.loadData("celebrities");
+  created() {
+    this.loadMovies();
+    this.loadActors();
   },
   methods: {
-    ...mapActions(["changeMediaPage", "getMedia"]),
-    async loadData(type) {
-      try {
-        const response = await this.getMedia(type);
-        const {
-          data: { results },
-        } = response;
-        this[type] = results;
-      } catch (error) {
-        console.log(error);
-      }
+    ...mapActions(["changeMediaPage", "getMovies", "getActors"]),
+    async loadMovies() {
+      const response = await this.getMovies();
+      const {
+        data: { results },
+      } = response;
+      this.movies = results;
+    },
+    async loadActors() {
+      const response = await this.getActors();
+      const {
+        data: { results },
+      } = response;
+      this.celebrities = results;
     },
     async findMedia(searchData) {
       if (searchData) {
