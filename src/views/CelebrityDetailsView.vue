@@ -8,7 +8,7 @@
       flex-column
       align-items-between
       justify-content-center
-      px-3
+      p-3
     "
   >
     <div class="row gx-0 pb-5 d-flex">
@@ -170,8 +170,6 @@ export default {
 </script>
 
 <style lang="scss">
-.celebrity-profile__container {
-}
 .celebrity__rating {
   margin: 0 auto;
 }
