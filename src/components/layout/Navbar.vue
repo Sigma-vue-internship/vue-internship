@@ -1,14 +1,19 @@
 <template>
   <div class="w-100">
     <b-nav class="navbar p-2 px-4 navbar-light amber lighten-4 mb-1">
-      <b-navbar-brand class="navbar-brand" to="/">Moviedesk</b-navbar-brand>
+      <b-navbar-brand
+        class="navbar-brand"
+        to="/"
+      >
+        Moviedesk
+      </b-navbar-brand>
       <button
         class="navbar-toggler first-button"
         type="button"
         @click="showHideMenu"
       >
         <div :class="isMenuOpen ? 'animated-icon1 open' : 'animated-icon1'">
-          <span></span><span></span><span></span>
+          <span /><span /><span />
         </div>
       </button>
       <div
@@ -18,19 +23,28 @@
             : 'navbar-collapse d-flex justify-content-end navbar__burger'
         "
       >
-        <ul v-if="isMenuOpen" class="navbar-nav">
+        <ul
+          v-if="isMenuOpen"
+          class="navbar-nav"
+        >
           <li @click="showHideMenu">
-            <b-nav-item to="/">Home</b-nav-item>
+            <b-nav-item to="/">
+              Home
+            </b-nav-item>
           </li>
         </ul>
       </div>
       <div class="navbar-collapse d-flex justify-content-end navbar__wide">
         <ul class="navbar-nav navbar__wide">
           <li>
-            <b-nav-item to="/">Home</b-nav-item>
+            <b-nav-item to="/">
+              Home
+            </b-nav-item>
           </li>
           <li>
-            <b-nav-item to="/search">Search</b-nav-item>
+            <b-nav-item to="/search">
+              Search
+            </b-nav-item>
           </li>
         </ul>
       </div>

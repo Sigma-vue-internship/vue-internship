@@ -6,7 +6,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     movies: [],
-    celebrities: []
+    celebrities: [],
   },
   getters: {
     getMovies: state => state.movies,
@@ -117,6 +117,6 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
-    }
+    },
   },
 });

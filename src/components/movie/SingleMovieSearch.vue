@@ -10,20 +10,24 @@
         img-alt="Card image"
         img-width="185"
         img-left
-        @click="redirectToMovie(movie.id)"
         class="mb-3 img-fluid"
+        @click="redirectToMovie(movie.id)"
       >
         <b-card-title>{{ movie.title }}</b-card-title>
         <div class="rating">
-          <Rating :movieRating="movieRating" />
+          <Rating :movie-rating="movieRating" />
         </div>
         <b-card-text>
           {{ overview }}
         </b-card-text>
         <div class="py-2 d-flex">
-          <b-button variant="dark" @click="redirectToMovie(movie.id)" size="md"
-            >Details</b-button
+          <b-button
+            variant="dark"
+            size="md"
+            @click="redirectToMovie(movie.id)"
           >
+            Details
+          </b-button>
         </div>
       </b-card>
     </div>

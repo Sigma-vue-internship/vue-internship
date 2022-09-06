@@ -53,9 +53,9 @@ const routes = [
         path: "watchlist",
         name: "watchlist",
         component: () => import("../views/User/WatchlistView.vue"),
-      },
+      }
     ],
-  },
+  }
 ];
 
 const router = new VueRouter({

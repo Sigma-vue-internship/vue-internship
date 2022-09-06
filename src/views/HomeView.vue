@@ -5,15 +5,15 @@
         <div class="main__name text-center py-3">
           <h1>Moviedesk</h1>
         </div>
-        <div class="main__overlay"></div>
+        <div class="main__overlay" />
       </div>
       <div class="text-center">
         <div class="main__watch py-3">
           <h4>Find movie or actor info</h4>
           <SearchForm
             :mode="'preview'"
-            @findMedia="findMedia"
             class="main__searchForm"
+            @findMedia="findMedia"
           />
         </div>
       </div>
@@ -23,7 +23,7 @@
         title="Popular movies"
         route="/movie/"
         :elements="movies"
-        :changePage="
+        :change-page="
           () => {
             return changeCurrentPage('movies');
           }
@@ -33,7 +33,7 @@
         title="Popular actors"
         route="/celebrity/"
         :elements="celebrities"
-        :changePage="
+        :change-page="
           () => {
             return changeCurrentPage('celebrities');
           }
@@ -41,7 +41,7 @@
         class="pb-4"
       />
     </section>
-    <div class="main__bg"></div>
+    <div class="main__bg" />
   </div>
 </template>
 

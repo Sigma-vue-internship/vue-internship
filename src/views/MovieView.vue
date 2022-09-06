@@ -1,7 +1,13 @@
 <template>
   <div class="movie-view">
-    <SpinnerLoader :isLoading="isLoading" v-if="isLoading" />
-    <SingleMoviePage :movie="movie" v-else />
+    <SpinnerLoader
+      v-if="isLoading"
+      :is-loading="isLoading"
+    />
+    <SingleMoviePage
+      v-else
+      :movie="movie"
+    />
   </div>
 </template>
 
@@ -13,7 +19,7 @@ export default {
   name: "MovieView",
   components: {
     SingleMoviePage,
-    SpinnerLoader
+    SpinnerLoader,
   },
   data() {
     return {
@@ -23,6 +29,22 @@ export default {
   },
   methods: {
     ...mapActions(["getMovie"]),
+  },
+  watch: {
+    $route: {
+      async handler() {
+        try {
+          this.isLoading = true;
+          const response = await this.getMovie(this.$route.params.id);
+          const { data } = response;
+          this.movie = data;
+          this.isLoading = false;
+        } catch (error) {
+          console.log(error);
+          this.isLoading = false;
+        }
+      },
+    },
   },
   async created() {
     try {
@@ -35,22 +57,6 @@ export default {
       console.log(error);
       this.isLoading = false;
     }
-  },
-  watch: {
-    $route: {
-      async handler() {
-        try {
-        this.isLoading = true;
-        const response = await this.getMovie(this.$route.params.id);
-        const { data } = response;
-        this.movie = data;
-        this.isLoading = false;
-        } catch (error) {
-          console.log(error);
-          this.isLoading = false;
-        }
-      },
-    },
   },
 };
 </script>
