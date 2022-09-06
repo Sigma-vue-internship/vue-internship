@@ -1,5 +1,5 @@
 <template>
-  <div v-if="movieRating" class="movie-raiting">
+  <div v-if="movieRating || celebrityRating" class="movie-raiting">
     <progress
       class="movie-raiting__bar"
       :style="{
@@ -25,19 +25,15 @@ export default {
   props: ["celebrityRating", "movieRating"],
   data() {
     return {
-      colors: [
-        '#FF5050FF',
-        '#FCFF50FF',
-        '#96FF50FF'
-      ],
-    }
+      colors: ["#FF5050FF", "#FCFF50FF", "#96FF50FF"],
+    };
   },
   computed: {
     celebrityRatingColor() {
-      return this.setRatingColor('celebrityRating', 100, 175);
+      return this.setRatingColor("celebrityRating", 100, 175);
     },
     movieRatingColor() {
-      return this.setRatingColor('movieRating', 4, 6);
+      return this.setRatingColor("movieRating", 4, 6);
     },
   },
   methods: {
@@ -52,8 +48,8 @@ export default {
         default:
           return null;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -62,7 +58,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  // margin: 0 auto;
   margin-top: 20px;
   width: 90%;
 }

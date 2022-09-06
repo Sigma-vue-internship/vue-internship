@@ -211,7 +211,6 @@ export default {};
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
   content: "\f0c8";
-  font-family: "FontAwesome";
   position: absolute;
   color: rgba(0, 0, 0, 0.1);
   font-size: 20px;
@@ -223,7 +222,6 @@ export default {};
   input:checked ~ .checkmark:after {
     display: block;
     content: "\f14a";
-    font-family: "FontAwesome";
     color: rgba(0, 0, 0, 0.2);
   }
 }
@@ -252,20 +250,14 @@ export default {};
     color: white !important;
     &:hover {
       color: $lightPurple;
-
       background: transparent;
-      color: blue;
     }
     &.btn-outline-primary {
       color: $lightPurple;
-
       background: transparent;
-      color: $lightPurple;
 
       &:hover {
         border: 1px solid transparent;
-        color: $lightPurple;
-
         color: white;
       }
     }

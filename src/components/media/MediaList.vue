@@ -22,7 +22,7 @@ import SingleMediaElementList from "./SingleMediaElementList";
 export default {
   name: "MediaList",
   components: {
-    SingleMediaElementList
+    SingleMediaElementList,
   },
   props: {
     title: String,
@@ -32,7 +32,7 @@ export default {
   },
   methods: {
     routeToElementPage(id) {
-      this.$router.push({ path: `${this.route}${id}` });
+      this.$router.push({ path: `${this.route}${id}` }).catch(() => {});
     },
   },
 };

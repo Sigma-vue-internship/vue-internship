@@ -8,8 +8,8 @@
   </div>
 </template>
 <script>
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Footer from "./components/layout/Footer.vue";
+import Header from "./components/layout/Header.vue";
 export default {
   name: "App",
   components: {
