@@ -13,7 +13,19 @@
         @click="redirectToMovie(celebrity.id)"
         class="mb-3"
       >
-        <b-card-title>{{ celebrity.name }}</b-card-title>
+        <div class="row d-flex justify-content-between">
+          <b-card-title class="col-md-5">{{ celebrity.name }} </b-card-title>
+          <span
+            class="
+              movie-badge
+              badge badge-secondary
+              col-6 col-sm-3 col-md-2 col-lg-1
+              mx-md-4
+              mb-3
+            "
+            >Actor</span
+          >
+        </div>
         <div class="rating">
           <Rating :celebrityRating="celebrityRating" />
         </div>
@@ -76,15 +88,24 @@ export default {
   width: 30%;
   margin-bottom: 15px;
 }
+.celebrity-result .movie-raiting {
+  margin-top: 0;
+}
 @media (max-width: 992px) {
   .celebrity-result .rating {
     width: 60%;
   }
 }
 
-@media (max-width: 450px) {
+@media (max-width: 768px) {
   .celebrity-result .card-text {
     display: none;
+  }
+  .celebrity-result .rating {
+    width: 100%;
+  }
+  .celebrity-result .movie-raiting {
+    width: 100%;
   }
   .celebrity-result .card-title {
     font-size: 18px;
