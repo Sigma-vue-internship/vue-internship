@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="celebrity-result container px-5">
+    <div class="celebrity-result container px-3">
       <b-card
         :img-src="
           celebrity.profile_path

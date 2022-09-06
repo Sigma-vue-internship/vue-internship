@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="movie-result container px-5">
+    <div class="movie-result container px-3">
       <b-card
         :img-src="
           movie.poster_path
