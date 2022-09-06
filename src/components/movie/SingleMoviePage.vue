@@ -25,7 +25,11 @@
           <p><strong>Release date:</strong> {{ movie.release_date }}</p>
           <p><strong>Runtime:</strong> {{ movie.runtime }}</p>
           <p class="movie__overview">{{ movie.overview }}</p>
-          <b-button v-if="movie.homepage" :href="movie.homepage" variant="dark">
+          <b-button
+            v-if="movie.homepage"
+            @click="toMovieHomepage(movie.homepage)"
+            variant="dark"
+          >
             Go to the movie site
           </b-button>
         </div>
@@ -60,6 +64,9 @@ export default {
   },
   methods: {
     ...mapActions(["getMovieImages"]),
+    toMovieHomepage(url) {
+      window.location.href = url;
+    },
   },
   computed: {
     imgUrls() {
@@ -89,7 +96,6 @@ export default {
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;
-
       console.log(e);
     }
   },
