@@ -167,6 +167,20 @@ export default {
       console.error(e);
     }
   },
+  watch: {
+    $route: {
+      async handler() {
+        try {
+          this.isLoading = true;
+          await this.getCelebrityData();
+          this.isLoading = false;
+        } catch (e) {
+          this.isLoading = false;
+          console.error(e);
+        }
+      },
+    },
+  },
 };
 </script>
 

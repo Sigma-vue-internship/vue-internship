@@ -36,5 +36,21 @@ export default {
       this.isLoading = false;
     }
   },
+  watch: {
+    $route: {
+      async handler() {
+        try {
+        this.isLoading = true;
+        const response = await this.getMovie(this.$route.params.id);
+        const { data } = response;
+        this.movie = data;
+        this.isLoading = false;
+        } catch (error) {
+          console.log(error);
+          this.isLoading = false;
+        }
+      },
+    },
+  },
 };
 </script>

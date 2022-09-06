@@ -3,50 +3,44 @@
           <div class="container">
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Top movies</h5>
+                    <h5>Movies</h5>
                     <ul class="nav flex-column">
                         <li 
                             class="nav-item mb-2"
                             v-for="movie in movies"
                             :key="movie.uuid"
                         >
-                            <a :href="$router.resolve({ name: 'movie', params: { id: movie.id } }).href"> 
-                                {{ movie.title }} 
-                            </a>
+                            <router-link :to="{ name: 'movie', params: { id: movie.id } }">
+                                {{ movie.title }}
+                            </router-link>
                         </li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Top celebrities</h5>
+                    <h5>Celebrities</h5>
                     <ul class="nav flex-column">
                         <li 
                             class="nav-item mb-2"
                             v-for="celebrity in celebrities"
                             :key="celebrity.uuid"
                         >
-                            <a :href="$router.resolve({ name: 'celebrity', params: { id: celebrity.id } }).href"> 
+                            <router-link :to="{ name: 'celebrity', params: { id: celebrity.id } }"> 
                                 {{ celebrity.name }} 
-                            </a>
+                            </router-link>
                         </li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-2 mb-3">
                     <h5>Navigation</h5>
                     <ul class="nav flex-column">
-                        <li>
-                            <a href="/" class="nav-item mb-2 text-muted">
-                                Home
-                            </a>
+                        <li class="nav-item mb-2">
+                            <a href="/">Home</a>
                         </li>
-                        <li>
-                            <a href="/search" class="nav-item mb-2 text-muted">
-                                Search
-                            </a>
+                        <li class="nav-item mb-2">
+                            <a href="/search">Search</a>
                         </li>
-                        <li>
-                            <a href="/login" class="nav-item mb-2 text-muted">
-                                Login
-                            </a>
+                        <li class="nav-item mb-2">
+                            <a href="/login">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -139,8 +133,8 @@ export default {
                     .catch(() => {});
                 return;
             }
-        },
-    }
+        }, 
+    },
 }
 </script>
 

@@ -25,18 +25,16 @@ export default {
   },
   computed: {
     imgPath() {
-      return "profile_path" in this.element
-        ? this.element.profile_path
-        : "poster_path" in this.element
-        ? this.element.poster_path
-        : "";
+      if ("profile_path" in this.element) {
+        return this.element.profile_path;
+      }
+      return this.element.poster_path;
     },
     captionElement() {
-      return "name" in this.element
-        ? this.element.name
-        : "title" in this.element
-        ? this.element.title
-        : "";
+      if ("name" in this.element) {
+        return this.element.name;
+      }
+      return this.element.title;
     },
   },
 };
@@ -65,7 +63,7 @@ export default {
   }
 }
 .card-body {
-  height: 60px;
+  height: 65px;
   overflow: hidden;
 }
 </style>
