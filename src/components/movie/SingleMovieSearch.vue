@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="movie-result container">
+    <div class="movie-result container px-3">
       <b-card
         :img-src="
           movie.poster_path
@@ -34,8 +34,8 @@
 import Rating from "@/components/common/Rating";
 export default {
   name: "SingleMovieSearch",
-  components: { 
-    Rating 
+  components: {
+    Rating,
   },
   props: {
     movie: {
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     redirectToMovie(id) {
-      this.$router.push(`/movie/${id}`);
+      this.$router.push(`/movie/${id}`).catch(() => {});
     },
   },
 };

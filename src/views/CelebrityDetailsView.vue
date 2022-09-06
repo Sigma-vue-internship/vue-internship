@@ -1,78 +1,72 @@
 <template>
-  <div class="celebrity-profile__back">
-    <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
-    <div
-      v-else
-      class="
-        container
-        d-flex
-        flex-column
-        align-items-between
-        justify-content-center
-        py-4
-      "
-    >
-      <div class="row gx-0 py-4 d-flex">
-        <div
-          class="celebrity-profile__image-container col-lg-5 col-xl-5"
-          :class="{ 'justify-content-center': !celebrityImages.length }"
-        >
-          <div class="d-flex flex-column px-4">
-            <img
-              class="celebrity-profile__image img-fluid"
-              :src="selectedImg ? selectedImg : profilePath"
-              alt="celebrity profile image"
-            />
-            <Rating
-              class="celebrity__rating"
-              v-if="celebrityRating"
-              :celebrityRating="celebrityRating"
-            />
-          </div>
-          <div
-            v-if="celebrityImages.length"
-            class="celebrity-profile__preview-container"
-          >
-            <img
-              v-for="(celImg, i) in celebrityImages"
-              :key="`celelebrity_img ${i}`"
-              class="celebrity-profile__preview-img img-fluid"
-              :src="celImg"
-              @click="selectImg(celImg, i)"
-             alt=""/>
-          </div>
+  <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
+  <div
+    v-else
+    class="
+      container
+      d-flex
+      flex-column
+      align-items-between
+      justify-content-center
+      p-3
+    "
+  >
+    <div class="row gx-0 pb-5 d-flex">
+      <div class="celebrity-profile__image-container col-lg-5 col-xl-5">
+        <div class="d-flex flex-column">
+          <img
+            class="celebrity-profile__image img-fluid"
+            :src="selectedImg ? selectedImg : profilePath"
+            alt="celebrity profile image"
+          />
+          <Rating
+            class="celebrity__rating"
+            v-if="celebrityRating"
+            :celebrityRating="celebrityRating"
+          />
         </div>
-
-        <div class="celebrity-profile__info col-lg-7 col-xl-7">
-          <h1 class="celebrity-profile__name">{{ celebrity.name }}</h1>
-          <p><strong> Birthday: </strong>{{ celebrity.birthday }}</p>
-          <p>
-            <strong> Also known as: </strong
-            >{{ celebrity.also_known_as.join(", ") }}
-          </p>
-          <p>
-            <strong> Place of birth: </strong>{{ celebrity.place_of_birth }}
-          </p>
-          <h2 class="celebrity-profile__bio-name">Biography</h2>
-
-          <p class="celebrity-profile__bio">
-            <vue-show-more-text
-              :text="celebrity.biography"
-              :lines="4"
-              additional-content-css="font-size:16px;"
-              additional-content-expanded-css="font-size:16px;"
-              additional-anchor-css="font-size: 16px;"
-            />
-          </p>
+        <div
+          v-if="celebrityImages.length"
+          class="celebrity-profile__preview-container"
+        >
+          <img
+            v-for="(celImg, i) in celebrityImages"
+            :key="`celelebrity_img ${i}`"
+            class="celebrity-profile__preview-img img-fluid"
+            :src="celImg"
+            @click="selectImg(celImg, i)"
+            alt=""
+          />
         </div>
       </div>
-      <MediaList
-        v-if="celebrityMovies.length"
-        title="Actor's movies"
-        route="/movie/"
-        :elements="celebrityMovies"
-      />
+
+      <div class="celebrity-profile__info col-lg-7 col-xl-7">
+        <h1 class="celebrity-profile__name">{{ celebrity.name }}</h1>
+        <p><strong> Birthday: </strong>{{ celebrity.birthday }}</p>
+        <p>
+          <strong> Also known as: </strong
+          >{{ celebrity.also_known_as.join(", ") }}
+        </p>
+        <p><strong> Place of birth: </strong>{{ celebrity.place_of_birth }}</p>
+        <h2 class="celebrity-profile__bio-name">Biography</h2>
+
+        <p class="celebrity-profile__bio">
+          <vue-show-more-text
+            :text="celebrity.biography"
+            :lines="4"
+            additional-content-css="font-size:16px;"
+            additional-content-expanded-css="font-size:16px;"
+            additional-anchor-css="font-size: 16px;"
+          />
+        </p>
+      </div>
     </div>
+    <MediaList
+      v-if="celebrityMovies.length"
+      title="Actor's movies"
+      route="/movie/"
+      :elements="celebrityMovies"
+    />
   </div>
 </template>
 
@@ -84,11 +78,11 @@ import MediaList from "../components/media/MediaList";
 import Rating from "../components/common/Rating";
 export default {
   name: "CelebrityDetailsView",
-  components: { 
-    SpinnerLoader, 
-    vueShowMoreText, 
-    MediaList, 
-    Rating 
+  components: {
+    SpinnerLoader,
+    vueShowMoreText,
+    MediaList,
+    Rating,
   },
   data() {
     return {
@@ -128,11 +122,16 @@ export default {
       this.prevSelectedImg = imgUrl;
     },
     async getCelebrityData() {
-      const { data }  = await this.findSingleCelebrity(this.$route.params.id);
+      const { data } = await this.findSingleCelebrity(this.$route.params.id);
       this.celebrity = data;
       this.resImagesData = await this.getCelebrityImages(this.$route.params.id);
-      const { data: { cast } } = await this.getCelebrityMovies(this.$route.params.id);
-      this.celebrityMovies = cast.length > this.maxMoviesToShow ?  cast.slice(0, this.maxMoviesToShow) : cast;
+      const {
+        data: { cast },
+      } = await this.getCelebrityMovies(this.$route.params.id);
+      this.celebrityMovies =
+        cast.length > this.maxMoviesToShow
+          ? cast.slice(0, this.maxMoviesToShow)
+          : cast;
     },
   },
   computed: {
@@ -207,8 +206,7 @@ export default {
   .celebrity-profile__preview-container {
     display: flex;
     flex-direction: column;
-
-    padding-right: 10px;
+    padding-left: 20px;
   }
   .celebrity-profile__image {
     box-shadow: 8px 8px 24px 0 rgb(0, 0, 0);

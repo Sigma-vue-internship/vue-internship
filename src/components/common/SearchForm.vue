@@ -24,11 +24,21 @@
               @keyup.enter="emitFindMedia"
             ></b-form-input>
           </div>
-          <hr class="my-4" />
           <div class="d-flex justify-content-between">
-            <p class="search-form__filters-info">
-              This is a multi-search, here you can find movies or actors
-            </p>
+            <div class="radio__container">
+              <b-form-group
+                class="radio-group__container"
+                label="Please select an option"
+              >
+                <b-form-radio-group
+                  id="radio-group-1"
+                  class="radio-btns d-flex gap-3"
+                  v-model="selected"
+                  :options="options"
+                  name="radio-options"
+                ></b-form-radio-group>
+              </b-form-group>
+            </div>
             <p class="lead px-2">
               <button
                 type="button"
@@ -37,6 +47,13 @@
               >
                 Search
               </button>
+            </p>
+          </div>
+          <hr class="my-4" />
+
+          <div class="d-flex justify-content-between">
+            <p class="search-form__filters-info">
+              This is a multi-search, here you can find movies or actors
             </p>
           </div>
         </div>
@@ -71,20 +88,6 @@
             </button>
           </div>
         </div>
-      </div>
-      <div v-if="mode !== 'preview'" class="radio__container">
-        <b-form-group
-          class="radio-group__container"
-          label="Please select an option"
-        >
-          <b-form-radio-group
-            id="radio-group-1"
-            class="d-flex gap-3"
-            v-model="selected"
-            :options="options"
-            name="radio-options"
-          ></b-form-radio-group>
-        </b-form-group>
       </div>
     </div>
     <notifications
@@ -165,11 +168,26 @@ export default {
 </script>
 
 <style lang="scss">
+.radio-group__container {
+  font-size: 18px;
+  #radio-group-1 {
+    .custom-radio {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+.custom-control-input {
+  width: 25px;
+  height: 25px;
+  margin-right: 7px;
+}
 .jumbotron {
   width: 100%;
   text-align: start;
   .search-form__filters {
     width: 100%;
+    margin-bottom: 15px;
     gap: 10px;
   }
 }

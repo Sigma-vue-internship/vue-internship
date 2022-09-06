@@ -1,6 +1,8 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="dark" class="fixed-top">
-    <Navbar />
+    <div class="container">
+      <Navbar />
+    </div>
   </b-navbar>
 </template>
 
@@ -9,10 +11,7 @@ import Navbar from "./Navbar";
 export default {
   name: "Header",
   components: {
-    Navbar
+    Navbar,
   },
 };
 </script>
-
-<style>
-</style>

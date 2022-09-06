@@ -22,24 +22,12 @@
           <li @click="showHideMenu">
             <b-nav-item to="/">Home</b-nav-item>
           </li>
-          <li @click="showHideMenu">
-            <b-nav-item to="/search">Search</b-nav-item>
-          </li>
-          <li @click="showHideMenu">
-            <b-nav-item to="/login">Login</b-nav-item>
-          </li>
         </ul>
       </div>
       <div class="navbar-collapse d-flex justify-content-end navbar__wide">
         <ul class="navbar-nav navbar__wide">
           <li>
             <b-nav-item to="/">Home</b-nav-item>
-          </li>
-          <li>
-            <b-nav-item to="/search">Search</b-nav-item>
-          </li>
-          <li>
-            <b-nav-item to="/login">Login</b-nav-item>
           </li>
         </ul>
       </div>
@@ -114,9 +102,6 @@ export default {
   -moz-transition: 0.25s ease-in-out;
   -o-transition: 0.25s ease-in-out;
   transition: 0.25s ease-in-out;
-}
-
-.animated-icon1 span {
   background: $lightGreen;
 }
 
