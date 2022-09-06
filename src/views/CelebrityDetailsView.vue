@@ -8,15 +8,12 @@
       flex-column
       align-items-between
       justify-content-center
-      px-5
+      px-3
     "
   >
     <div class="row gx-0 pb-5 d-flex">
-      <div
-        class="celebrity-profile__image-container col-lg-5 col-xl-5"
-        :class="{ 'justify-content-center': !celebrityImages.length }"
-      >
-        <div class="d-flex flex-column px-4">
+      <div class="celebrity-profile__image-container col-lg-5 col-xl-5">
+        <div class="d-flex flex-column">
           <img
             class="celebrity-profile__image img-fluid"
             :src="selectedImg ? selectedImg : profilePath"
@@ -173,6 +170,8 @@ export default {
 </script>
 
 <style lang="scss">
+.celebrity-profile__container {
+}
 .celebrity__rating {
   margin: 0 auto;
 }
@@ -209,8 +208,7 @@ export default {
   .celebrity-profile__preview-container {
     display: flex;
     flex-direction: column;
-
-    padding-right: 10px;
+    padding-left: 20px;
   }
   .celebrity-profile__image {
     box-shadow: 8px 8px 24px 0 rgb(0, 0, 0);

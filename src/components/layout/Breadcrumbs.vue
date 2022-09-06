@@ -1,5 +1,5 @@
 <template>
-  <b-breadcrumb class="container px-5 py-3" v-if="breadCrumbs.length">
+  <b-breadcrumb class="container px-3 py-3" v-if="breadCrumbs.length">
     <b-breadcrumb-item
       class="breadcrumb"
       v-for="(crumb, i) in breadCrumbs"

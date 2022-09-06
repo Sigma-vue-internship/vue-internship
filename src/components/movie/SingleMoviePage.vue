@@ -1,7 +1,7 @@
 <template>
   <div>
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
-    <div class="container px-5">
+    <div class="container px-3">
       <div v-if="!isLoading" class="row gx-0 justify-content-between">
         <div class="movie__poster col-lg-4 col-xl-3">
           <img
@@ -44,10 +44,10 @@ import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
 export default {
   name: "SingleMoviePage",
-  components: { 
-    Carousel, 
+  components: {
+    Carousel,
     Rating,
-    SpinnerLoader
+    SpinnerLoader,
   },
   props: {
     movie: Object,

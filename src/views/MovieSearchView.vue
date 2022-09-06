@@ -3,7 +3,7 @@
     <SearchForm
       :mode="'optional'"
       @findMedia="findMediaElements"
-      class="px-5"
+      class="px-3"
     />
     <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
     <ul class="search__results-list" v-if="searchMedia.length">
