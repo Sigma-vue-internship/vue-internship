@@ -66,6 +66,7 @@
       title="Actor's movies"
       route="/movie/"
       :elements="celebrityMovies"
+      class="flex-row"
     />
   </div>
 </template>

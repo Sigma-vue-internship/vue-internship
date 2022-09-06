@@ -5,11 +5,12 @@
     </div>
     <b-container class="scroll d-flex flex-row">
       <ul class="list d-flex flex-row" v-if="elements.length">
-        <li>
-          <SingleMediaElementList
-            :element="element"
-            v-for="element in elements"
-            :key="element.uuid"
+        <li 
+          v-for="element in elements" 
+          :key="element.uuid" 
+        >
+          <SingleMediaElementList 
+            :element="element" 
             @click.native="routeToElementPage(element.id)"
           />
         </li>
