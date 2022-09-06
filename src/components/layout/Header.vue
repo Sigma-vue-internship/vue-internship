@@ -1,6 +1,8 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="dark" class="fixed-top">
-    <Navbar />
+    <div class="container">
+      <Navbar />
+    </div>
   </b-navbar>
 </template>
 
