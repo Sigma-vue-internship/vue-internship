@@ -4,9 +4,24 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  getters: {},
-  mutations: {},
+  state: {
+    movies: [],
+    celebrities: []
+  },
+  getters: {
+    getMovies: state => state.movies,
+    getCelebrities: state => state.celebrities,
+  },
+  mutations: {
+    SET_MOVIES(state, movies) {
+      state.movies = movies;
+      state.movies.length = 3;
+    },
+    SET_CELEBRITIES(state, celebrities) {
+      state.celebrities = celebrities;
+      state.celebrities.length = 3;
+    },
+  },
   actions: {
     async findMedia(
       context,
@@ -65,7 +80,7 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getMedia(_, type) {
+    async getMedia({ commit }, type) {
       const options = {
         params: {
           page: 1,
@@ -73,9 +88,15 @@ export default new Vuex.Store({
       };
       try {
         if(type === "movies") {
+          const response = await this.axios.get("movie/popular", options);
+          const { data: { results } } = response;
+          commit("SET_MOVIES", results);
           return await this.axios.get("movie/popular", options);
         } else if(type === "celebrities") {
-          return await this.axios.get("person/popular", options);
+          const response = await this.axios.get("person/popular", options);
+          const { data: { results } } = response;
+          commit("SET_CELEBRITIES", results);
+          return await this.axios.get("movie/popular", options);
         }
       } catch (error) {
         console.error(error);

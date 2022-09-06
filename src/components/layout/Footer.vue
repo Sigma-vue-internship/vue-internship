@@ -7,7 +7,7 @@
                     <ul class="nav flex-column">
                         <li 
                             class="nav-item mb-2"
-                            v-for="movie in movies"
+                            v-for="movie in getMovies"
                             :key="movie.uuid"
                         >
                             <router-link :to="{ name: 'movie', params: { id: movie.id } }">
@@ -21,7 +21,7 @@
                     <ul class="nav flex-column">
                         <li 
                             class="nav-item mb-2"
-                            v-for="celebrity in celebrities"
+                            v-for="celebrity in getCelebrities"
                             :key="celebrity.uuid"
                         >
                             <router-link :to="{ name: 'celebrity', params: { id: celebrity.id } }"> 
@@ -89,38 +89,14 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapGetters } from "vuex";
 import SearchForm from "@/components/common/SearchForm";
 export default {
     name: "Footer",
     components: {
         SearchForm
     },
-    data() {
-        return {
-            celebrities: [],
-            movies: [],
-        }
-    },
-    async created() {
-        await this.loadData('movies');
-        await this.loadData('celebrities');
-    },
     methods: {
-        ...mapActions([
-            "getMedia"
-        ]),
-        async loadData(type) {
-            try {
-                const response = await this.getMedia(type);
-                const { data: { results } } = response;
-                this[type] = results;
-                this[type].length = 3;
-                
-            } catch (error) {
-                console.log(error);
-            }
-        },
         async findMedia(searchData) {
             if (searchData) {
                 this.$router
@@ -134,6 +110,9 @@ export default {
             }
         }, 
     },
+    computed: {
+        ...mapGetters(["getMovies", "getCelebrities"])
+    }
 }
 </script>
 
