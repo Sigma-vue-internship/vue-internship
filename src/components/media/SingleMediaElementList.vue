@@ -1,20 +1,18 @@
 <template>
-  <li>
-    <div class="card">
-      <img
-        class="card-img-top"
-        alt="Card img"
-        :src="
-          imgPath
-            ? 'https://image.tmdb.org/t/p/w185/' + imgPath
-            : 'https://dummyimage.com/300x450/000/00ff8c'
-        "
-      />
-      <div class="card-body">
-        <h5 class="card-title">{{ captionElement }}</h5>
-      </div>
+  <div class="card">
+    <img
+      class="card-img-top"
+      alt="Card img"
+      :src="
+        imgPath
+          ? 'https://image.tmdb.org/t/p/w185/' + imgPath
+          : 'https://dummyimage.com/300x450/000/00ff8c'
+      "
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{ captionElement }}</h5>
     </div>
-  </li>
+  </div>
 </template>
 
 <script>
@@ -63,7 +61,7 @@ export default {
   }
 }
 .card-body {
-  height: 60px;
+  height: 65px;
   overflow: hidden;
 }
 </style>

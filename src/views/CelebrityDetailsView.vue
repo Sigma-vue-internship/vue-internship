@@ -66,6 +66,7 @@
       title="Actor's movies"
       route="/movie/"
       :elements="celebrityMovies"
+      class="flex-row"
     />
   </div>
 </template>
@@ -165,6 +166,20 @@ export default {
       this.isLoading = false;
       console.error(e);
     }
+  },
+  watch: {
+    $route: {
+      async handler() {
+        try {
+          this.isLoading = true;
+          await this.getCelebrityData();
+          this.isLoading = false;
+        } catch (e) {
+          this.isLoading = false;
+          console.error(e);
+        }
+      },
+    },
   },
 };
 </script>
