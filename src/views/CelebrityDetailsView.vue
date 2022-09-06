@@ -1,5 +1,8 @@
 <template>
-  <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
+  <SpinnerLoader
+    v-if="isLoading"
+    :is-loading="isLoading"
+  />
   <div
     v-else
     class="
@@ -18,11 +21,11 @@
             class="celebrity-profile__image img-fluid"
             :src="selectedImg ? selectedImg : profilePath"
             alt="celebrity profile image"
-          />
+          >
           <Rating
-            class="celebrity__rating"
             v-if="celebrityRating"
-            :celebrityRating="celebrityRating"
+            class="celebrity__rating"
+            :celebrity-rating="celebrityRating"
           />
         </div>
         <div
@@ -34,21 +37,24 @@
             :key="`celelebrity_img ${i}`"
             class="celebrity-profile__preview-img img-fluid"
             :src="celImg"
-            @click="selectImg(celImg, i)"
             alt=""
-          />
+            @click="selectImg(celImg, i)"
+          >
         </div>
       </div>
 
       <div class="celebrity-profile__info col-lg-7 col-xl-7">
-        <h1 class="celebrity-profile__name">{{ celebrity.name }}</h1>
+        <h1 class="celebrity-profile__name">
+          {{ celebrity.name }}
+        </h1>
         <p><strong> Birthday: </strong>{{ celebrity.birthday }}</p>
         <p>
-          <strong> Also known as: </strong
-          >{{ celebrity.also_known_as.join(", ") }}
+          <strong> Also known as: </strong>{{ celebrity.also_known_as.join(", ") }}
         </p>
         <p><strong> Place of birth: </strong>{{ celebrity.place_of_birth }}</p>
-        <h2 class="celebrity-profile__bio-name">Biography</h2>
+        <h2 class="celebrity-profile__bio-name">
+          Biography
+        </h2>
 
         <p class="celebrity-profile__bio">
           <vue-show-more-text
@@ -102,7 +108,7 @@ export default {
     ...mapActions([
       "findSingleCelebrity",
       "getCelebrityImages",
-      "getCelebrityMovies",
+      "getCelebrityMovies"
     ]),
     selectImg(imgUrl, i) {
       if (this.celebrityImages[i] === this.profilePath) {
@@ -157,16 +163,6 @@ export default {
       return Math.floor(this.celebrity.popularity);
     },
   },
-  async created() {
-    try {
-      this.isLoading = true;
-      await this.getCelebrityData();
-      this.isLoading = false;
-    } catch (e) {
-      this.isLoading = false;
-      console.error(e);
-    }
-  },
   watch: {
     $route: {
       async handler() {
@@ -180,6 +176,16 @@ export default {
         }
       },
     },
+  },
+  async created() {
+    try {
+      this.isLoading = true;
+      await this.getCelebrityData();
+      this.isLoading = false;
+    } catch (e) {
+      this.isLoading = false;
+      console.error(e);
+    }
   },
 };
 </script>

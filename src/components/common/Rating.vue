@@ -1,5 +1,8 @@
 <template>
-  <div v-if="movieRating || celebrityRating" class="movie-raiting">
+  <div
+    v-if="movieRating || celebrityRating"
+    class="movie-raiting"
+  >
     <progress
       class="movie-raiting__bar"
       :style="{
@@ -11,7 +14,9 @@
       :max="celebrityRating ? 250 : 10"
     />
     <div class="movie-raiting__info row text-center">
-      <h4 class="movie-raiting__title col-md-6 col-lg-5">Rating</h4>
+      <h4 class="movie-raiting__title col-md-6 col-lg-5">
+        Rating
+      </h4>
       <p class="movie-raiting__number col-lg-4">
         {{ celebrityRating ? celebrityRating : movieRating }}
       </p>
@@ -22,7 +27,10 @@
 <script>
 export default {
   name: "Rating",
-  props: ["celebrityRating", "movieRating"],
+  props: [
+    "celebrityRating",
+    "movieRating"
+  ],
   data() {
     return {
       colors: ["#FF5050FF", "#FCFF50FF", "#96FF50FF"],

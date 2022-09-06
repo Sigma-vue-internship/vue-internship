@@ -1,5 +1,8 @@
 <template>
-  <div v-if="isLoading" class="text-center">
+  <div
+    v-if="isLoading"
+    class="text-center"
+  >
     <div class="spinner-border text-primary">
       <span class="visually-hidden">Loading...</span>
     </div>

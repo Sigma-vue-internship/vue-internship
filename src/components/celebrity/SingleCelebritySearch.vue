@@ -10,24 +10,25 @@
         img-alt="Card image"
         img-width="185"
         img-left
-        @click="redirectToMovie(celebrity.id)"
         class="mb-3"
+        @click="redirectToMovie(celebrity.id)"
       >
         <b-card-title>{{ celebrity.name }}</b-card-title>
         <div class="rating">
-          <Rating :celebrityRating="celebrityRating" />
+          <Rating :celebrity-rating="celebrityRating" />
         </div>
-        <b-card-text
-          ><strong>Known for:</strong>
-          {{ knownFor ? knownFor : "Movies not found" }}</b-card-text
-        >
+        <b-card-text>
+          <strong>Known for:</strong>
+          {{ knownFor ? knownFor : "Movies not found" }}
+        </b-card-text>
         <div class="py-2">
           <b-button
             variant="dark"
-            @click="redirectToMovie(celebrity.id)"
             size="md"
-            >Details</b-button
+            @click="redirectToMovie(celebrity.id)"
           >
+            Details
+          </b-button>
         </div>
       </b-card>
     </div>
@@ -47,11 +48,6 @@ export default {
       default: () => {},
     },
   },
-  methods: {
-    redirectToMovie(id) {
-      this.$router.push(`/celebrity/${id}`).catch(() => {});
-    },
-  },
   computed: {
     knownFor() {
       return (
@@ -61,6 +57,11 @@ export default {
     },
     celebrityRating() {
       return Math.floor(this.celebrity.popularity);
+    },
+  },
+  methods: {
+    redirectToMovie(id) {
+      this.$router.push(`/celebrity/${id}`).catch(() => {});
     },
   },
 };

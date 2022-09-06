@@ -8,7 +8,7 @@
       v-for="(url, i) in imgUrls"
       :key="i"
       :img-src="url"
-    ></b-carousel-slide>
+    />
   </b-carousel>
 </template>
 

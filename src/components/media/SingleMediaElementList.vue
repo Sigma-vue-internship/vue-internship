@@ -8,9 +8,11 @@
           ? 'https://image.tmdb.org/t/p/w185/' + imgPath
           : 'https://dummyimage.com/300x450/000/00ff8c'
       "
-    />
+    >
     <div class="card-body">
-      <h5 class="card-title">{{ captionElement }}</h5>
+      <h5 class="card-title">
+        {{ captionElement }}
+      </h5>
     </div>
   </div>
 </template>

@@ -4,18 +4,24 @@
       <h2>{{ title }}</h2>
     </div>
     <b-container class="scroll d-flex flex-row">
-      <ul class="list d-flex flex-row" v-if="elements.length">
-        <li 
-          v-for="element in elements" 
-          :key="element.uuid" 
+      <ul
+        v-if="elements.length"
+        class="list d-flex flex-row"
+      >
+        <li
+          v-for="element in elements"
+          :key="element.uuid"
         >
-          <SingleMediaElementList 
-            :element="element" 
+          <SingleMediaElementList
+            :element="element"
             @click.native="routeToElementPage(element.id)"
           />
         </li>
       </ul>
-      <div v-if="changePage" v-intersection="changePage"></div>
+      <div
+        v-if="changePage"
+        v-intersection="changePage"
+      />
     </b-container>
   </div>
 </template>

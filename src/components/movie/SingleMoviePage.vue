@@ -1,19 +1,28 @@
 <template>
   <div>
-    <SpinnerLoader v-if="isLoading" :isLoading="isLoading" />
+    <SpinnerLoader
+      v-if="isLoading"
+      :is-loading="isLoading"
+    />
     <div class="container p-3">
-      <div v-if="!isLoading" class="row gx-0 justify-content-between">
+      <div
+        v-if="!isLoading"
+        class="row gx-0 justify-content-between"
+      >
         <div class="movie__poster col-lg-4 col-xl-3">
           <img
             class="movie__poster-img img-fluid"
             :src="posterPath"
             alt="movie poster"
-          />
-          <Rating :movieRating="movieRating" />
+          >
+          <Rating :movie-rating="movieRating" />
         </div>
         <div class="movie__info col-lg-7 col-xl-8">
           <h1>{{ movie.title }}</h1>
-          <span class="movie__tagline" v-if="movie.tagline">{{
+          <span
+            v-if="movie.tagline"
+            class="movie__tagline"
+          >{{
             movie.tagline
           }}</span>
           <p>
@@ -24,18 +33,26 @@
           <p><strong>Status:</strong> {{ movie.status }}</p>
           <p><strong>Release date:</strong> {{ movie.release_date }}</p>
           <p><strong>Runtime:</strong> {{ movie.runtime }}</p>
-          <p class="movie__overview">{{ movie.overview }}</p>
+          <p class="movie__overview">
+            {{ movie.overview }}
+          </p>
           <b-button
             v-if="movie.homepage"
-            @click="toMovieHomepage(movie.homepage)"
             variant="dark"
+            @click="toMovieHomepage(movie.homepage)"
           >
             Go to the movie site
           </b-button>
         </div>
       </div>
-      <div v-if="imgUrls && imgUrls.length && !isLoading" class="row my-4 gx-0">
-        <Carousel class="col-lg-12 movie-carousel" :imgUrls="imgUrls" />
+      <div
+        v-if="imgUrls && imgUrls.length && !isLoading"
+        class="row my-4 gx-0"
+      >
+        <Carousel
+          class="col-lg-12 movie-carousel"
+          :img-urls="imgUrls"
+        />
       </div>
     </div>
   </div>
