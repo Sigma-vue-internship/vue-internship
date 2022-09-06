@@ -79,36 +79,42 @@ export default {
 </script>
 
 <style lang="scss">
-.celebrity-result .card {
-  --bs-card-bg: rgba(74, 36, 141, 0.316);
-  --bs-card-color: white;
-  cursor: pointer;
-}
-.celebrity-result .rating {
-  width: 30%;
-  margin-bottom: 15px;
-}
-.celebrity-result .movie-raiting {
-  margin-top: 0;
+.celebrity-result {
+  .card {
+    --bs-card-bg: rgba(74, 36, 141, 0.316);
+    --bs-card-color: white;
+    cursor: pointer;
+  }
+  .rating {
+    width: 30%;
+    margin-bottom: 15px;
+  }
+  .movie-raiting {
+    margin-top: 0;
+  }
 }
 @media (max-width: 992px) {
-  .celebrity-result .rating {
-    width: 60%;
+  .celebrity-result {
+    .rating {
+      width: 60%;
+    }
   }
 }
 
 @media (max-width: 768px) {
-  .celebrity-result .card-text {
-    display: none;
-  }
-  .celebrity-result .rating {
-    width: 100%;
-  }
-  .celebrity-result .movie-raiting {
-    width: 100%;
-  }
-  .celebrity-result .card-title {
-    font-size: 18px;
+  .celebrity-result {
+    .card-text {
+      display: none;
+    }
+
+    .rating,
+    .movie-raiting {
+      width: 100%;
+    }
+
+    .card-title {
+      font-size: 18px;
+    }
   }
 }
 </style>

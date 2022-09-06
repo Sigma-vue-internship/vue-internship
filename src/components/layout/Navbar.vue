@@ -56,12 +56,14 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../assets/scss/variables.scss";
-.navbar__burger {
-  height: 0;
-  transition: height cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
-}
-.navbar__open {
-  height: 120px;
+.navbar {
+  &__burger {
+    height: 0;
+    transition: height cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
+  }
+  &__open {
+    height: 120px;
+  }
 }
 @media (max-width: 992px) {
   .navbar__wide {
@@ -87,58 +89,58 @@ export default {
   -o-transition: 0.5s ease-in-out;
   transition: 0.5s ease-in-out;
   cursor: pointer;
-}
+  span {
+    display: block;
+    position: absolute;
+    height: 3px;
+    width: 100%;
+    border-radius: 9px;
+    opacity: 1;
+    left: 0;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.25s ease-in-out;
+    -moz-transition: 0.25s ease-in-out;
+    -o-transition: 0.25s ease-in-out;
+    transition: 0.25s ease-in-out;
+    background: $lightGreen;
+    &:nth-child(1) {
+      top: 0px;
+    }
 
-.animated-icon1 span {
-  display: block;
-  position: absolute;
-  height: 3px;
-  width: 100%;
-  border-radius: 9px;
-  opacity: 1;
-  left: 0;
-  -webkit-transform: rotate(0deg);
-  -moz-transform: rotate(0deg);
-  -o-transform: rotate(0deg);
-  transform: rotate(0deg);
-  -webkit-transition: 0.25s ease-in-out;
-  -moz-transition: 0.25s ease-in-out;
-  -o-transition: 0.25s ease-in-out;
-  transition: 0.25s ease-in-out;
-  background: $lightGreen;
-}
+    &:nth-child(2) {
+      top: 10px;
+    }
 
-.animated-icon1 span:nth-child(1) {
-  top: 0px;
-}
+    &:nth-child(3) {
+      top: 20px;
+    }
+  }
 
-.animated-icon1 span:nth-child(2) {
-  top: 10px;
-}
+  &.open span {
+    &:nth-child(1) {
+      top: 11px;
+      -webkit-transform: rotate(135deg);
+      -moz-transform: rotate(135deg);
+      -o-transform: rotate(135deg);
+      transform: rotate(135deg);
+    }
 
-.animated-icon1 span:nth-child(3) {
-  top: 20px;
-}
+    &:nth-child(2) {
+      opacity: 0;
+      left: -60px;
+    }
 
-.animated-icon1.open span:nth-child(1) {
-  top: 11px;
-  -webkit-transform: rotate(135deg);
-  -moz-transform: rotate(135deg);
-  -o-transform: rotate(135deg);
-  transform: rotate(135deg);
-}
-
-.animated-icon1.open span:nth-child(2) {
-  opacity: 0;
-  left: -60px;
-}
-
-.animated-icon1.open span:nth-child(3) {
-  top: 11px;
-  -webkit-transform: rotate(-135deg);
-  -moz-transform: rotate(-135deg);
-  -o-transform: rotate(-135deg);
-  transform: rotate(-135deg);
+    &:nth-child(3) {
+      top: 11px;
+      -webkit-transform: rotate(-135deg);
+      -moz-transform: rotate(-135deg);
+      -o-transform: rotate(-135deg);
+      transform: rotate(-135deg);
+    }
+  }
 }
 .navbar-brand {
   color: white;

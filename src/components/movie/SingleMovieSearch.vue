@@ -85,41 +85,50 @@ export default {
   height: 30px;
   background-color: $lightGreen;
 }
-.movie-result .rating {
-  width: 30%;
-  margin-top: 0;
-  margin-bottom: 15px;
+.movie-result {
+  .rating {
+    width: 30%;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .movie-raiting {
+    margin-top: 0;
+  }
+
+  .card {
+    --bs-card-bg: rgba(74, 36, 141, 0.493);
+    --bs-card-color: white;
+    cursor: pointer;
+  }
+
+  .card-title {
+    margin-bottom: 20px;
+  }
+
+  .card-text {
+    max-width: 500px;
+  }
 }
-.movie-result .movie-raiting {
-  margin-top: 0;
-}
+
 @media (max-width: 992px) {
   .movie-result .rating {
     width: 60%;
   }
 }
-.movie-result .card {
-  --bs-card-bg: rgba(74, 36, 141, 0.493);
-  --bs-card-color: white;
-  cursor: pointer;
-}
-.movie-result .card-title {
-  margin-bottom: 20px;
-}
-.movie-result .card-text {
-  max-width: 500px;
-}
 @media (max-width: 768px) {
-  .movie-result .card-text {
-    display: none;
+  .movie-result {
+    .card-text {
+      display: none;
+    }
+
+    .rating,
+    .movie-raiting {
+      width: 100%;
+    }
   }
-  .movie-result .rating {
-    width: 100%;
-  }
-  .movie-result .movie-raiting {
-    width: 100%;
-  }
-  .movie-result .card-title {
+
+  .card-title {
     font-size: 18px;
   }
 }
