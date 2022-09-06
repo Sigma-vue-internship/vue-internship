@@ -64,35 +64,23 @@ export default {
     };
   },
   created() {
-    this.loadMovies();
-    this.loadActors();
+    this.loadData();
   },
   methods: {
     ...mapActions(["changeMediaPage", "getMovies", "getActors"]),
-    async loadMovies() {
-      const response = await this.getMovies();
-      const {
-        data: { results },
-      } = response;
-      this.movies = results;
-    },
-    async loadActors() {
-      const response = await this.getActors();
-      const {
-        data: { results },
-      } = response;
-      this.celebrities = results;
+    async loadData() {
+      this.movies = await this.getMovies();
+      this.celebrities = await this.getActors();
     },
     async findMedia(searchData) {
       if (searchData) {
-        this.$router
-          .push({
-            path: "/search",
-            query: {
-              searchQuery: searchData.searchQuery,
-            },
-          })
-          .catch(() => {});
+        const { searchQuery } = searchData;
+        this.$router.push({
+          path: "/search",
+          query: {
+            searchQuery,
+          },
+        });
       }
     },
     async changeCurrentPage(type) {

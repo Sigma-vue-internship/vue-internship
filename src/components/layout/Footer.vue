@@ -6,7 +6,7 @@
           <h5>Movies</h5>
           <ul class="nav flex-column">
             <li
-              v-for="movie in getMovies"
+              v-for="movie in movies"
               :key="movie.uuid"
               class="nav-item mb-2"
             >
@@ -20,7 +20,7 @@
           <h5>Celebrities</h5>
           <ul class="nav flex-column">
             <li
-              v-for="celebrity in getCelebrities"
+              v-for="celebrity in celebrities"
               :key="celebrity.uuid"
               class="nav-item mb-2"
             >
@@ -103,7 +103,7 @@ export default {
     SearchForm,
   },
   computed: {
-    ...mapGetters(["getMovies", "getCelebrities"]),
+    ...mapGetters(["movies", "celebrities"]),
   },
   methods: {
     async findMedia(searchData) {

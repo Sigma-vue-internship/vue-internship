@@ -15,17 +15,15 @@ export default new Vuex.Store({
     celebrities: [],
   },
   getters: {
-    getMovies: state => state.movies,
-    getCelebrities: state => state.celebrities,
+    movies: state => state.movies,
+    celebrities: state => state.celebrities,
   },
   mutations: {
     SET_MOVIES(state, movies) {
-      state.movies = movies;
-      state.movies.length = 3;
+      state.movies = movies.slice(0, 3);
     },
     SET_CELEBRITIES(state, celebrities) {
-      state.celebrities = celebrities;
-      state.celebrities.length = 3;
+      state.celebrities = celebrities.slice(0, 3);
     },
   },
   actions: {
@@ -86,7 +84,7 @@ export default new Vuex.Store({
         const response = await this.axios.get("movie/popular", options);
         const { data: { results } } = response;
         commit("SET_MOVIES", results);
-        return await this.axios.get("movie/popular", options);
+        return results;
       } catch (error) {
         console.error(error);
       }
@@ -96,7 +94,7 @@ export default new Vuex.Store({
         const response = await this.axios.get("person/popular", options);
         const { data: { results } } = response;
         commit("SET_CELEBRITIES", results);
-        return await this.axios.get("movie/popular", options);
+        return results;
       } catch (error) {
         console.error(error);
       }
