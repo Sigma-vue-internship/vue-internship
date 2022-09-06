@@ -3,44 +3,50 @@
           <div class="container">
             <div class="row">
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Support</h5>
+                    <h5>Top movies</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">Home</a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">Conditions of Use</a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">For developers</a>
+                        <li 
+                            class="nav-item mb-2"
+                            v-for="movie in movies"
+                            :key="movie.uuid"
+                        >
+                            <a :href="$router.resolve({ name: 'movie', params: { id: movie.id } }).href"> 
+                                {{ movie.title }} 
+                            </a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Features</h5>
+                    <h5>Top celebrities</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">Press Room</a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">About us</a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">Pricing</a>
+                        <li 
+                            class="nav-item mb-2"
+                            v-for="celebrity in celebrities"
+                            :key="celebrity.uuid"
+                        >
+                            <a :href="$router.resolve({ name: 'celebrity', params: { id: celebrity.id } }).href"> 
+                                {{ celebrity.name }} 
+                            </a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-6 col-md-2 mb-3">
-                    <h5>Privacy</h5>
+                    <h5>Navigation</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">Advertising</a>
+                        <li>
+                            <a href="/" class="nav-item mb-2 text-muted">
+                                Home
+                            </a>
                         </li>
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">Site Index</a>
+                        <li>
+                            <a href="/search" class="nav-item mb-2 text-muted">
+                                Search
+                            </a>
                         </li>
-                        <li class="nav-item mb-2">
-                            <a href="#" class="nav-link p-0 text-muted">Privacy Policy</a>
+                        <li>
+                            <a href="/login" class="nav-item mb-2 text-muted">
+                                Login
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -59,16 +65,28 @@
                 <p>© 2022 Sigma, Inc. All rights reserved.</p>
                 <ul class="list-unstyled d-flex">
                     <li>
-                        <a href="#" class="bi icon-facebook icons"></a>
+                        <a 
+                            href="https://www.facebook.com/SIGMASOFTWAREGROUP" 
+                            class="bi icon-facebook icons"
+                        ></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi icon-youtube icons"></a>
+                        <a 
+                            href="https://www.youtube.com/user/SigmaUkraine" 
+                            class="bi icon-youtube icons"
+                        ></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi icon-instagram icons"></a>
+                        <a 
+                            href="https://www.instagram.com/sigma_software/" 
+                            class="bi icon-instagram icons"
+                        ></a>
                     </li>
                     <li class="ms-3">
-                        <a href="#" class="bi icon-linkedin icons"></a>
+                        <a 
+                            href="https://www.linkedin.com/company/sigma-software-group/" 
+                            class="bi icon-linkedin icons"
+                        ></a>
                     </li>
                 </ul>
             </div>
@@ -77,13 +95,38 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import SearchForm from "@/components/common/SearchForm";
 export default {
     name: "Footer",
     components: {
         SearchForm
     },
+    data() {
+        return {
+            celebrities: [],
+            movies: [],
+        }
+    },
+    async created() {
+        await this.loadData('movies');
+        await this.loadData('celebrities');
+    },
     methods: {
+        ...mapActions([
+            "getMedia"
+        ]),
+        async loadData(type) {
+            try {
+                const response = await this.getMedia(type);
+                const { data: { results } } = response;
+                this[type] = results;
+                this[type].length = 3;
+                
+            } catch (error) {
+                console.log(error);
+            }
+        },
         async findMedia(searchData) {
             if (searchData) {
                 this.$router
@@ -106,7 +149,6 @@ export default {
     footer {
       min-width: 100%;
       background-color: $darkPurple;
-
       .icons {
         color: #513f7a;
         font-size: 25px;
@@ -126,9 +168,15 @@ export default {
         background-color: transparent;
         padding: 0;
       }
-
       .border-top {
         border-top-color: #4c3e6b !important;
+      }
+      a {
+        text-decoration: none;
+        color: rgb(111, 111, 111);
+        &:hover {
+          color: #9f8fc3;
+        }
       }
     }
 </style>
