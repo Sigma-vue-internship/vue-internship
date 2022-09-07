@@ -115,5 +115,12 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async getMovieActors(_, movieId) {
+      try {
+        return await this.axios.get(`movie/${movieId}/credits`);
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 });
