@@ -32,6 +32,9 @@
           <li>
             <b-nav-item to="/search">Search</b-nav-item>
           </li>
+          <li>
+            <b-nav-item to="/login">Login</b-nav-item>
+          </li>
         </ul>
       </div>
     </b-nav>
