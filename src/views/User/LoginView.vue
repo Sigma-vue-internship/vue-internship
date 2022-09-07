@@ -109,7 +109,6 @@ export default {
         }
         return;
       }
-      return;
     },
   },
   created() {
@@ -171,10 +170,10 @@ export default {
 .ftco-section {
   padding: 3em 0;
   text-decoration: none;
-}
-.ftco-section a {
-  text-decoration: none;
-  color: $lightGreen;
+  a {
+    text-decoration: none;
+    color: $lightGreen;
+  }
 }
 
 .ftco-no-pt {
@@ -283,15 +282,18 @@ export default {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-/* Hide the browser's default checkbox */
-.checkbox-wrap input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
+  input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+    input:checked ~ .checkmark:after {
+      display: block;
+      content: "\f14a";
+      color: rgba(0, 0, 0, 0.2);
+    }
+  }
 }
 
 /* Create a custom checkbox */
@@ -311,13 +313,6 @@ export default {
 }
 
 /* Show the checkmark when checked */
-.checkbox-wrap {
-  input:checked ~ .checkmark:after {
-    display: block;
-    content: "\f14a";
-    color: rgba(0, 0, 0, 0.2);
-  }
-}
 
 .checkbox-primary {
   color: $lightPurple;
