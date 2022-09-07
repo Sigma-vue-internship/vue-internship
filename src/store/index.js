@@ -46,13 +46,10 @@ export default new Vuex.Store({
     ) {
       try {
         const sessionTokenRes = this.axios.post(
-          "/authentication/token/validate_with_login",
-          {
-            data: {
-              username,
-              password,
-              request_token,
-            },
+          "/authentication/token/validate_with_login", {
+            username,
+            password,
+            request_token,
           }
         );
         commit("SET_USER_SESSION_TOKEN", sessionTokenRes.data.session_token);
