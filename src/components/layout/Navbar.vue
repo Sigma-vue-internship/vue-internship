@@ -22,6 +22,12 @@
           <li @click="showHideMenu">
             <b-nav-item to="/">Home</b-nav-item>
           </li>
+          <li>
+            <b-nav-item to="/search">Search</b-nav-item>
+          </li>
+          <li>
+            <b-nav-item to="/login">Login</b-nav-item>
+          </li>
         </ul>
       </div>
       <div class="navbar-collapse d-flex justify-content-end navbar__wide">

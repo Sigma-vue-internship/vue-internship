@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -85,6 +85,9 @@ export default {
       },
       disableForm: true,
     };
+  },
+  computed: {
+    ...mapGetters(["getUserSessionToken"]),
   },
   methods: {
     ...mapActions(["getRequestToken", "createSessionToken"]),
@@ -98,18 +101,25 @@ export default {
     },
     async loginUser() {
       this.user.request_token = localStorage.getItem("requestToken");
-      if (this.user.request_token) return this.createSessionToken(this.user);
+      if (this.user.request_token) {
+        this.createSessionToken(this.user);
+        if (this.getUserSessionToken) {
+          this.$router.push("/user/profile");
+          return;
+        }
+        return;
+      }
+      return;
     },
   },
   created() {
-    const isRequestTokenExists =
-      localStorage.getItem("requestToken") !== "undefined";
-    if (!isRequestTokenExists) {
-      this.disableForm = false;
+    const isRequestTokenExists = localStorage.getItem("requestToken");
+    if (isRequestTokenExists === null) {
+      this.disableForm = true;
       return;
     }
     if (isRequestTokenExists) {
-      this.disableForm = true;
+      this.disableForm = false;
       return;
     }
     this.disableForm = true;

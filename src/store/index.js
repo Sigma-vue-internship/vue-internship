@@ -4,30 +4,40 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  // state: {
-  //   user: {
-  //     sessionToken: "",
-  //   },
-  // },
-  // getters: {
-  //   getUserSessionToken: (state) => state.sessionToken,
-  // },
-  // mutations: {
-  //   SET_USER_SESSION_TOKEN: (state, token) => (state.user.sessionToken = token),
-  // },
+  state: {
+    user: {
+      sessionToken: "",
+    },
+  },
+  getters: {
+    getUserSessionToken: (state) => state.sessionToken,
+  },
+  mutations: {
+    SET_USER_SESSION_TOKEN: (state, token) => (state.user.sessionToken = token),
+  },
   actions: {
     async getRequestToken() {
       return this.axios.get("/authentication/token/new");
     },
-    async createSessionToken(_, { username, password, request_token }) {
-      return this.axios.post("/authentication/token/validate_with_login", {
-        data: {
-          username,
-          password,
-          request_token,
-        },
-      });
-      // commit("SET_USER_SESSION_TOKEN", sessionTokenRes.data.session_token);
+    async createSessionToken(
+      { commit },
+      { username, password, request_token }
+    ) {
+      try {
+        const sessionTokenRes = this.axios.post(
+          "/authentication/token/validate_with_login",
+          {
+            data: {
+              username,
+              password,
+              request_token,
+            },
+          }
+        );
+        commit("SET_USER_SESSION_TOKEN", sessionTokenRes.data.session_token);
+      } catch (e) {
+        console.log(e);
+      }
     },
     async findMedia(_, { searchQuery, searchBy = null, searchByValue = null }) {
       if (!searchBy || !searchByValue) {
