@@ -4,18 +4,29 @@
       <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5 col-xl-4">
           <div class="login-wrap">
-            <div
-              class="img d-flex align-items-center justify-content-center"
-            />
+            <div class="img d-flex align-items-center justify-content-center" />
             <h3 class="text-center mb-0">
               Welcome
             </h3>
             <p class="text-center welcome-info">
               Sign in by entering the information below
             </p>
+            <div
+              v-if="disableForm"
+              class="form-disabler"
+            >
+              <p class="form-disabler__info">
+                Before login please approve your account on
+                <a
+                  class="form-disabler__link"
+                  @click="createRequestToken"
+                >TMDB</a>
+              </p>
+            </div>
             <form
               action="#"
               class="login-form"
+              @submit.prevent="loginUser"
             >
               <div class="form-group">
                 <div
@@ -24,7 +35,9 @@
                   <span class="fa fa-user" />
                 </div>
                 <input
+                  v-model="user.username"
                   type="text"
+                  :disabled="disableForm ? true : false"
                   class="form-control"
                   placeholder="Username"
                   required=""
@@ -37,6 +50,8 @@
                   <span class="fa fa-lock" />
                 </div>
                 <input
+                  v-model="user.password"
+                  :disabled="disableForm ? true : false"
                   type="password"
                   class="form-control"
                   placeholder="Password"
@@ -51,7 +66,8 @@
               <div class="form-group">
                 <button
                   type="submit"
-                  class="btn form-control btn-primary rounded submit px-3"
+                  :disabled="disableForm ? true : false"
+                  class="submit-btn btn form-control btn-primary rounded px-3"
                 >
                   Login
                 </button>
@@ -65,11 +81,93 @@
 </template>
 
 <script>
-export default {};
+import { mapActions, mapGetters } from "vuex";
+
+export default {
+  data() {
+    return {
+      user: {
+        username: "",
+        password: "",
+        request_token: "",
+      },
+      disableForm: true,
+    };
+  },
+  computed: {
+    ...mapGetters(["getUserSessionToken"]),
+  },
+  created() {
+    const isRequestTokenExists = localStorage.getItem("requestToken");
+    if (isRequestTokenExists === null) {
+      this.disableForm = true;
+      return;
+    }
+    if (isRequestTokenExists) {
+      this.disableForm = false;
+      return;
+    }
+    this.disableForm = true;
+  },
+  methods: {
+    ...mapActions(["getRequestToken", "createSessionToken"]),
+    async createRequestToken() {
+      const { data } = await this.getRequestToken();
+      localStorage.setItem("requestToken", data.request_token);
+
+      window.location.replace(
+        `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=${process.env.VUE_APP_APPROVED_URL}`
+      );
+    },
+    async loginUser() {
+      this.user.request_token = localStorage.getItem("requestToken");
+      if (this.user.request_token) {
+        this.createSessionToken(this.user);
+        if (this.getUserSessionToken) {
+          this.$router.push("/user/profile");
+          return;
+        }
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
 @import "../../assets/scss/variables.scss";
+.submit-btn {
+  z-index: 0;
+  --bs-btn-disabled-opacity: 1;
+}
+.form-disabler {
+  position: absolute;
+  backdrop-filter: blur(2px);
+  width: 100%;
+  height: 100%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  &__info {
+    color: white;
+    background: rgba(0, 0, 0, 0.418);
+    font-size: 18px;
+    padding: 20px;
+    position: absolute;
+    width: 100%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  &__link {
+    cursor: pointer;
+    transition: color cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
+
+    &:hover {
+      color: rgb(236, 92, 255);
+    }
+  }
+}
 .welcome-info {
   margin-bottom: 20px;
 }
@@ -79,10 +177,10 @@ export default {};
 .ftco-section {
   padding: 3em 0;
   text-decoration: none;
-}
-.ftco-section a {
-  text-decoration: none;
-  color: $lightGreen;
+  a {
+    text-decoration: none;
+    color: $lightGreen;
+  }
 }
 
 .ftco-no-pt {
@@ -121,7 +219,7 @@ export default {};
     text-transform: uppercase;
     letter-spacing: 1px;
   }
-  p {
+  .welcome-info {
     color: rgba(255, 255, 255, 0.5);
   }
   .img {
@@ -131,10 +229,6 @@ export default {};
     margin: 0 auto;
     margin-bottom: 20px;
   }
-}
-
-.form-group {
-  position: relative;
 }
 
 //FORM CONTROL
@@ -201,13 +295,15 @@ export default {};
     cursor: pointer;
     height: 0;
     width: 0;
-  }
-  input:checked ~ .checkmark:after {
-    display: block;
-    content: "\f14a";
-    color: rgba(0, 0, 0, 0.2);
+    input:checked ~ .checkmark:after {
+      display: block;
+      content: "\f14a";
+      color: rgba(0, 0, 0, 0.2);
+    }
   }
 }
+
+/* Create a custom checkbox */
 .checkmark {
   position: absolute;
   top: 0;
@@ -224,6 +320,7 @@ export default {};
 }
 
 /* Show the checkmark when checked */
+
 .checkbox-primary {
   color: $lightPurple;
   input:checked ~ .checkmark:after {

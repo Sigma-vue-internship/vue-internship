@@ -11,16 +11,24 @@ const options = {
 
 export default new Vuex.Store({
   state: {
+    user: {
+      sessionToken: "",
+    },
+
     movies: [],
     celebrities: [],
   },
   getters: {
-    lastThreeMovies: state => state.movies.slice(0, 3),
-    lastThreeCelebrities: state => state.celebrities.slice(0, 3),
-    cashedMovies: state => state.movies,
-    cashedCelebrities: state => state.celebrities,
+    getUserSessionToken: (state) => state.sessionToken,
+
+    lastThreeMovies: (state) => state.movies.slice(0, 3),
+    lastThreeCelebrities: (state) => state.celebrities.slice(0, 3),
+    cashedMovies: (state) => state.movies,
+    cashedCelebrities: (state) => state.celebrities,
   },
   mutations: {
+    SET_USER_SESSION_TOKEN: (state, token) => (state.user.sessionToken = token),
+
     SET_MOVIES(state, movies) {
       state.movies = movies;
     },
@@ -29,10 +37,30 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async findMedia(
-      context,
-      { searchQuery, searchBy = null, searchByValue = null }
+    async getRequestToken() {
+      return this.axios.get("/authentication/token/new");
+    },
+    async createSessionToken(
+      { commit },
+      { username, password, request_token }
     ) {
+      try {
+        const sessionTokenRes = this.axios.post(
+          "/authentication/token/validate_with_login",
+          {
+            data: {
+              username,
+              password,
+              request_token,
+            },
+          }
+        );
+        commit("SET_USER_SESSION_TOKEN", sessionTokenRes.data.session_token);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async findMedia(_, { searchQuery, searchBy = null, searchByValue = null }) {
       if (!searchBy || !searchByValue) {
         return this.axios.get(`search/multi`, {
           params: { query: searchQuery, page: 1 },
@@ -43,7 +71,7 @@ export default new Vuex.Store({
       });
     },
     async loadMoreMedia(
-      context,
+      _,
       { searchQuery, searchBy = null, searchByValue = null, page }
     ) {
       if (!searchBy || !searchByValue) {
@@ -55,7 +83,7 @@ export default new Vuex.Store({
         params: { query: searchQuery, [searchBy]: searchByValue, page },
       });
     },
-    async findSingleCelebrity(context, celebrityId) {
+    async findSingleCelebrity(_, celebrityId) {
       return this.axios.get(`person/${celebrityId}`);
     },
     async getCelebrityMovies(_, celebrityId) {
@@ -84,7 +112,9 @@ export default new Vuex.Store({
     async getMovies({ commit }) {
       try {
         const response = await this.axios.get("movie/popular", options);
-        const { data: { results } } = response;
+        const {
+          data: { results },
+        } = response;
         commit("SET_MOVIES", results);
         return results;
       } catch (error) {
@@ -94,7 +124,9 @@ export default new Vuex.Store({
     async getActors({ commit }) {
       try {
         const response = await this.axios.get("person/popular", options);
-        const { data: { results } } = response;
+        const {
+          data: { results },
+        } = response;
         commit("SET_CELEBRITIES", results);
         return results;
       } catch (error) {
@@ -108,9 +140,9 @@ export default new Vuex.Store({
         },
       };
       try {
-        if(obj.type === "celebrities") {
+        if (obj.type === "celebrities") {
           return await this.axios.get("person/popular", options);
-        } else if(obj.type === "movies") {
+        } else if (obj.type === "movies") {
           return await this.axios.get("movie/popular", options);
         }
       } catch (error) {
