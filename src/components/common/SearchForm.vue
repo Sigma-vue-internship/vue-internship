@@ -2,8 +2,13 @@
   <div class="search-form__container container">
     <div>
       <div class="search-form">
-        <div v-if="mode !== 'preview'" class="jumbotron">
-          <h1 class="display-4">Find media</h1>
+        <div
+          v-if="mode !== 'preview'"
+          class="jumbotron"
+        >
+          <h1 class="display-4">
+            Find media
+          </h1>
           <div
             class="
               d-grid d-sm-flex
@@ -16,13 +21,13 @@
               v-model="searchQuery"
               placeholder="Search for media"
               @keyup.enter="emitFindMedia"
-            ></b-form-input>
+            />
             <b-form-input
               v-if="selected"
               v-model="searchByValue"
               :placeholder="selected"
               @keyup.enter="emitFindMedia"
-            ></b-form-input>
+            />
           </div>
           <div class="d-flex justify-content-between">
             <div class="radio__container">
@@ -32,24 +37,24 @@
               >
                 <b-form-radio-group
                   id="radio-group-1"
-                  class="radio-btns d-flex gap-3"
                   v-model="selected"
+                  class="radio-btns d-flex gap-3"
                   :options="options"
                   name="radio-options"
-                ></b-form-radio-group>
+                />
               </b-form-group>
             </div>
             <p class="lead px-2">
               <button
                 type="button"
-                @click="emitFindMedia"
                 class="btn btn-dark btn-lg px-4 search-btn"
+                @click="emitFindMedia"
               >
                 Search
               </button>
             </p>
           </div>
-          <hr class="my-4" />
+          <hr class="my-4">
 
           <div class="d-flex justify-content-between">
             <p class="search-form__filters-info">
@@ -57,7 +62,10 @@
             </p>
           </div>
         </div>
-        <div v-if="mode === 'preview'" class="jumbotron">
+        <div
+          v-if="mode === 'preview'"
+          class="jumbotron"
+        >
           <div
             class="
               d-grid d-sm-flex
@@ -69,20 +77,20 @@
             <b-form-input
               v-model="searchQuery"
               placeholder="Type movie or actor title here"
-              @keyup.enter="emitFindMedia"
               class="my-2 input-lg"
-            ></b-form-input>
+              @keyup.enter="emitFindMedia"
+            />
             <b-form-input
               v-if="selected"
               v-model="searchByValue"
               :placeholder="selected"
-              @keyup.enter="emitFindMedia"
               class="my-2 input-lg"
-            ></b-form-input>
+              @keyup.enter="emitFindMedia"
+            />
             <button
               type="button"
-              @click="emitFindMedia"
               class="btn btn-dark px-4 search-btn my-2"
+              @click="emitFindMedia"
             >
               Search
             </button>
@@ -96,7 +104,10 @@
       position="top right"
     >
       <template slot="body">
-        <div class="alert alert-warning p-2 text-start m-2" role="alert">
+        <div
+          class="alert alert-warning p-2 text-start m-2"
+          role="alert"
+        >
           {{ alertSign }}
         </div>
       </template>
@@ -120,9 +131,27 @@ export default {
       selected: null,
       options: [
         { value: null, text: "By film title" },
-        { value: "region", text: "By region" },
+        { value: "region", text: "By region" }
       ],
     };
+  },
+  computed: {
+    searchData() {
+      return {
+        searchQuery: this.searchQuery,
+        searchBy: this.selected,
+        searchByValue: this.searchByValue.toLowerCase(),
+      };
+    },
+    alertSign() {
+      if (this.selected && !this.searchByValue) {
+        return `To find movie or actor, you have to provide ${this.selected}`;
+      }
+      return `To find movie or actor, you have to provide name`;
+    },
+  },
+  created() {
+    this.searchQuery = this.$route.query.searchQuery;
   },
   methods: {
     emitFindMedia() {
@@ -145,24 +174,6 @@ export default {
       }
       this.$notify({ group: "search" });
     },
-  },
-  computed: {
-    searchData() {
-      return {
-        searchQuery: this.searchQuery,
-        searchBy: this.selected,
-        searchByValue: this.searchByValue.toLowerCase(),
-      };
-    },
-    alertSign() {
-      if (this.selected && !this.searchByValue) {
-        return `To find movie or actor, you have to provide ${this.selected}`;
-      }
-      return `To find movie or actor, you have to provide name`;
-    },
-  },
-  created() {
-    this.searchQuery = this.$route.query.searchQuery;
   },
 };
 </script>

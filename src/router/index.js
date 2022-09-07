@@ -1,7 +1,16 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 
 Vue.use(VueRouter);
+
+const freeAccessRouts = [
+  'home',
+  'search',
+  'movie',
+  'celebrity',
+  'login'
+];
 
 const routes = [
   {
@@ -25,24 +34,19 @@ const routes = [
     component: () => import("../views/CelebrityDetailsView.vue"),
   },
   {
+    path: "/login",
+    name: "login",
+    component: () => import("../views/User/LoginView"),
+  },
+  {
     path: "/user",
     name: "user",
     component: () => import("../views/User/UserView"),
     children: [
       {
-        path: "signup",
-        name: "signup",
-        component: () => import("../views/User/SignupView"),
-      },
-      {
-        path: "login",
-        name: "login",
-        component: () => import("../views/User/LoginView"),
-      },
-      {
-        path: "favorites",
-        name: "favorites",
-        component: () => import("../views/User/FavoritesView"),
+        path: "profile",
+        name: "profile",
+        component: () => import("../views/User/ProfileView"),
       },
       {
         path: "favorites",
@@ -53,9 +57,9 @@ const routes = [
         path: "watchlist",
         name: "watchlist",
         component: () => import("../views/User/WatchlistView.vue"),
-      },
+      }
     ],
-  },
+  }
 ];
 
 const router = new VueRouter({
@@ -65,6 +69,17 @@ const router = new VueRouter({
   scrollBehavior() {
     return { x: 0, y: 0 };
   },
+});
+
+router.beforeEach((to, from, next) => {
+  if (freeAccessRouts.includes(to.name)) {
+    return next();
+  }
+  if (!freeAccessRouts.includes(to.name) && store.getters.getUserSessionToken) {
+    return next();
+  } else {
+    return next("/login");
+  }
 });
 
 export default router;
