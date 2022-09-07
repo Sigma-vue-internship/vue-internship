@@ -22,10 +22,10 @@
           <li @click="showHideMenu">
             <b-nav-item to="/">Home</b-nav-item>
           </li>
-          <li>
+          <li @click="showHideMenu">
             <b-nav-item to="/search">Search</b-nav-item>
           </li>
-          <li>
+          <li @click="showHideMenu">
             <b-nav-item to="/login">Login</b-nav-item>
           </li>
         </ul>
