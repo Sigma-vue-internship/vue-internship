@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import SearchForm from "../components/common/SearchForm";
 import MediaList from "../components/media/MediaList";
 export default {
@@ -63,14 +63,17 @@ export default {
       moviesPage: 1,
     };
   },
+  computed: {
+    ...mapGetters(["cashedMovies", "cashedCelebrities"]),
+  },
   created() {
     this.loadData();
   },
   methods: {
     ...mapActions(["changeMediaPage", "getMovies", "getActors"]),
     async loadData() {
-      this.movies = await this.getMovies();
-      this.celebrities = await this.getActors();
+      this.movies = this.cashedMovies.length ? this.cashedMovies : await this.getMovies();
+      this.celebrities = this.cashedCelebrities.length ? this.cashedCelebrities : await this.getActors();
     },
     async findMedia(searchData) {
       if (searchData) {
