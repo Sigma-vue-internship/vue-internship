@@ -4,7 +4,15 @@ import store from "../store";
 
 Vue.use(VueRouter);
 
-let routes = [
+const freeAccessRouts = [
+  'home',
+  'search',
+  'movie',
+  'celebrity',
+  'login'
+];
+
+const routes = [
   {
     path: "/",
     name: "home",
@@ -54,25 +62,6 @@ let routes = [
   }
 ];
 
-routes = routes.map((route) => {
-  if (route.path !== "/user") {
-    route.meta = {
-      auth: false,
-    };
-    return route;
-  }
-  route.meta = {
-    auth: true,
-  };
-  route.children = route.children.map((route) => {
-    route.meta = {
-      auth: true,
-    };
-    return route;
-  });
-  return route;
-});
-
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
@@ -82,10 +71,10 @@ const router = new VueRouter({
   },
 });
 router.beforeEach((to, from, next) => {
-  if (!to.meta.auth) {
+  if (freeAccessRouts.includes(to.name)) {
     return next();
   }
-  if (to.meta.auth && store.getters.getUserSessionToken) {
+  if (!freeAccessRouts.includes(to.name) && store.getters.getUserSessionToken) {
     return next();
   } else {
     return next("/login");
