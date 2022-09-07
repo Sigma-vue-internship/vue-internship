@@ -107,7 +107,6 @@ export default {
           this.$router.push("/user/profile");
           return;
         }
-        return;
       }
     },
   },
