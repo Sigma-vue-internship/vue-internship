@@ -71,19 +71,16 @@ export default {
     SpinnerLoader,
   },
   props: {
-    movie: Object,
+    movie: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
       movieImgRes: null,
       isLoading: false,
     };
-  },
-  methods: {
-    ...mapActions(["getMovieImages"]),
-    toMovieHomepage(url) {
-      window.location.href = url;
-    },
   },
   computed: {
     imgUrls() {
@@ -115,6 +112,12 @@ export default {
       this.isLoading = false;
       console.log(e);
     }
+  },
+  methods: {
+    ...mapActions(["getMovieImages"]),
+    toMovieHomepage(url) {
+      window.location.href = url;
+    },
   },
 };
 </script>

@@ -34,10 +34,22 @@ export default {
     SingleMediaElementList,
   },
   props: {
-    title: String,
-    elements: Array,
-    changePage: Function,
-    route: String,
+    title: {
+      type: String,
+      default: "",
+    },
+    elements: {
+      type: Array,
+      default: () => [],
+    },
+    changePage: {
+      type: Function,
+      default: () => {},
+    },
+    route: {
+      type: String,
+      default: "",
+    },
   },
   methods: {
     routeToElementPage(id) {

@@ -72,6 +72,55 @@ export default {
       isLoading: false,
     };
   },
+  watch: {
+    $route: {
+      async handler(newRoute) {
+        this.routeSearchData = { ...newRoute.query };
+        this.currentPage = 1;
+        if (this.routeSearchData.searchQuery) {
+          try {
+            this.isLoading = true;
+            this.resData = await this.findMedia(this.routeSearchData);
+            if (this.resData.data.results.length === 0) {
+              this.$notify({
+                group: "empty-search",
+                classes: "search-notification",
+              });
+            }
+            this.searchMedia = this.resData.data.results;
+            this.totalPages = this.resData.data.total_pages;
+            this.isLoading = false;
+          } catch (e) {
+            console.log(e);
+            this.isLoading = false;
+          }
+        }
+      },
+      deep: true,
+    },
+  },
+  async created() {
+    this.routeSearchData = { ...this.$route.query };
+    this.currentPage = 1;
+    if (this.routeSearchData.searchQuery && !this.searchMedia.length) {
+      try {
+        this.isLoading = true;
+        this.resData = await this.findMedia(this.routeSearchData);
+        if (this.resData.data.results.length === 0) {
+          this.$notify({
+            group: "empty-search",
+            classes: "search-notification",
+          });
+        }
+        this.searchMedia = this.resData.data.results;
+        this.totalPages = this.resData.data.total_pages;
+        this.isLoading = false;
+      } catch (e) {
+        console.log(e);
+        this.isLoading = false;
+      }
+    }
+  },
   methods: {
     ...mapActions(["loadMoreMedia", "findMedia"]),
     async loadMoreMediaElements() {
@@ -151,55 +200,6 @@ export default {
         }
       }
     },
-  },
-  watch: {
-    $route: {
-      async handler(newRoute) {
-        this.routeSearchData = { ...newRoute.query };
-        this.currentPage = 1;
-        if (this.routeSearchData.searchQuery) {
-          try {
-            this.isLoading = true;
-            this.resData = await this.findMedia(this.routeSearchData);
-            if (this.resData.data.results.length === 0) {
-              this.$notify({
-                group: "empty-search",
-                classes: "search-notification",
-              });
-            }
-            this.searchMedia = this.resData.data.results;
-            this.totalPages = this.resData.data.total_pages;
-            this.isLoading = false;
-          } catch (e) {
-            console.log(e);
-            this.isLoading = false;
-          }
-        }
-      },
-      deep: true,
-    },
-  },
-  async created() {
-    this.routeSearchData = { ...this.$route.query };
-    this.currentPage = 1;
-    if (this.routeSearchData.searchQuery && !this.searchMedia.length) {
-      try {
-        this.isLoading = true;
-        this.resData = await this.findMedia(this.routeSearchData);
-        if (this.resData.data.results.length === 0) {
-          this.$notify({
-            group: "empty-search",
-            classes: "search-notification",
-          });
-        }
-        this.searchMedia = this.resData.data.results;
-        this.totalPages = this.resData.data.total_pages;
-        this.isLoading = false;
-      } catch (e) {
-        console.log(e);
-        this.isLoading = false;
-      }
-    }
   },
 };
 </script>

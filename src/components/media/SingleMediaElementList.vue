@@ -21,7 +21,10 @@
 export default {
   name: "SingleMediaElementList",
   props: {
-    element: Object,
+    element: {
+      type: Object,
+      default: () => {},
+    },
   },
   computed: {
     imgPath() {
