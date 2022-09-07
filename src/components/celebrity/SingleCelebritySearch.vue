@@ -79,6 +79,17 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../assets/scss/variables.scss";
+.movie-badge {
+  display: flex;
+  margin: 0 10px 0 auto;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 15px;
+  height: 30px;
+  background-color: rgb(228, 94, 228);
+}
 .celebrity-result {
   .card {
     --bs-card-bg: rgba(74, 36, 141, 0.316);
