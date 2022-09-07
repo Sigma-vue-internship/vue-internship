@@ -17,8 +17,8 @@ export default new Vuex.Store({
   getters: {
     lastThreeMovies: state => state.movies.slice(0, 3),
     lastThreeCelebrities: state => state.celebrities.slice(0, 3),
-    twentyMovies: state => state.movies,
-    twentyCelebrities: state => state.celebrities,
+    cashedMovies: state => state.movies,
+    cashedCelebrities: state => state.celebrities,
   },
   mutations: {
     SET_MOVIES(state, movies) {

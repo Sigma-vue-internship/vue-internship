@@ -64,14 +64,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["twentyMovies", "twentyCelebrities"]),
+    ...mapGetters(["cashedMovies", "cashedCelebrities"]),
   },
   created() {
-    if(this.twentyMovies.length===0 || this.twentyCelebrities.length===0) {
+    if(this.cashedMovies.length===0 || this.cashedCelebrities.length===0) {
       this.loadData();
     } else {
-      this.movies = this.twentyMovies;
-      this.celebrities = this.twentyCelebrities;
+      this.movies = this.cashedMovies;
+      this.celebrities = this.cashedCelebrities;
     }
   },
   methods: {
