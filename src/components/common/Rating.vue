@@ -27,10 +27,16 @@
 <script>
 export default {
   name: "Rating",
-  props: [
-    "celebrityRating",
-    "movieRating"
-  ],
+  props: {
+    celebrityRating: {
+      type: Number,
+      default: undefined,
+    },
+    movieRating: {
+      type: Number,
+      default: undefined,
+    },
+  },
   data() {
     return {
       colors: ["#FF5050FF", "#FCFF50FF", "#96FF50FF"],

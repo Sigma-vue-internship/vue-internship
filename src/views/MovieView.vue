@@ -27,9 +27,6 @@ export default {
       isLoading: false,
     };
   },
-  methods: {
-    ...mapActions(["getMovie"]),
-  },
   watch: {
     $route: {
       async handler() {
@@ -57,6 +54,9 @@ export default {
       console.log(error);
       this.isLoading = false;
     }
+  },
+  methods: {
+    ...mapActions(["getMovie"]),
   },
 };
 </script>

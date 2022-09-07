@@ -104,43 +104,6 @@ export default {
       isLoading: false,
     };
   },
-  methods: {
-    ...mapActions([
-      "findSingleCelebrity",
-      "getCelebrityImages",
-      "getCelebrityMovies"
-    ]),
-    selectImg(imgUrl, i) {
-      if (this.celebrityImages[i] === this.profilePath) {
-        this.selectedImg = "";
-        this.celebrityImages[i] = this.prevSelectedImg;
-        return;
-      }
-      if (!this.selectedImg) {
-        this.prevIndex = i;
-        this.prevSelectedImg = imgUrl;
-        this.selectedImg = imgUrl;
-        this.celebrityImages[i] = this.profilePath;
-        return;
-      }
-      this.selectedImg = imgUrl;
-      this.celebrityImages[i] = this.prevSelectedImg;
-      this.prevIndex = i;
-      this.prevSelectedImg = imgUrl;
-    },
-    async getCelebrityData() {
-      const { data } = await this.findSingleCelebrity(this.$route.params.id);
-      this.celebrity = data;
-      this.resImagesData = await this.getCelebrityImages(this.$route.params.id);
-      const {
-        data: { cast },
-      } = await this.getCelebrityMovies(this.$route.params.id);
-      this.celebrityMovies =
-        cast.length > this.maxMoviesToShow
-          ? cast.slice(0, this.maxMoviesToShow)
-          : cast;
-    },
-  },
   computed: {
     celebrityImages() {
       if (this.resImagesData) {
@@ -186,6 +149,43 @@ export default {
       this.isLoading = false;
       console.error(e);
     }
+  },
+  methods: {
+    ...mapActions([
+      "findSingleCelebrity",
+      "getCelebrityImages",
+      "getCelebrityMovies"
+    ]),
+    selectImg(imgUrl, i) {
+      if (this.celebrityImages[i] === this.profilePath) {
+        this.selectedImg = "";
+        this.celebrityImages[i] = this.prevSelectedImg;
+        return;
+      }
+      if (!this.selectedImg) {
+        this.prevIndex = i;
+        this.prevSelectedImg = imgUrl;
+        this.selectedImg = imgUrl;
+        this.celebrityImages[i] = this.profilePath;
+        return;
+      }
+      this.selectedImg = imgUrl;
+      this.celebrityImages[i] = this.prevSelectedImg;
+      this.prevIndex = i;
+      this.prevSelectedImg = imgUrl;
+    },
+    async getCelebrityData() {
+      const { data } = await this.findSingleCelebrity(this.$route.params.id);
+      this.celebrity = data;
+      this.resImagesData = await this.getCelebrityImages(this.$route.params.id);
+      const {
+        data: { cast },
+      } = await this.getCelebrityMovies(this.$route.params.id);
+      this.celebrityMovies =
+        cast.length > this.maxMoviesToShow
+          ? cast.slice(0, this.maxMoviesToShow)
+          : cast;
+    },
   },
 };
 </script>
