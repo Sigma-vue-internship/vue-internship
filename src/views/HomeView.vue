@@ -67,18 +67,13 @@ export default {
     ...mapGetters(["cashedMovies", "cashedCelebrities"]),
   },
   created() {
-    if(this.cashedMovies.length===0 || this.cashedCelebrities.length===0) {
-      this.loadData();
-    } else {
-      this.movies = this.cashedMovies;
-      this.celebrities = this.cashedCelebrities;
-    }
+    this.loadData();
   },
   methods: {
     ...mapActions(["changeMediaPage", "getMovies", "getActors"]),
     async loadData() {
-      this.movies = await this.getMovies();
-      this.celebrities = await this.getActors();
+      this.movies = this.cashedMovies.length ? this.cashedMovies : await this.getMovies();
+      this.celebrities = this.cashedCelebrities.length ? this.cashedCelebrities : await this.getActors();
     },
     async findMedia(searchData) {
       if (searchData) {
