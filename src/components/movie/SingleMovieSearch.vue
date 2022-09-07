@@ -13,7 +13,19 @@
         class="mb-3 img-fluid"
         @click="redirectToMovie(movie.id)"
       >
-        <b-card-title>{{ movie.title }}</b-card-title>
+        <div class="row d-flex justify-content-between">
+          <b-card-title class="col-md-5">{{ movie.title }} </b-card-title>
+          <span
+            class="
+              movie-badge
+              badge badge-secondary
+              col-6 col-sm-3 col-md-2 col-lg-1
+              mx-md-4
+              mb-3
+            "
+            >Movie</span
+          >
+        </div>
         <div class="rating">
           <Rating :movie-rating="movieRating" />
         </div>
@@ -66,31 +78,61 @@ export default {
 </script>
 
 <style lang="scss">
-.movie-result .rating {
-  width: 30%;
-  margin-bottom: 15px;
+@import "../../assets/scss/variables.scss";
+.movie-badge {
+  display: flex;
+  margin: 0 10px 0 auto;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-size: 15px;
+  height: 30px;
+  background-color: $lightGreen;
 }
+.movie-result {
+  .rating {
+    width: 30%;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+
+  .movie-raiting {
+    margin-top: 0;
+  }
+
+  .card {
+    --bs-card-bg: rgba(74, 36, 141, 0.493);
+    --bs-card-color: white;
+    cursor: pointer;
+  }
+
+  .card-title {
+    margin-bottom: 20px;
+  }
+
+  .card-text {
+    max-width: 500px;
+  }
+}
+
 @media (max-width: 992px) {
   .movie-result .rating {
     width: 60%;
   }
 }
-.movie-result .card {
-  --bs-card-bg: rgba(74, 36, 141, 0.493);
-  --bs-card-color: white;
-  cursor: pointer;
-}
-.movie-result .card-title {
-  margin-bottom: 20px;
-}
-.movie-result .card-text {
-  max-width: 500px;
-}
-@media (max-width: 450px) {
-  .movie-result .card-text {
-    display: none;
+@media (max-width: 768px) {
+  .movie-result {
+    .card-text {
+      display: none;
+    }
+
+    .rating,
+    .movie-raiting {
+      width: 100%;
+    }
   }
-  .movie-result .card-title {
+
+  .card-title {
     font-size: 18px;
   }
 }
