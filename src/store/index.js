@@ -15,15 +15,15 @@ export default new Vuex.Store({
     celebrities: [],
   },
   getters: {
-    movies: state => state.movies,
-    celebrities: state => state.celebrities,
+    lastThreeMovies: state => state.movies.slice(0, 3),
+    lastThreeCelebrities: state => state.celebrities.slice(0, 3),
   },
   mutations: {
     SET_MOVIES(state, movies) {
-      state.movies = movies.slice(0, 3);
+      state.movies = movies;
     },
     SET_CELEBRITIES(state, celebrities) {
-      state.celebrities = celebrities.slice(0, 3);
+      state.celebrities = celebrities;
     },
   },
   actions: {
