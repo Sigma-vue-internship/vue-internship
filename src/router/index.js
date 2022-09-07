@@ -20,11 +20,6 @@ const routes = [
     component: () => import("../views/MovieView.vue"),
   },
   {
-    path: "/verified",
-    name: "verified",
-    component: () => import("../views/User/VerifiedView.vue"),
-  },
-  {
     path: "/celebrity/:id",
     name: "celebrity",
     component: () => import("../views/CelebrityDetailsView.vue"),
