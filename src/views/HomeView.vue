@@ -5,15 +5,15 @@
         <div class="main__name text-center py-3">
           <h1>Moviedesk</h1>
         </div>
-        <div class="main__overlay"></div>
+        <div class="main__overlay" />
       </div>
       <div class="text-center">
         <div class="main__watch py-3">
           <h4>Find movie or actor info</h4>
           <SearchForm
             :mode="'preview'"
-            @findMedia="findMedia"
             class="main__searchForm"
+            @findMedia="findMedia"
           />
         </div>
       </div>
@@ -23,7 +23,7 @@
         title="Popular movies"
         route="/movie/"
         :elements="movies"
-        :changePage="
+        :change-page="
           () => {
             return changeCurrentPage('movies');
           }
@@ -33,7 +33,7 @@
         title="Popular actors"
         route="/celebrity/"
         :elements="celebrities"
-        :changePage="
+        :change-page="
           () => {
             return changeCurrentPage('celebrities');
           }
@@ -41,12 +41,12 @@
         class="pb-4"
       />
     </section>
-    <div class="main__bg"></div>
+    <div class="main__bg" />
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import SearchForm from "../components/common/SearchForm";
 import MediaList from "../components/media/MediaList";
 export default {
@@ -63,33 +63,27 @@ export default {
       moviesPage: 1,
     };
   },
-  async created() {
-    await this.loadData("movies");
-    await this.loadData("celebrities");
+  computed: {
+    ...mapGetters(["cashedMovies", "cashedCelebrities"]),
+  },
+  created() {
+    this.loadData();
   },
   methods: {
-    ...mapActions(["changeMediaPage", "getMedia"]),
-    async loadData(type) {
-      try {
-        const response = await this.getMedia(type);
-        const {
-          data: { results },
-        } = response;
-        this[type] = results;
-      } catch (error) {
-        console.log(error);
-      }
+    ...mapActions(["changeMediaPage", "getMovies", "getActors"]),
+    async loadData() {
+      this.movies = this.cashedMovies.length ? this.cashedMovies : await this.getMovies();
+      this.celebrities = this.cashedCelebrities.length ? this.cashedCelebrities : await this.getActors();
     },
     async findMedia(searchData) {
       if (searchData) {
-        this.$router
-          .push({
-            path: "/search",
-            query: {
-              searchQuery: searchData.searchQuery,
-            },
-          })
-          .catch(() => {});
+        const { searchQuery } = searchData;
+        this.$router.push({
+          path: "/search",
+          query: {
+            searchQuery,
+          },
+        });
       }
     },
     async changeCurrentPage(type) {

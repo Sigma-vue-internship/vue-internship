@@ -4,42 +4,50 @@
       <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5 col-xl-4">
           <div class="login-wrap">
-            <div
-              class="img d-flex align-items-center justify-content-center"
-            ></div>
-            <h3 class="text-center mb-0">Welcome</h3>
+            <div class="img d-flex align-items-center justify-content-center" />
+            <h3 class="text-center mb-0">
+              Welcome
+            </h3>
             <p class="text-center welcome-info">
               Sign in by entering the information below
             </p>
-            <div v-if="disableForm" class="form-disabler">
+            <div
+              v-if="disableForm"
+              class="form-disabler"
+            >
               <p class="form-disabler__info">
                 Before login please approve your account on
-                <a class="form-disabler__link" @click="createRequestToken"
-                  >TMDB</a
-                >
+                <a
+                  class="form-disabler__link"
+                  @click="createRequestToken"
+                >TMDB</a>
               </p>
             </div>
-            <form action="#" @submit.prevent="loginUser" class="login-form">
+            <form
+              action="#"
+              class="login-form"
+              @submit.prevent="loginUser"
+            >
               <div class="form-group">
                 <div
                   class="icon d-flex align-items-center justify-content-center"
                 >
-                  <span class="fa fa-user"></span>
+                  <span class="fa fa-user" />
                 </div>
                 <input
+                  v-model="user.username"
                   type="text"
                   :disabled="disableForm ? true : false"
-                  v-model="user.username"
                   class="form-control"
                   placeholder="Username"
                   required=""
-                />
+                >
               </div>
               <div class="form-group">
                 <div
                   class="icon d-flex align-items-center justify-content-center"
                 >
-                  <span class="fa fa-lock"></span>
+                  <span class="fa fa-lock" />
                 </div>
                 <input
                   v-model="user.password"
@@ -48,7 +56,7 @@
                   class="form-control"
                   placeholder="Password"
                   required=""
-                />
+                >
               </div>
               <div class="form-group d-md-flex">
                 <div class="w-100 text-end p-2 forgot-msg">
@@ -89,6 +97,18 @@ export default {
   computed: {
     ...mapGetters(["getUserSessionToken"]),
   },
+  created() {
+    const isRequestTokenExists = localStorage.getItem("requestToken");
+    if (isRequestTokenExists === null) {
+      this.disableForm = true;
+      return;
+    }
+    if (isRequestTokenExists) {
+      this.disableForm = false;
+      return;
+    }
+    this.disableForm = true;
+  },
   methods: {
     ...mapActions(["getRequestToken", "createSessionToken"]),
     async createRequestToken() {
@@ -109,18 +129,6 @@ export default {
         }
       }
     },
-  },
-  created() {
-    const isRequestTokenExists = localStorage.getItem("requestToken");
-    if (isRequestTokenExists === null) {
-      this.disableForm = true;
-      return;
-    }
-    if (isRequestTokenExists) {
-      this.disableForm = false;
-      return;
-    }
-    this.disableForm = true;
   },
 };
 </script>

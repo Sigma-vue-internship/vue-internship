@@ -49,9 +49,9 @@ let routes = [
         path: "watchlist",
         name: "watchlist",
         component: () => import("../views/User/WatchlistView.vue"),
-      },
+      }
     ],
-  },
+  }
 ];
 
 routes = routes.map((route) => {

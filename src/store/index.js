@@ -3,17 +3,38 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
+const options = {
+  params: {
+    page: 1,
+  },
+};
+
 export default new Vuex.Store({
   state: {
     user: {
       sessionToken: "",
     },
+
+    movies: [],
+    celebrities: [],
   },
   getters: {
     getUserSessionToken: (state) => state.sessionToken,
+
+    lastThreeMovies: (state) => state.movies.slice(0, 3),
+    lastThreeCelebrities: (state) => state.celebrities.slice(0, 3),
+    cashedMovies: (state) => state.movies,
+    cashedCelebrities: (state) => state.celebrities,
   },
   mutations: {
     SET_USER_SESSION_TOKEN: (state, token) => (state.user.sessionToken = token),
+
+    SET_MOVIES(state, movies) {
+      state.movies = movies;
+    },
+    SET_CELEBRITIES(state, celebrities) {
+      state.celebrities = celebrities;
+    },
   },
   actions: {
     async getRequestToken() {
@@ -66,11 +87,6 @@ export default new Vuex.Store({
       return this.axios.get(`person/${celebrityId}`);
     },
     async getCelebrityMovies(_, celebrityId) {
-      const options = {
-        params: {
-          page: 1,
-        },
-      };
       try {
         return await this.axios.get(
           `person/${celebrityId}/movie_credits`,
@@ -93,18 +109,26 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
-    async getMedia(_, type) {
-      const options = {
-        params: {
-          page: 1,
-        },
-      };
+    async getMovies({ commit }) {
       try {
-        if (type === "movies") {
-          return await this.axios.get("movie/popular", options);
-        } else if (type === "celebrities") {
-          return await this.axios.get("person/popular", options);
-        }
+        const response = await this.axios.get("movie/popular", options);
+        const {
+          data: { results },
+        } = response;
+        commit("SET_MOVIES", results);
+        return results;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getActors({ commit }) {
+      try {
+        const response = await this.axios.get("person/popular", options);
+        const {
+          data: { results },
+        } = response;
+        commit("SET_CELEBRITIES", results);
+        return results;
       } catch (error) {
         console.error(error);
       }

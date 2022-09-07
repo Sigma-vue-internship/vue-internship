@@ -1,5 +1,8 @@
 <template>
-  <div v-if="movieRating || celebrityRating" class="movie-raiting">
+  <div
+    v-if="movieRating || celebrityRating"
+    class="movie-raiting"
+  >
     <progress
       class="movie-raiting__bar"
       :style="{
@@ -11,7 +14,9 @@
       :max="celebrityRating ? 250 : 10"
     />
     <div class="movie-raiting__info row text-center">
-      <h4 class="movie-raiting__title col-md-6 col-lg-5">Rating</h4>
+      <h4 class="movie-raiting__title col-md-6 col-lg-5">
+        Rating
+      </h4>
       <p class="movie-raiting__number col-lg-4">
         {{ celebrityRating ? celebrityRating : movieRating }}
       </p>
@@ -22,7 +27,16 @@
 <script>
 export default {
   name: "Rating",
-  props: ["celebrityRating", "movieRating"],
+  props: {
+    celebrityRating: {
+      type: Number,
+      default: undefined,
+    },
+    movieRating: {
+      type: Number,
+      default: undefined,
+    },
+  },
   data() {
     return {
       colors: ["#FF5050FF", "#FCFF50FF", "#96FF50FF"],
@@ -60,40 +74,44 @@ export default {
   align-items: center;
   margin-top: 20px;
   width: 90%;
-}
-.movie-raiting__bar {
-  max-width: 300px;
-  width: 100%;
-  height: 20px;
-}
-.movie-raiting__info {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-content: center;
-  color: white;
-}
-.movie-raiting__number {
-  text-align: end;
-  font-size: 1rem;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
-.movie-raiting__title {
-  text-align: start;
-  font-size: 1.2rem;
-}
-@media (max-width: 992px) {
-  .movie-raiting__number {
-    text-align: center;
+  &__bar {
+    max-width: 300px;
+    width: 100%;
+    height: 20px;
   }
-  .movie-raiting__title {
-    text-align: center;
+  &__info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    color: white;
+  }
+  &__number {
+    text-align: end;
+    font-size: 1rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  &__title {
+    text-align: start;
+    font-size: 1.2rem;
   }
 }
 @media (max-width: 992px) {
-  .movie-raiting__title {
-    display: none;
+  .movie-raiting {
+    &__number {
+      text-align: center;
+    }
+    &__title {
+      text-align: center;
+    }
+  }
+}
+@media (max-width: 992px) {
+  .movie-raiting {
+    &__title {
+      display: none;
+    }
   }
 }
 </style>
