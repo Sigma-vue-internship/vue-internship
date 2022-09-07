@@ -14,17 +14,19 @@
         @click="redirectToMovie(celebrity.id)"
       >
         <div class="row d-flex justify-content-between">
-          <b-card-title class="col-md-5">{{ celebrity.name }} </b-card-title>
+          <b-card-title class="col-md-5">
+            {{ celebrity.name }}
+          </b-card-title>
           <span
             class="
               movie-badge
               badge badge-secondary
               col-6 col-sm-3 col-md-2 col-lg-1
               mx-md-4
-              mb-3
-            "
-            >Actor</span
+              mb-3"
           >
+            Actor
+          </span>
         </div>
         <div class="rating">
           <Rating :celebrity-rating="celebrityRating" />
