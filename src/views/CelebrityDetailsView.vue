@@ -14,7 +14,7 @@
       p-3
     "
   >
-    <div class="row gx-0 pb-5 d-flex">
+    <div class="row gx-0 d-flex">
       <div class="celebrity-profile__image-container col-lg-5 col-xl-5">
         <div class="d-flex flex-column">
           <img
@@ -72,7 +72,7 @@
       title="Actor's movies"
       route="/movie/"
       :elements="celebrityMovies"
-      class="flex-row"
+      class="flex-row text-center movies py-3"
     />
   </div>
 </template>
@@ -193,6 +193,10 @@ export default {
 <style lang="scss">
 .celebrity__rating {
   margin: 0 auto;
+}
+.movies {
+  padding-right: 0;
+  padding-top: 0!important;
 }
 .celebrity-profile__info {
   position: relative;

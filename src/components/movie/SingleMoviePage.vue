@@ -54,12 +54,15 @@
           :img-urls="imgUrls"
         />
       </div>
-      <div class="row my-0 gx-2">
+      <div
+        v-if="actors.length"
+        class="row my-0 gx-2"
+      >
         <MediaList
           title="Cast"
           route="/celebrity/"
           :elements="actors"
-          class="pb-4 actors"
+          class="pb-4 text-center actors"
         />
       </div>
     </div>
