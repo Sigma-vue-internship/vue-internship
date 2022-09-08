@@ -13,12 +13,14 @@ export default new Vuex.Store({
   state: {
     movies: [],
     celebrities: [],
+    topMovies: [],
+    moviesNowPlaying: [],
   },
   getters: {
     getUserSessionToken: (state) => state.sessionToken,
 
-    lastThreeMovies: (state) => state.movies.slice(0, 3),
-    lastThreeCelebrities: (state) => state.celebrities.slice(0, 3),
+    cashedTopMovies: (state) => state.topMovies,
+    cashedMoviesNowPlaying: (state) => state.moviesNowPlaying,
     cashedMovies: (state) => state.movies,
     cashedCelebrities: (state) => state.celebrities,
   },
@@ -28,6 +30,12 @@ export default new Vuex.Store({
     },
     SET_CELEBRITIES(state, celebrities) {
       state.celebrities = celebrities;
+    },
+    SET_TOP_MOVIES(state, movies) {
+      state.topMovies = movies;
+    },
+    SET_MOVIES_NOW_PLAYING(state, movies) {
+      state.moviesNowPlaying = movies;
     },
   },
   actions: {
@@ -121,6 +129,30 @@ export default new Vuex.Store({
         } = response;
         commit("SET_MOVIES", results);
         return results;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getMoviesTopRated({ commit }) {
+      try {
+        const response = await this.axios.get("movie/top_rated");
+        const {
+          data: { results },
+        } = response;
+        commit("SET_TOP_MOVIES", results);
+        return results.slice(0, 3);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getMoviesNowPlaying({ commit }) {
+      try {
+        const response = await this.axios.get("movie/now_playing");
+        const {
+          data: { results },
+        } = response;
+        commit("SET_MOVIES_NOW_PLAYING", results);
+        return results.slice(0, 3);
       } catch (error) {
         console.error(error);
       }

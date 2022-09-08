@@ -3,10 +3,10 @@
     <div class="container">
       <div class="row">
         <div class="col-6 col-md-2 mb-3">
-          <h5>Movies</h5>
+          <h5>Top movies</h5>
           <ul class="nav flex-column">
             <li
-              v-for="movie in lastThreeMovies"
+              v-for="movie in topMovies"
               :key="movie.uuid"
               class="nav-item mb-2"
             >
@@ -17,15 +17,15 @@
           </ul>
         </div>
         <div class="col-6 col-md-2 mb-3">
-          <h5>Celebrities</h5>
+          <h5>Now playing</h5>
           <ul class="nav flex-column">
             <li
-              v-for="celebrity in lastThreeCelebrities"
-              :key="celebrity.uuid"
+              v-for="movie in moviesNowPlaying"
+              :key="movie.uuid"
               class="nav-item mb-2"
             >
-              <router-link :to="{ name: 'celebrity', params: { id: celebrity.id } }">
-                {{ celebrity.name }}
+              <router-link :to="{ name: 'movie', params: { id: movie.id } }">
+                {{ movie.title }}
               </router-link>
             </li>
           </ul>
@@ -95,17 +95,31 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import SearchForm from "@/components/common/SearchForm";
 export default {
   name: "Footer",
   components: {
     SearchForm,
   },
+  data() {
+    return {
+      topMovies: [],
+      moviesNowPlaying: [],
+    };
+  },
   computed: {
-    ...mapGetters(["lastThreeMovies", "lastThreeCelebrities"]),
+    ...mapGetters(["cashedTopMovies", "cashedMoviesNowPlaying"]),
+  },
+  created() {
+    this.loadData();
   },
   methods: {
+    ...mapActions(["getMoviesTopRated", "getMoviesNowPlaying"]),
+    async loadData() {
+      this.topMovies = this.cashedTopMovies.length ? this.cashedTopMovies : await this.getMoviesTopRated();
+      this.moviesNowPlaying = this.cashedMoviesNowPlaying.length ? this.cashedMoviesNowPlaying : await this.getMoviesNowPlaying();
+    },
     async findMedia(searchData) {
       if (searchData) {
         this.$router.push({
