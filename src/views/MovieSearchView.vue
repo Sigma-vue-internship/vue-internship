@@ -63,7 +63,6 @@ export default {
     $route: {
       async handler(newRoute) {
         this.routeSearchData = { ...newRoute.query };
-        this.searchData(this.routeSearchData);
       },
       deep: true,
     },
