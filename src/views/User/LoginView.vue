@@ -5,29 +5,19 @@
         <div class="col-md-7 col-lg-5 col-xl-4">
           <div class="login-wrap">
             <div class="img d-flex align-items-center justify-content-center" />
-            <h3 class="text-center mb-0">
-              Welcome
-            </h3>
+            <h3 class="text-center mb-0">Welcome</h3>
             <p class="text-center welcome-info">
               Sign in by entering the information below
             </p>
-            <div
-              v-if="disableForm"
-              class="form-disabler"
-            >
+            <div v-if="disableForm" class="form-disabler">
               <p class="form-disabler__info">
                 Before login please approve your account on
-                <a
-                  class="form-disabler__link"
-                  @click="createRequestToken"
-                >TMDB</a>
+                <a class="form-disabler__link" @click="createRequestToken"
+                  >TMDB</a
+                >
               </p>
             </div>
-            <form
-              action="#"
-              class="login-form"
-              @submit.prevent="loginUser"
-            >
+            <form action="#" class="login-form" @submit.prevent="loginUser">
               <div class="form-group">
                 <div
                   class="icon d-flex align-items-center justify-content-center"
@@ -41,7 +31,7 @@
                   class="form-control"
                   placeholder="Username"
                   required=""
-                >
+                />
               </div>
               <div class="form-group">
                 <div
@@ -56,7 +46,7 @@
                   class="form-control"
                   placeholder="Password"
                   required=""
-                >
+                />
               </div>
               <div class="form-group d-md-flex">
                 <div class="w-100 text-end p-2 forgot-msg">
@@ -89,7 +79,7 @@ export default {
       user: {
         username: "",
         password: "",
-        requestToken:"",
+        requestToken: "",
       },
       disableForm: true,
     };
@@ -122,9 +112,8 @@ export default {
       this.user.requestToken = localStorage.getItem("requestToken");
       const authToken = await this.getAuthorizedToken(this.user);
       const sessionId = await this.getSessionToken(authToken);
-      localStorage.setItem('sessionToken',sessionId);
+      localStorage.setItem("sessionToken", sessionId);
       this.$router.push("/user/profile");
-      return;
     },
   },
 };

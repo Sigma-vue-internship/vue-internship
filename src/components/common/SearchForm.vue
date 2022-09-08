@@ -2,13 +2,8 @@
   <div class="search-form__container container">
     <div>
       <div class="search-form">
-        <div
-          v-if="mode !== 'preview'"
-          class="jumbotron"
-        >
-          <h1 class="display-4">
-            Find media
-          </h1>
+        <div v-if="mode !== 'preview'" class="jumbotron">
+          <h1 class="display-4">Find media</h1>
           <div
             class="
               d-grid d-sm-flex
@@ -53,7 +48,7 @@
               </button>
             </p>
           </div>
-          <hr class="my-4">
+          <hr class="my-4" />
 
           <div class="d-flex justify-content-between">
             <p class="search-form__filters-info">
@@ -61,10 +56,7 @@
             </p>
           </div>
         </div>
-        <div
-          v-if="mode === 'preview'"
-          class="jumbotron"
-        >
+        <div v-if="mode === 'preview'" class="jumbotron">
           <div
             class="
               d-grid d-sm-flex
@@ -82,7 +74,7 @@
             <b-form-input
               v-if="selected"
               :placeholder="selected"
-              class=" input-lg"
+              class="input-lg"
               @keyup.enter="emitFindMedia"
             />
             <button
@@ -102,10 +94,7 @@
       position="top right"
     >
       <template slot="body">
-        <div
-          class="alert alert-warning p-2 text-start m-2"
-          role="alert"
-        >
+        <div class="alert alert-warning p-2 text-start m-2" role="alert">
           {{ alertSign }}
         </div>
       </template>
@@ -133,15 +122,18 @@ export default {
       selected: null,
       options: [
         { value: null, text: "By film title" },
-        { value: "region", text: "By region" }
+        { value: "region", text: "By region" },
       ],
     };
   },
   computed: {
-    regionOptions(){
-      if(this.mode!=='preview'){
-        return this.regions.map
-        ((reg,i)=> i!==0 ? { value:reg.iso_3166_1,text:reg.english_name }: { value: null, text:"-- Please select a region --" });
+    regionOptions() {
+      if (this.mode !== "preview") {
+        return this.regions.map((reg, i) =>
+          i !== 0
+            ? { value: reg.iso_3166_1, text: reg.english_name }
+            : { value: null, text: "-- Please select a region --" }
+        );
       }
       return [];
     },
@@ -188,7 +180,7 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../assets/scss/variables.scss";
+@import "../../assets/scss/variables.scss";
 .radio-group__container {
   font-size: 18px;
   #radio-group-1 {
@@ -210,15 +202,15 @@ export default {
     width: 100%;
     margin-bottom: 15px;
     gap: 10px;
-    .custom-select{
+    .custom-select {
       padding: 0.5rem 0rem;
-      border-radius:0.5rem;
+      border-radius: 0.5rem;
       background-color: $lightGreen;
       color: black;
       font-size: 1.25rem;
-      option{
+      option {
         background-color: white;
-        font-size:1.1rem;
+        font-size: 1.1rem;
       }
     }
   }
