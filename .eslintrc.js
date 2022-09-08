@@ -10,7 +10,6 @@ module.exports = {
   },
   extends: [
     'plugin:vue/recommended',
-    'prettier'
   ],
   // add your custom rules here
   rules: {
