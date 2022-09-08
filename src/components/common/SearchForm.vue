@@ -1,3 +1,4 @@
+<!-- eslint-disable comma-dangle -->
 <template>
   <div class="search-form__container container">
     <div>
@@ -122,7 +123,7 @@ export default {
       selected: null,
       options: [
         { value: null, text: "By film title" },
-        { value: "region", text: "By region" },
+        { value: "region", text: "By region" }
       ],
     };
   },
@@ -141,7 +142,7 @@ export default {
       return {
         searchQuery: this.searchQuery,
         searchBy: this.selected,
-        searchByValue: this.searchByValue.toUpperCase(),
+        searchByValue: this.searchByValue && this.searchByValue.toUpperCase(),
       };
     },
     alertSign() {

@@ -81,7 +81,14 @@ export default {
 
 <style lang="scss">
 @import "../../assets/scss/variables.scss";
-.movie-badge {
+
+.movie-result {
+  .rating {
+    width: 30%;
+    margin-top: 0;
+    margin-bottom: 15px;
+  }
+  .movie-badge {
   display: flex;
   margin: 0 10px 0 auto;
   justify-content: center;
@@ -91,13 +98,6 @@ export default {
   height: 30px;
   background-color: $lightGreen;
 }
-.movie-result {
-  .rating {
-    width: 30%;
-    margin-top: 0;
-    margin-bottom: 15px;
-  }
-
   .movie-raiting {
     margin-top: 0;
   }
