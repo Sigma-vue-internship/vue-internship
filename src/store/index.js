@@ -49,17 +49,17 @@ export default new Vuex.Store({
           {
             username,
             password,
-            requestToken,
+            request_token: requestToken,
           }
         );
-        return data.session_id;
+        return data.request_token;
       } catch (e) {
         console.log(e);
       }
     },
     async getSessionToken(_, authToken) {
       const { data } = await this.axios.post("/authentication/session/new", {
-        authToken,
+        request_token: authToken,
       });
       return data.session_id;
     },

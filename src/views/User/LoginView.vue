@@ -113,6 +113,7 @@ export default {
       const authToken = await this.getAuthorizedToken(this.user);
       const sessionId = await this.getSessionToken(authToken);
       localStorage.setItem("sessionToken", sessionId);
+      localStorage.removeItem("requestToken");
       this.$router.push("/user/profile");
     },
   },
