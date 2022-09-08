@@ -4,7 +4,7 @@
       v-if="isLoading"
       :is-loading="isLoading"
     />
-    <div class="container p-3">
+    <div class="container py-3">
       <div
         v-if="!isLoading"
         class="row gx-0 justify-content-between"
@@ -54,6 +54,14 @@
           :img-urls="imgUrls"
         />
       </div>
+      <div class="row my-0 gx-2">
+        <MediaList
+          title="Cast"
+          route="/celebrity/"
+          :elements="actors"
+          class="pb-4 actors"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -63,12 +71,14 @@ import { mapActions } from "vuex";
 import Carousel from "@/components/common/Carousel";
 import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
+import MediaList from "@/components/media/MediaList";
 export default {
   name: "SingleMoviePage",
   components: {
     Carousel,
     Rating,
     SpinnerLoader,
+    MediaList,
   },
   props: {
     movie: {
@@ -80,6 +90,7 @@ export default {
     return {
       movieImgRes: null,
       isLoading: false,
+      actors: [],
     };
   },
   computed: {
@@ -106,6 +117,9 @@ export default {
   async created() {
     try {
       this.isLoading = true;
+      const response = await this.getMovieActors(this.movie.id);
+      const { data } = response;
+      this.actors = data.cast;
       this.movieImgRes = await this.getMovieImages(this.movie.id);
       this.isLoading = false;
     } catch (e) {
@@ -114,7 +128,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getMovieImages"]),
+    ...mapActions(["getMovieImages", "getMovieActors"]),
     toMovieHomepage(url) {
       window.location.href = url;
     },
@@ -126,6 +140,9 @@ export default {
 @import "../../assets/scss/variables.scss";
 .movie-carousel {
   padding: 0;
+}
+.actors {
+  padding-top: 0!important;
 }
 @media (max-width: 992px) {
   .movie-carousel {
