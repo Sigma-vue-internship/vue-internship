@@ -34,7 +34,6 @@ export default new Vuex.Store({
     async getRequestToken() {
       try{
         const { data } = await this.axios.get("/authentication/token/new");
-        console.log("getReqToken", data);
         return data.request_token;
       }catch(e){
         console.log(e);
