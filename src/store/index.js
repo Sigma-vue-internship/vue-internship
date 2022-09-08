@@ -11,10 +11,6 @@ const options = {
 
 export default new Vuex.Store({
   state: {
-    user: {
-      sessionToken: "",
-    },
-
     movies: [],
     celebrities: [],
   },
@@ -27,8 +23,6 @@ export default new Vuex.Store({
     cashedCelebrities: (state) => state.celebrities,
   },
   mutations: {
-    SET_USER_SESSION_TOKEN: (state, token) => (state.user.sessionToken = token),
-
     SET_MOVIES(state, movies) {
       state.movies = movies;
     },
@@ -38,24 +32,37 @@ export default new Vuex.Store({
   },
   actions: {
     async getRequestToken() {
-      return this.axios.get("/authentication/token/new");
+      try{
+        const { data } = await this.axios.get("/authentication/token/new");
+        return data.request_token;
+      }catch(e){
+        console.log(e);
+      }
     },
-    async createSessionToken(
-      { commit },
-      { username, password, request_token }
+    async getAuthorizedToken(
+      _,
+      { username, password, requestToken }
     ) {
       try {
-        const sessionTokenRes = this.axios.post(
+        const { data } = await this.axios.post(
           "/authentication/token/validate_with_login", {
             username,
             password,
-            request_token,
+            requestToken,
           }
         );
-        commit("SET_USER_SESSION_TOKEN", sessionTokenRes.data.session_token);
+        return data.session_id;
       } catch (e) {
         console.log(e);
       }
+    },
+    async getSessionToken(_,authToken) {
+      const { data } = await this.axios.post(
+        "/authentication/session/new", {
+          authToken,
+        }
+      );
+      return data.session_id;
     },
     async findMedia(_, { searchQuery, searchBy = null, searchByValue = null }) {
       if (!searchBy || !searchByValue) {

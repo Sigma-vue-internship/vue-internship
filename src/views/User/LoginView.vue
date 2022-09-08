@@ -89,7 +89,7 @@ export default {
       user: {
         username: "",
         password: "",
-        request_token: "",
+        requestToken:"",
       },
       disableForm: true,
     };
@@ -110,24 +110,20 @@ export default {
     this.disableForm = true;
   },
   methods: {
-    ...mapActions(["getRequestToken", "createSessionToken"]),
+    ...mapActions(["getRequestToken", "getAuthorizedToken", "getSessionToken"]),
     async createRequestToken() {
-      const { data } = await this.getRequestToken();
-      localStorage.setItem("requestToken", data.request_token);
-
+      const reqToken = await this.getRequestToken();
+      localStorage.setItem("requestToken", reqToken);
       window.location.replace(
-        `https://www.themoviedb.org/authenticate/${data.request_token}?redirect_to=${process.env.VUE_APP_APPROVED_URL}`
+        `https://www.themoviedb.org/authenticate/${reqToken}?redirect_to=${process.env.VUE_APP_APPROVED_URL}`
       );
     },
     async loginUser() {
-      this.user.request_token = localStorage.getItem("requestToken");
-      if (this.user.request_token) {
-        this.createSessionToken(this.user);
-        if (this.getUserSessionToken) {
-          this.$router.push("/user/profile");
-          return;
-        }
-      }
+      this.user.requestToken = localStorage.getItem("requestToken");
+      const authToken = await this.getAuthorizedToken(this.user);
+      const sessionId = await this.getSessionToken(authToken);
+      localStorage.setItem('sessionToken',sessionId);
+      this.$router.push("/user/profile");
     },
   },
 };
