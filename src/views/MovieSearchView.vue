@@ -2,25 +2,14 @@
   <div>
     <SearchForm
       :mode="'optional'"
+      :regions="regions"
       class="p-3"
       @findMedia="findMediaElements"
     />
-    <SpinnerLoader
-      v-if="isLoading"
-      :is-loading="isLoading"
-    />
-    <ul
-      v-if="searchMedia.length"
-      class="search__results-list"
-    >
-      <li
-        v-for="media in searchMedia"
-        :key="media.uuid"
-      >
-        <SingleMovieSearch
-          v-if="media.media_type === 'movie'"
-          :movie="media"
-        />
+    <SpinnerLoader v-if="isLoading" :is-loading="isLoading" />
+    <ul v-if="searchMedia.length" class="search__results-list">
+      <li v-for="media in searchMedia" :key="media.uuid">
+        <SingleMovieSearch v-if="media.media_type === 'movie'" :movie="media" />
         <SingleCelebritySearch
           v-else-if="media.media_type === 'person'"
           :celebrity="media"
@@ -33,10 +22,7 @@
       position="top right"
     >
       <template slot="body">
-        <div
-          class="alert alert-warning p-2 text-start m-2"
-          role="alert"
-        >
+        <div class="alert alert-warning p-2 text-start m-2" role="alert">
           Not found any result
         </div>
       </template>
@@ -66,6 +52,7 @@ export default {
     return {
       searchMedia: [],
       resData: null,
+      regions: [],
       currentPage: 1,
       totalPages: null,
       routeSearchData: null,
@@ -76,17 +63,27 @@ export default {
     $route: {
       async handler(newRoute) {
         this.routeSearchData = { ...newRoute.query };
-        this.searchData(this.routeSearchData);
       },
       deep: true,
     },
   },
-  created() {
-    this.routeSearchData = { ...this.$route.query };
-    this.searchData(this.routeSearchData);
+  async created() {
+    try {
+      this.isLoading = true;
+      this.routeSearchData = { ...this.$route.query };
+      this.searchData(this.routeSearchData);
+      const {
+        data: { results },
+      } = await this.getRegions();
+      this.regions = results;
+      this.isLoading = false;
+    } catch (e) {
+      this.isLoading = false;
+      console.log(e);
+    }
   },
   methods: {
-    ...mapActions(["loadMoreMedia", "findMedia"]),
+    ...mapActions(["loadMoreMedia", "findMedia", "getRegions"]),
     async loadMoreMediaElements() {
       const routeSearchData = { ...this.$route.query };
       this.currentPage += 1;

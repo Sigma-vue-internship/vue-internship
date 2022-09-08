@@ -1,14 +1,10 @@
+<!-- eslint-disable comma-dangle -->
 <template>
   <div class="search-form__container container">
     <div>
       <div class="search-form">
-        <div
-          v-if="mode !== 'preview'"
-          class="jumbotron"
-        >
-          <h1 class="display-4">
-            Find media
-          </h1>
+        <div v-if="mode !== 'preview'" class="jumbotron">
+          <h1 class="display-4">Find media</h1>
           <div
             class="
               d-grid d-sm-flex
@@ -22,11 +18,10 @@
               placeholder="Search for media"
               @keyup.enter="emitFindMedia"
             />
-            <b-form-input
+            <b-form-select
               v-if="selected"
               v-model="searchByValue"
-              :placeholder="selected"
-              @keyup.enter="emitFindMedia"
+              :options="regionOptions"
             />
           </div>
           <div class="d-flex justify-content-between">
@@ -44,7 +39,7 @@
                 />
               </b-form-group>
             </div>
-            <p class="lead px-2">
+            <p class="lead">
               <button
                 type="button"
                 class="btn btn-dark btn-lg px-4 search-btn"
@@ -54,7 +49,7 @@
               </button>
             </p>
           </div>
-          <hr class="my-4">
+          <hr class="my-4" />
 
           <div class="d-flex justify-content-between">
             <p class="search-form__filters-info">
@@ -62,10 +57,7 @@
             </p>
           </div>
         </div>
-        <div
-          v-if="mode === 'preview'"
-          class="jumbotron"
-        >
+        <div v-if="mode === 'preview'" class="jumbotron">
           <div
             class="
               d-grid d-sm-flex
@@ -82,9 +74,8 @@
             />
             <b-form-input
               v-if="selected"
-              v-model="searchByValue"
               :placeholder="selected"
-              class="my-2 input-lg"
+              class="input-lg"
               @keyup.enter="emitFindMedia"
             />
             <button
@@ -104,10 +95,7 @@
       position="top right"
     >
       <template slot="body">
-        <div
-          class="alert alert-warning p-2 text-start m-2"
-          role="alert"
-        >
+        <div class="alert alert-warning p-2 text-start m-2" role="alert">
           {{ alertSign }}
         </div>
       </template>
@@ -123,11 +111,15 @@ export default {
       type: String,
       default: () => "preview",
     },
+    regions: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
       searchQuery: "",
-      searchByValue: "",
+      searchByValue: null,
       selected: null,
       options: [
         { value: null, text: "By film title" },
@@ -136,11 +128,21 @@ export default {
     };
   },
   computed: {
+    regionOptions() {
+      if (this.mode !== "preview") {
+        return this.regions.map((reg, i) =>
+          i !== 0
+            ? { value: reg.iso_3166_1, text: reg.english_name }
+            : { value: null, text: "-- Please select a region --" }
+        );
+      }
+      return [];
+    },
     searchData() {
       return {
         searchQuery: this.searchQuery,
         searchBy: this.selected,
-        searchByValue: this.searchByValue.toLowerCase(),
+        searchByValue: this.searchByValue && this.searchByValue.toUpperCase(),
       };
     },
     alertSign() {
@@ -179,6 +181,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../assets/scss/variables.scss";
 .radio-group__container {
   font-size: 18px;
   #radio-group-1 {
@@ -200,6 +203,17 @@ export default {
     width: 100%;
     margin-bottom: 15px;
     gap: 10px;
+    .custom-select {
+      padding: 0.5rem 0rem;
+      border-radius: 0.5rem;
+      background-color: $lightGreen;
+      color: black;
+      font-size: 1.25rem;
+      option {
+        background-color: white;
+        font-size: 1.1rem;
+      }
+    }
   }
 }
 @media (max-width: 576px) {
@@ -225,7 +239,7 @@ export default {
 .search-form {
   width: 100%;
   .btn {
-    background-color: rgba(26, 11, 53, 0.682) !important;
+    background-color: rgba(26, 11, 53, 0.682);
     border-color: rgba(0, 0, 0, 0.316) !important;
   }
 }

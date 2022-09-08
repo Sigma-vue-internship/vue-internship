@@ -39,37 +39,36 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async getRegions() {
+      return this.axios.get("/watch/providers/regions");
+    },
     async getRequestToken() {
-      try{
+      try {
         const { data } = await this.axios.get("/authentication/token/new");
         return data.request_token;
-      }catch(e){
-        console.log(e);
-      }
-    },
-    async getAuthorizedToken(
-      _,
-      { username, password, requestToken }
-    ) {
-      try {
-        const { data } = await this.axios.post(
-          "/authentication/token/validate_with_login", {
-            username,
-            password,
-            requestToken,
-          }
-        );
-        return data.session_id;
       } catch (e) {
         console.log(e);
       }
     },
-    async getSessionToken(_,authToken) {
-      const { data } = await this.axios.post(
-        "/authentication/session/new", {
-          authToken,
-        }
-      );
+    async getAuthorizedToken(_, { username, password, requestToken }) {
+      try {
+        const { data } = await this.axios.post(
+          "/authentication/token/validate_with_login",
+          {
+            username,
+            password,
+            request_token: requestToken,
+          }
+        );
+        return data.request_token;
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    async getSessionToken(_, authToken) {
+      const { data } = await this.axios.post("/authentication/session/new", {
+        request_token: authToken,
+      });
       return data.session_id;
     },
     async findMedia(_, { searchQuery, searchBy = null, searchByValue = null }) {
@@ -79,7 +78,7 @@ export default new Vuex.Store({
         });
       }
       return this.axios.get(`search/multi`, {
-        params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
+        params: { query: searchQuery, page: 1, [searchBy]: searchByValue },
       });
     },
     async loadMoreMedia(
