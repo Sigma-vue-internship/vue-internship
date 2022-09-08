@@ -88,11 +88,13 @@ export default {
     },
     async changeCurrentPage(type) {
       try {
-        this[`${type}Page`]++;
-        const obj = { type, page: this[`${type}Page`] };
-        const response = await this.changeMediaPage(obj);
-        const { data } = response;
-        this[type] = this[type].concat(data.results);
+        if(this[`${type}Page`] <= 10) {
+          this[`${type}Page`]++;
+          const obj = { type, page: this[`${type}Page`] };
+          const response = await this.changeMediaPage(obj);
+          const { data } = response;
+          this[type] = this[type].concat(data.results);
+        }
       } catch (error) {
         console.error(error);
       }
