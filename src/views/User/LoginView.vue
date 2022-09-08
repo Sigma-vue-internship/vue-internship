@@ -124,7 +124,6 @@ export default {
       const sessionId = await this.getSessionToken(authToken);
       localStorage.setItem('sessionToken',sessionId);
       this.$router.push("/user/profile");
-      return;
     },
   },
 };
