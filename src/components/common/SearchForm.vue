@@ -22,11 +22,10 @@
               placeholder="Search for media"
               @keyup.enter="emitFindMedia"
             />
-            <b-form-input
+            <b-form-select
               v-if="selected"
               v-model="searchByValue"
-              :placeholder="selected"
-              @keyup.enter="emitFindMedia"
+              :options="regionOptions"
             />
           </div>
           <div class="d-flex justify-content-between">
@@ -44,7 +43,7 @@
                 />
               </b-form-group>
             </div>
-            <p class="lead px-2">
+            <p class="lead">
               <button
                 type="button"
                 class="btn btn-dark btn-lg px-4 search-btn"
@@ -82,9 +81,8 @@
             />
             <b-form-input
               v-if="selected"
-              v-model="searchByValue"
               :placeholder="selected"
-              class="my-2 input-lg"
+              class=" input-lg"
               @keyup.enter="emitFindMedia"
             />
             <button
@@ -123,11 +121,15 @@ export default {
       type: String,
       default: () => "preview",
     },
+    regions: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
       searchQuery: "",
-      searchByValue: "",
+      searchByValue: null,
       selected: null,
       options: [
         { value: null, text: "By film title" },
@@ -136,11 +138,18 @@ export default {
     };
   },
   computed: {
+    regionOptions(){
+      if(this.mode!=='preview'){
+        return this.regions.map
+        ((reg,i)=> i!==0 ? { value:reg.iso_3166_1,text:reg.english_name }: { value: null, text:"-- Please select a region --" });
+      }
+      return [];
+    },
     searchData() {
       return {
         searchQuery: this.searchQuery,
         searchBy: this.selected,
-        searchByValue: this.searchByValue.toLowerCase(),
+        searchByValue: this.searchByValue.toUpperCase(),
       };
     },
     alertSign() {
@@ -179,6 +188,7 @@ export default {
 </script>
 
 <style lang="scss">
+  @import "../../assets/scss/variables.scss";
 .radio-group__container {
   font-size: 18px;
   #radio-group-1 {
@@ -200,6 +210,17 @@ export default {
     width: 100%;
     margin-bottom: 15px;
     gap: 10px;
+    .custom-select{
+      padding: 0.5rem 0rem;
+      border-radius:0.5rem;
+      background-color: $lightGreen;
+      color: black;
+      font-size: 1.25rem;
+      option{
+        background-color: white;
+        font-size:1.1rem;
+      }
+    }
   }
 }
 @media (max-width: 576px) {
@@ -225,7 +246,7 @@ export default {
 .search-form {
   width: 100%;
   .btn {
-    background-color: rgba(26, 11, 53, 0.682) !important;
+    background-color: rgba(26, 11, 53, 0.682);
     border-color: rgba(0, 0, 0, 0.316) !important;
   }
 }

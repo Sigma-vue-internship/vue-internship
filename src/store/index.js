@@ -31,6 +31,9 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async getRegions(){
+      return await this.axios.get("/watch/providers/regions");
+    },
     async getRequestToken() {
       try{
         const { data } = await this.axios.get("/authentication/token/new");
@@ -71,7 +74,7 @@ export default new Vuex.Store({
         });
       }
       return this.axios.get(`search/multi`, {
-        params: { query: searchQuery, [searchBy]: searchByValue, page: 1 },
+        params: { query: searchQuery, page: 1, [searchBy]: searchByValue },
       });
     },
     async loadMoreMedia(
