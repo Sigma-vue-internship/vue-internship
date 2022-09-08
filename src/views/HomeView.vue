@@ -87,14 +87,15 @@ export default {
       }
     },
     async changeCurrentPage(type) {
+      if(this[`${type}Page`] > 9) {
+        return;
+      }
       try {
-        if(this[`${type}Page`] <= 10) {
-          this[`${type}Page`]++;
-          const obj = { type, page: this[`${type}Page`] };
-          const response = await this.changeMediaPage(obj);
-          const { data } = response;
-          this[type] = this[type].concat(data.results);
-        }
+        this[`${type}Page`]++;
+        const obj = { type, page: this[`${type}Page`] };
+        const response = await this.changeMediaPage(obj);
+        const { data } = response;
+        this[type] = this[type].concat(data.results);
       } catch (error) {
         console.error(error);
       }
