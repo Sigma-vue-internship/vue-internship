@@ -87,6 +87,9 @@ export default {
       }
     },
     async changeCurrentPage(type) {
+      if(this[`${type}Page`] > 9) {
+        return;
+      }
       try {
         this[`${type}Page`]++;
         const obj = { type, page: this[`${type}Page`] };
