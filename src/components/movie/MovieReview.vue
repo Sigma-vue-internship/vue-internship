@@ -4,7 +4,7 @@
       <img
         v-if="review.author_details.avatar_path !== null"
         class="card-img mb-2"
-        :src="imgPath"
+        :src="checkImgPath"
         :alt="'Avatar' + review.author"
       >
       <h5 class="card-title">
@@ -38,20 +38,12 @@ export default {
       default: () => {},
     },
   },
-  data() {
-    return {
-      imgPath: "",
-    };
-  },
-  created() {
-    this.checkImgPath();
-  },
-  methods: {
+  computed: {
     checkImgPath() {
-      this.imgPath = this.review.author_details.avatar_path;
-      (this.imgPath || "").includes('gravatar') && this.imgPath!==null
-        ? this.imgPath = this.imgPath.slice(1)
-        : this.imgPath = 'https://image.tmdb.org/t/p/w185/' + this.imgPath;
+      if((this.review.author_details.avatar_path || "").includes('gravatar') && this.review.author_details.avatar_path!==null) {
+        return this.review.author_details.avatar_path.slice(1);
+      } else
+        return 'https://image.tmdb.org/t/p/w185/' + this.review.author_details.avatar_path;
     },
   },
 };
