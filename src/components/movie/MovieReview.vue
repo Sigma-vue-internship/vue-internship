@@ -5,6 +5,7 @@
         v-if="review.author_details.avatar_path !== null"
         class="card-img mb-2"
         :src="imgPath"
+        :alt="'Avatar' + review.author"
       >
       <h5 class="card-title">
         {{ review.author }}
