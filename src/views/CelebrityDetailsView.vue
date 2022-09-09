@@ -229,6 +229,13 @@ export default {
     flex-direction: column;
     padding-left: 20px;
   }
+  @media (min-width: 992px) and (max-width:1200px) {
+    .celebrity-profile__preview-container {
+    display: flex;
+    flex-direction: column;
+    padding-right: 20px;
+  }
+  }
   .celebrity-profile__image {
     box-shadow: 8px 8px 24px 0 rgb(0, 0, 0);
     align-self: flex-start;

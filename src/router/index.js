@@ -8,7 +8,8 @@ const freeAccessRouts = [
   'search',
   'movie',
   'celebrity',
-  'login'
+  'login',
+  'missing'
 ];
 
 const routes = [
@@ -58,6 +59,11 @@ const routes = [
         component: () => import("../views/User/WatchlistView.vue"),
       }
     ],
+  },
+  {
+    path: "*",
+    name: "missing",
+    component: () => import("../views/MissingView"),
   }
 ];
 

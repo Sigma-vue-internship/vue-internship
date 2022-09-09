@@ -38,8 +38,17 @@
             </b-nav-item>
           </li>
           <li @click="showHideMenu">
-            <b-nav-item to="/login">
+            <b-nav-item
+              v-if="!getUserAuth"
+              to="/login"
+            >
               Login
+            </b-nav-item>
+            <b-nav-item
+              v-else
+              to="/user/profile"
+            >
+              Profile
             </b-nav-item>
           </li>
         </ul>
@@ -68,12 +77,16 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 export default {
   name: "Navbar",
   data() {
     return {
       isMenuOpen: false,
     };
+  },
+  computed:{
+    ...mapGetters(["getUserAuth"]),
   },
   methods: {
     showHideMenu() {

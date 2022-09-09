@@ -11,13 +11,16 @@ const options = {
 
 export default new Vuex.Store({
   state: {
+    user:{
+      auth:false,
+    },
     movies: [],
     celebrities: [],
     topMovies: [],
     moviesNowPlaying: [],
   },
   getters: {
-    getUserSessionToken: (state) => state.sessionToken,
+    getUserAuth: (state) => state.user.auth,
 
     cashedTopMovies: (state) => state.topMovies,
     cashedMoviesNowPlaying: (state) => state.moviesNowPlaying,
@@ -25,6 +28,9 @@ export default new Vuex.Store({
     cashedCelebrities: (state) => state.celebrities,
   },
   mutations: {
+    SET_USER_AUTH(state, isAuth) {
+      state.user.auth = isAuth;
+    },
     SET_MOVIES(state, movies) {
       state.movies = movies;
     },
@@ -65,10 +71,11 @@ export default new Vuex.Store({
         console.log(e);
       }
     },
-    async getSessionToken(_, authToken) {
+    async getSessionToken({ commit }, authToken) {
       const { data } = await this.axios.post("/authentication/session/new", {
         request_token: authToken,
       });
+      commit("SET_USER_AUTH", true);
       return data.session_id;
     },
     async findMedia(_, { searchQuery, searchBy = null, searchByValue = null }) {
