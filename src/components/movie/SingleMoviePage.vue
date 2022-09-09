@@ -65,6 +65,25 @@
           class="pb-4 text-center actors"
         />
       </div>
+      <ul
+        v-if="reviews.length"
+        class="row my-0 gx-2 reviews"
+      >
+        <h2 class="py-2 text-white">
+          Reviews
+        </h2>
+        <li
+          v-for="review in reviews"
+          :key="review.uuid"
+          class="pb-3 text-white"
+        >
+          <MovieReview :review="review" />
+        </li>
+      </ul>
+      <div
+        v-show="reviews.length && !isLoading"
+        v-intersection="changeReviewsPage"
+      />
     </div>
   </div>
 </template>
@@ -75,6 +94,7 @@ import Carousel from "@/components/common/Carousel";
 import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
 import MediaList from "@/components/media/MediaList";
+import MovieReview from "@/components/movie/MovieReview";
 export default {
   name: "SingleMoviePage",
   components: {
@@ -82,6 +102,7 @@ export default {
     Rating,
     SpinnerLoader,
     MediaList,
+    MovieReview,
   },
   props: {
     movie: {
@@ -94,6 +115,8 @@ export default {
       movieImgRes: null,
       isLoading: false,
       actors: [],
+      reviews: [],
+      reviewsPage: 1,
     };
   },
   computed: {
@@ -120,10 +143,9 @@ export default {
   async created() {
     try {
       this.isLoading = true;
-      const response = await this.getMovieActors(this.movie.id);
-      const { data } = response;
-      this.actors = data.cast;
-      this.movieImgRes = await this.getMovieImages(this.movie.id);
+      this.getActors();
+      this.getImgs();
+      this.getReviews();
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;
@@ -131,9 +153,45 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors"]),
+    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage"]),
     toMovieHomepage(url) {
       window.location.href = url;
+    },
+    async getActors() {
+      try {
+        const response = await this.getMovieActors(this.movie.id);
+        const { data } = response;
+        this.actors = data.cast;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getImgs() {
+      try {
+        this.movieImgRes = await this.getMovieImages(this.movie.id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getReviews() {
+      try {
+        const response = await this.getMovieReviews(this.movie.id);
+        const { data } = response;
+        this.reviews = data.results;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async changeReviewsPage() {
+      try {
+        this.reviewsPage++;
+        const obj = { id: this.movie.id, page: this.reviewsPage };
+        const response = await this.changeMovieReviewsPage(obj);
+        const { data } = response;
+        this.reviews = this.reviews.concat(data.results);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
@@ -146,6 +204,9 @@ export default {
 }
 .actors {
   padding-top: 0!important;
+}
+.reviews {
+  padding-left: 0;
 }
 @media (max-width: 992px) {
   .movie-carousel {
