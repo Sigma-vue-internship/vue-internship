@@ -67,6 +67,7 @@ export default {
 }
 .card-body {
   height: 65px;
+  width: $imgWidth;
   overflow: hidden;
 }
 </style>

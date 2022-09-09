@@ -5,10 +5,16 @@
       height: $imgHeight*0.85!important;
       width: $imgWidth*0.85!important;
     }
+    .card-body {
+        width: $imgWidth*0.85!important;
+    }
 }
 @media (max-width: 990px) and (min-width: 768px) {
     .card-img-top {
         height: $imgHeight*0.79!important;
+        width: $imgWidth*0.79!important;
+    }
+    .card-body {
         width: $imgWidth*0.79!important;
     }
 }
@@ -17,16 +23,25 @@
         height: $imgHeight*0.78!important;
         width: $imgWidth*0.78!important;
     }
+    .card-body {
+        width: $imgWidth*0.78!important;
+    }
 }
 @media (max-width: 575px) and (min-width: 376px) {
     .card-img-top {
         height: $imgHeight*0.70!important;
         width: $imgWidth*0.70!important;
     }
+    .card-body {
+        width: $imgWidth*0.70!important;
+    }
 }
 @media (max-width: 375px) {
     .card-img-top {
         height: $imgHeight*0.71!important;
+        width: $imgWidth*0.71!important;
+    }
+    .card-body {
         width: $imgWidth*0.71!important;
     }
 }
