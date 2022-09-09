@@ -11,13 +11,16 @@ const options = {
 
 export default new Vuex.Store({
   state: {
+    user:{
+      auth:false,
+    },
     movies: [],
     celebrities: [],
     topMovies: [],
     moviesNowPlaying: [],
   },
   getters: {
-    getUserSessionToken: (state) => state.sessionToken,
+    getUserAuth: (state) => state.user.auth,
 
     cashedTopMovies: (state) => state.topMovies,
     cashedMoviesNowPlaying: (state) => state.moviesNowPlaying,
@@ -25,6 +28,9 @@ export default new Vuex.Store({
     cashedCelebrities: (state) => state.celebrities,
   },
   mutations: {
+    SET_USER_AUTH(state, isAuth) {
+      state.user.auth = isAuth;
+    },
     SET_MOVIES(state, movies) {
       state.movies = movies;
     },
@@ -39,6 +45,13 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async checkIsUserLogged({ commit }){
+      if(localStorage.getItem("sessionToken")){
+        commit("SET_USER_AUTH", true);
+        return;
+      }
+      commit("SET_USER_AUTH", false);
+    },
     async getRegions() {
       return this.axios.get("/watch/providers/regions");
     },

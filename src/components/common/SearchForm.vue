@@ -3,8 +3,13 @@
   <div class="search-form__container container">
     <div>
       <div class="search-form">
-        <div v-if="mode !== 'preview'" class="jumbotron">
-          <h1 class="display-4">Find media</h1>
+        <div
+          v-if="mode !== 'preview'"
+          class="jumbotron"
+        >
+          <h1 class="display-4">
+            Find media
+          </h1>
           <div
             class="
               d-grid d-sm-flex
@@ -49,7 +54,7 @@
               </button>
             </p>
           </div>
-          <hr class="my-4" />
+          <hr class="my-4">
 
           <div class="d-flex justify-content-between">
             <p class="search-form__filters-info">
@@ -57,7 +62,10 @@
             </p>
           </div>
         </div>
-        <div v-if="mode === 'preview'" class="jumbotron">
+        <div
+          v-if="mode === 'preview'"
+          class="jumbotron"
+        >
           <div
             class="
               d-grid d-sm-flex
@@ -95,7 +103,10 @@
       position="top right"
     >
       <template slot="body">
-        <div class="alert alert-warning p-2 text-start m-2" role="alert">
+        <div
+          class="alert alert-warning p-2 text-start m-2"
+          role="alert"
+        >
           {{ alertSign }}
         </div>
       </template>

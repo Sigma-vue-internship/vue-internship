@@ -38,8 +38,17 @@
             </b-nav-item>
           </li>
           <li @click="showHideMenu">
-            <b-nav-item to="/login">
+            <b-nav-item
+              v-if="!getUserAuth"
+              to="/login"
+            >
               Login
+            </b-nav-item>
+            <b-nav-item
+              v-else
+              to="/user/profile"
+            >
+              Profile
             </b-nav-item>
           </li>
         </ul>
@@ -56,9 +65,18 @@
               Search
             </b-nav-item>
           </li>
-          <li>
-            <b-nav-item to="/login">
+          <li v-if="!getUserAuth">
+            <b-nav-item
+              to="/login"
+            >
               Login
+            </b-nav-item>
+          </li>
+          <li v-else>
+            <b-nav-item
+              to="/user/profile"
+            >
+              Profile
             </b-nav-item>
           </li>
         </ul>
@@ -68,6 +86,7 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "Navbar",
   data() {
@@ -75,7 +94,20 @@ export default {
       isMenuOpen: false,
     };
   },
+  computed:{
+    ...mapGetters(["getUserAuth"]),
+  },
+  watch:{
+    $route: {
+      async handler() {
+        await this.checkIsUserLogged();
+      },
+      deep: true,
+      immediate:true,
+    },
+  },
   methods: {
+    ...mapActions(["checkIsUserLogged"]),
     showHideMenu() {
       this.isMenuOpen = !this.isMenuOpen;
     },
