@@ -45,6 +45,13 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async checkIsUserLogged({ commit }){
+      if(localStorage.getItem("sessionToken")){
+        commit("SET_USER_AUTH", true);
+        return;
+      }
+      commit("SET_USER_AUTH", false);
+    },
     async getRegions() {
       return this.axios.get("/watch/providers/regions");
     },
@@ -71,11 +78,10 @@ export default new Vuex.Store({
         console.log(e);
       }
     },
-    async getSessionToken({ commit }, authToken) {
+    async getSessionToken(_, authToken) {
       const { data } = await this.axios.post("/authentication/session/new", {
         request_token: authToken,
       });
-      commit("SET_USER_AUTH", true);
       return data.session_id;
     },
     async findMedia(_, { searchQuery, searchBy = null, searchByValue = null }) {
