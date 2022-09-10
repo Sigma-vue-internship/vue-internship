@@ -45,6 +45,12 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async getUserAccountDetails(_, session_id) {
+      if (session_id) {
+        return this.axios.get("/account", { params: { session_id } });
+
+      }
+    },
     async checkIsUserLogged({ commit }){
       if(localStorage.getItem("sessionToken")){
         commit("SET_USER_AUTH", true);
