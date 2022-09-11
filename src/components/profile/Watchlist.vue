@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     posterPath(poster_path) {
-      return poster_path && poster_path
+      return poster_path
         ? "https://image.tmdb.org/t/p/w92/" + poster_path
         : "https://dummyimage.com/90x140/000/00ff8c";
     },
