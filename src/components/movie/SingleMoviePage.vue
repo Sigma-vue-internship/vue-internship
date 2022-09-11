@@ -117,6 +117,7 @@ export default {
       actors: [],
       reviews: [],
       reviewsPage: 1,
+      totalPages: 0,
     };
   },
   computed: {
@@ -140,22 +141,23 @@ export default {
       return Math.floor(this.movie.vote_average);
     },
   },
-  async created() {
-    try {
-      this.isLoading = true;
-      this.getActors();
-      this.getImgs();
-      this.getReviews();
-      this.isLoading = false;
-    } catch (e) {
-      this.isLoading = false;
-      console.log(e);
-    }
+  created() {
+    this.getData();
   },
   methods: {
     ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage"]),
     toMovieHomepage(url) {
       window.location.href = url;
+    },
+    async getData() {
+      try {
+        this.isLoading = true;
+        await Promise.all([this.getImgs(), this.getActors(), this.getReviews()]);
+        this.isLoading = false;
+      } catch (error) {
+        this.isLoading = false;
+        console.error(error);
+      }
     },
     async getActors() {
       try {
@@ -178,11 +180,15 @@ export default {
         const response = await this.getMovieReviews(this.movie.id);
         const { data } = response;
         this.reviews = data.results;
+        this.totalPages = data.total_pages;
       } catch (error) {
         console.error(error);
       }
     },
     async changeReviewsPage() {
+      if(this.reviewsPage > this.totalPages) {
+        return;
+      }
       try {
         this.reviewsPage++;
         const obj = { id: this.movie.id, page: this.reviewsPage };
