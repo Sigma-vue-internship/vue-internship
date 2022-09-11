@@ -153,23 +153,28 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors", "sendToWatchlist", "getUserAccountDetails"]),
+    ...mapActions(["getMovieImages", "getMovieActors", "sendToList", "getUserAccountDetails"]),
     toMovieHomepage(url) {
       window.location.href = url;
     },
     async addToWatchlist(id) {
-      const session_id = localStorage.getItem("sessionToken");
-      const { data } = await this.getUserAccountDetails(session_id);
-      const mediaInfo = {
-        media_type: "movie",
-        media_id: id,
-        session_id,
-        account_id: data.id,
-      };
-      await this.sendToWatchlist(mediaInfo);
-      this.$notify({
-        group: "watchlist",
-      });
+      try {
+        const session_id = localStorage.getItem("sessionToken");
+        const { data } = await this.getUserAccountDetails(session_id);
+        const mediaInfo = {
+          media_type: "movie",
+          media_id: id,
+          session_id,
+          account_id: data.id,
+          list_type: "watchlist",
+        };
+        await this.sendToList(mediaInfo);
+        this.$notify({
+          group: "watchlist",
+        });
+      } catch (e) {
+        console.log(e);
+      }
     },
   },
 };

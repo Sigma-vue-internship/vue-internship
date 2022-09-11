@@ -41,8 +41,6 @@ export default {
       default:()=>[],
     },
   },
-  computed: {
-  },
   methods: {
     posterPath(poster_path) {
       return poster_path

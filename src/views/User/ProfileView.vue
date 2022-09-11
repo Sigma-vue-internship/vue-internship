@@ -69,8 +69,9 @@ export default {
       const accountInfo = {
         session_id,
         account_id: data.id,
+        list_type: "watchlist",
       };
-      const watchlistRes = await this.getUserWatchlist(accountInfo);
+      const watchlistRes = await this.getUserList(accountInfo);
       this.account = { ...data };
       this.watchlist = watchlistRes.data.results;
       this.isLoading = false;
@@ -81,7 +82,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getUserAccountDetails", "getUserWatchlist"]),
+    ...mapActions(["getUserAccountDetails", "getUserList"]),
   },
 };
 </script>
