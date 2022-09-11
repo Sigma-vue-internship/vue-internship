@@ -45,6 +45,16 @@ export default new Vuex.Store({
     },
   },
   actions: {
+    async getUserWatchlist(_, { session_id, account_id }) {
+      return this.axios.get(`/account/${account_id}/watchlist/movies`, { params: { session_id } });
+    },
+    async sendToWatchlist(_, { media_type, media_id, session_id, account_id }) {
+      return this.axios.post(`/account/${account_id}/watchlist`,{
+        media_type,
+        media_id,
+        watchlist: true,
+      }, { params:{ session_id } });
+    },
     async getUserAccountDetails(_, session_id) {
       if (session_id) {
         return this.axios.get("/account", { params: { session_id } });

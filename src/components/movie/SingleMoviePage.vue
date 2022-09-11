@@ -36,13 +36,22 @@
           <p class="movie__overview">
             {{ movie.overview }}
           </p>
-          <b-button
-            v-if="movie.homepage"
-            variant="dark"
-            @click="toMovieHomepage(movie.homepage)"
-          >
-            Go to the movie site
-          </b-button>
+          <div class="d-flex flex-column align-items-start">
+            <b-button
+              v-if="movie.homepage"
+              class="mb-3"
+              variant="dark"
+              @click="toMovieHomepage(movie.homepage)"
+            >
+              Go to the movie site
+            </b-button>
+            <b-button
+              variant="dark"
+              @click="addToWatchlist(movie.id)"
+            >
+              Add to watchlist
+            </b-button>
+          </div>
         </div>
       </div>
       <div
@@ -66,6 +75,19 @@
         />
       </div>
     </div>
+    <notifications
+      group="watchlist"
+      position="top right"
+    >
+      <template slot="body">
+        <div
+          class="watchlist__alert alert alert-success p-3 text-start m-2"
+          role="alert"
+        >
+          Successfully added movie
+        </div>
+      </template>
+    </notifications>
   </div>
 </template>
 
@@ -131,9 +153,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors"]),
+    ...mapActions(["getMovieImages", "getMovieActors", "sendToWatchlist", "getUserAccountDetails"]),
     toMovieHomepage(url) {
       window.location.href = url;
+    },
+    async addToWatchlist(id) {
+      const session_id = localStorage.getItem("sessionToken");
+      const { data } = await this.getUserAccountDetails(session_id);
+      const mediaInfo = {
+        media_type: "movie",
+        media_id: id,
+        session_id,
+        account_id: data.id,
+      };
+      await this.sendToWatchlist(mediaInfo);
+      this.$notify({
+        group: "watchlist",
+      });
     },
   },
 };
@@ -165,7 +201,7 @@ export default {
 .movie__info {
   background-color: rgba(74, 36, 141, 0.316);
   box-shadow: 8px 8px 24px 0px rgb(0 0 0);
-  padding: 40px 40px 80px 40px;
+  padding: 40px 40px 40px 40px;
   border-radius: 10px;
   color: white;
   > p {
@@ -180,5 +216,10 @@ export default {
     padding-bottom: 10px;
     color: rgba(255, 255, 255, 0.507);
   }
+}
+.watchlist__alert{
+  background-color: rgb(41, 255, 148);
+  border: none;
+  color: black;
 }
 </style>

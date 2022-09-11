@@ -1,8 +1,19 @@
 <template>
   <section class="vh-100">
-    <div class="profile container h-100">
-      <div class="profile__container h-100 row d-flex px-2 justify-content-center">
-        <div class="profile__content p-5 col-12 col-md-12 col-lg-9 col-xl-10">
+    <div
+      class="profile container h-100"
+    >
+      <div
+        class="profile__container h-100 row d-flex px-2 justify-content-center"
+      >
+        <SpinnerLoader
+          v-if="isLoading"
+          :is-loading="isLoading"
+        />
+        <div
+          v-else
+          class="profile__content p-5 col-12 col-md-12 col-lg-9 col-xl-10"
+        >
           <div class="row d-flex">
             <div class="profile__img-container col-md-4 col-lg-4 col-xl-3">
               <img
@@ -22,6 +33,7 @@
               </div>
             </div>
           </div>
+          <Watchlist :watchlist="watchlist" />
         </div>
       </div>
     </div>
@@ -29,11 +41,15 @@
 </template>
 <script>
 import { mapActions } from 'vuex';
+import Watchlist from '../../components/profile/Watchlist.vue';
+import SpinnerLoader from '../../components/common/SpinnerLoader.vue';
 export default {
+  components: { Watchlist, SpinnerLoader },
   data() {
-    return{
-      account: {
-      },
+    return {
+      account: {},
+      watchlist: [],
+      isLoading:false,
     };
   },
   computed: {
@@ -47,17 +63,25 @@ export default {
   },
   async created() {
     try {
+      this.isLoading = true;
       const session_id = localStorage.getItem("sessionToken");
       const { data } = await this.getUserAccountDetails(session_id);
+      const accountInfo = {
+        session_id,
+        account_id: data.id,
+      };
+      const watchlistRes = await this.getUserWatchlist(accountInfo);
       this.account = { ...data };
-      console.log(this.account);
-      console.log(data);
-    } catch (e) {
+      this.watchlist = watchlistRes.data.results;
+      this.isLoading = false;
+    }
+    catch (e) {
+      this.isLoading = false;
       console.log(e);
     }
   },
   methods: {
-    ...mapActions(["getUserAccountDetails"]),
+    ...mapActions(["getUserAccountDetails", "getUserWatchlist"]),
   },
 };
 </script>

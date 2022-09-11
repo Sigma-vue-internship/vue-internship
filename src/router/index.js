@@ -47,16 +47,6 @@ const routes = [
         path: "profile",
         name: "profile",
         component: () => import("../views/User/ProfileView"),
-      },
-      {
-        path: "favorites",
-        name: "favorites",
-        component: () => import("../views/User/FavoritesView"),
-      },
-      {
-        path: "watchlist",
-        name: "watchlist",
-        component: () => import("../views/User/WatchlistView.vue"),
       }
     ],
   },
