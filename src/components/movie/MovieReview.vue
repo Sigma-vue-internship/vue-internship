@@ -7,7 +7,7 @@
         :src="checkImgPath"
         :alt="'Avatar' + review.author"
       >
-      <h5 class="card-title">
+      <h5 class="card-title author">
         {{ review.author }}
       </h5>
       <p class="card-text date">
@@ -66,6 +66,10 @@ export default {
         text-decoration: none;
         color: rgb(127, 107, 167);
       }
+    }
+    .author {
+      color: $lightGreen;
+      font-weight: 700;
     }
     .date {
       color: gray;

@@ -69,7 +69,7 @@
         v-if="reviews.length"
         class="row my-0 gx-2 reviews"
       >
-        <h2 class="py-2 text-white">
+        <h2 class="py-3 text-white">
           Reviews
         </h2>
         <li
