@@ -49,11 +49,16 @@
               :disabled="isAddedToWatchlist"
               class="movie__watchlist-btn mb-3"
               :variant="isAddedToWatchlist ? 'secondary' : 'info'"
-              @click="addToWatchlist(movie.id)"
+              @click="addTolist(movie.id, 'watchlist')"
             >
               <span :class="isAddedToWatchlist ? 'icon-ok' : 'icon-bookmark'" />
               {{ isAddedToWatchlist ? 'Movie added' : 'Add to watchlist' }}
             </b-button>
+            <b-button
+              :class="`bi icon-${heart} icons like`"
+              :disabled="isAddedToFavoritelist"
+              @click="addTolist(movie.id, 'favorite')"
+            />
           </div>
         </div>
       </div>
@@ -70,7 +75,10 @@
         v-if="reviews.length || actors.length"
         class="pt-3 tabElement"
       >
-        <b-tabs content-class="mt-3" fill>
+        <b-tabs
+          content-class="mt-3"
+          fill
+        >
           <b-tab
             title="Cast"
             active
@@ -106,15 +114,15 @@
       />
     </div>
     <notifications
-      group="watchlist"
+      group="list"
       position="top left"
     >
       <template slot="body">
         <div
-          class="watchlist__alert alert alert-success p-3 text-start m-2"
+          class="list__alert alert alert-success p-3 text-start m-2"
           role="alert"
         >
-          Successfully added movie
+          Successfully added
         </div>
       </template>
     </notifications>
@@ -152,12 +160,17 @@ export default {
       reviews: [],
       reviewsPage: 1,
       totalPages: 0,
+      heart: 'heart-empty',
+      isAddedToFavoritelist: false,
     };
   },
   computed: {
-    ...mapGetters(["getUserWatchlist"]),
+    ...mapGetters(["getUserWatchlist", "getUserFavoritelist"]),
     isInWatchlist() {
       return this.getUserWatchlist.some(movie => movie.id === this.movie.id);
+    },
+    isInFavoritelist() {
+      return this.getUserFavoritelist.some(movie => movie.id === this.movie.id);
     },
     imgUrls() {
       return (
@@ -183,10 +196,7 @@ export default {
     try {
       this.isLoading = true;
       this.setIsInWatchlist();
-      const response = await this.getMovieActors(this.movie.id);
-      const { data } = response;
-      this.actors = data.cast;
-      this.movieImgRes = await this.getMovieImages(this.movie.id);
+      this.setIsInFavoritelist();
       await this.getActors();
       await this.getImgs();
       await this.getReviews();
@@ -206,9 +216,20 @@ export default {
         this.isAddedToWatchlist = true;
       }
     },
-    async addToWatchlist(id) {
+    setIsInFavoritelist() {
+      if (this.isInFavoritelist) {
+        this.heart = "heart";
+        this.isAddedToFavoritelist = true;
+      }
+    },
+    async addTolist(id, type) {
       try {
-        this.isAddedToWatchlist = true;
+        if(type==="favorite"){
+          this.heart = "heart";
+          this.isAddedToFavoritelist = true;
+        } else {
+          this.isAddedToWatchlist = true;
+        }
         const session_id = localStorage.getItem("sessionToken");
         const { data } = await this.getUserAccountDetails(session_id);
         const mediaInfo = {
@@ -216,11 +237,11 @@ export default {
           media_id: id,
           session_id,
           account_id: data.id,
-          list_type: "watchlist",
+          list_type: type,
         };
         await this.sendToList(mediaInfo);
         this.$notify({
-          group: "watchlist",
+          group: "list",
           ignoreDuplicates: true,
         });
       } catch (e) {
@@ -298,6 +319,15 @@ export default {
     }
   }
 }
+.like, .like:disabled {
+  color: red;
+  background-color: transparent;
+  border: none;
+}
+.like:hover {
+  background: none;
+}
+
 @media (max-width: 992px) {
   .movie-carousel {
     margin-right: 0;
@@ -336,7 +366,7 @@ export default {
     margin-right:10px;
   }
 }
-.watchlist__alert{
+.list__alert{
   background-color: rgb(41, 255, 148);
   border: none;
   color: black;

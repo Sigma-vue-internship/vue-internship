@@ -14,6 +14,7 @@ export default new Vuex.Store({
     user:{
       auth: false,
       watchlist:[],
+      favoritelist: [],
     },
     movies: [],
     celebrities: [],
@@ -23,6 +24,7 @@ export default new Vuex.Store({
   getters: {
     getUserAuth: (state) => state.user.auth,
     getUserWatchlist: (state) => state.user.watchlist,
+    getUserFavoritelist: (state) => state.user.favoritelist,
     getSessionToken: () => localStorage.getItem("sessionToken"),
 
     cashedTopMovies: (state) => state.topMovies,
@@ -36,6 +38,9 @@ export default new Vuex.Store({
     },
     SET_USER_WATCHLIST(state, movies) {
       state.user.watchlist = movies;
+    },
+    SET_USER_FAVORITELIST(state, movies) {
+      state.user.favoritelist = movies;
     },
     SET_MOVIES(state, movies) {
       state.movies = movies;
@@ -54,6 +59,9 @@ export default new Vuex.Store({
     setUserWatchlist({ commit }, movies) {
       commit("SET_USER_WATCHLIST", movies);
     },
+    setUserFavoritelist({ commit }, movies) {
+      commit("SET_USER_FAVORITELIST", movies);
+    },
     async getUserList(_, { session_id, account_id, list_type }) {
       return this.axios.get(`/account/${account_id}/${list_type}/movies`, { params: { session_id } });
     },
@@ -67,7 +75,6 @@ export default new Vuex.Store({
     async getUserAccountDetails(_, session_id) {
       if (session_id) {
         return this.axios.get("/account", { params: { session_id } });
-
       }
     },
     async checkIsUserLogged({ commit, getters }) {
