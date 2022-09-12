@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-
+import store from "../store";
 Vue.use(VueRouter);
 
 const freeAccessRouts = [
@@ -70,7 +70,7 @@ router.beforeEach((to, from, next) => {
   if (freeAccessRouts.includes(to.name)) {
     return next();
   }
-  if (!freeAccessRouts.includes(to.name) && localStorage.getItem("sessionToken")) {
+  if (!freeAccessRouts.includes(to.name) && store.getters.getSessionToken) {
     return next();
   } else {
     return next("/login");

@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   props: {
     watchlist: {
@@ -55,7 +56,11 @@ export default {
       isLoading: false,
     };
   },
+  created() {
+    this.setUserWatchlist(this.watchlist);
+  },
   methods: {
+    ...mapActions(["setUserWatchlist"]),
     loadMoreMovies() {
       const currentMoviesLength = this.currentMovies.length;
       if (currentMoviesLength <= this.watchlist.length) {
@@ -68,7 +73,7 @@ export default {
         : "https://dummyimage.com/90x140/000/00ff8c";
     },
     redirectToMovie(id) {
-      this.$router.push(`/movie/${id}`).catch(() => { });
+      this.$router.push(`/movie/${id}`).catch(() => {});
     },
   },
 };

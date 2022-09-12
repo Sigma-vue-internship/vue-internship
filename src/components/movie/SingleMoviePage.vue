@@ -46,11 +46,13 @@
               Go to the movie site
             </b-button>
             <b-button
+              :disabled="isAddedToWatchlist"
               class="movie__watchlist-btn mb-3"
-              variant="info"
+              :variant="isAddedToWatchlist ? 'secondary' : 'info'"
               @click="addToWatchlist(movie.id)"
             >
-              Add to watchlist
+              <span :class="isAddedToWatchlist ? 'icon-ok' : 'icon-bookmark'" />
+              {{ isAddedToWatchlist ? 'Movie added' : 'Add to watchlist' }}
             </b-button>
           </div>
         </div>
@@ -65,20 +67,47 @@
         />
       </div>
       <div
-        v-if="actors.length"
-        class="row my-0 gx-2"
+        v-if="reviews.length || actors.length"
+        class="pt-3 tabElement"
       >
-        <MediaList
-          title="Cast"
-          route="/celebrity/"
-          :elements="actors"
-          class="pb-4 text-center actors"
-        />
+        <b-tabs content-class="mt-3" fill>
+          <b-tab
+            title="Cast"
+            active
+          >
+            <div class="row my-0 gx-2">
+              <MediaList
+                route="/celebrity/"
+                :elements="actors"
+                class="pb-4 text-center actors"
+              />
+            </div>
+          </b-tab>
+          <b-tab
+            v-if="reviews.length"
+            title="Reviews"
+            lazy
+          >
+            <ul class="row my-0 gx-2 reviews">
+              <li
+                v-for="review in reviews"
+                :key="review.uuid"
+                class="pb-3 text-white"
+              >
+                <MovieReview :review="review" />
+              </li>
+            </ul>
+          </b-tab>
+        </b-tabs>
       </div>
+      <div
+        v-show="reviews.length && !isLoading"
+        v-intersection="changeReviewsPage"
+      />
     </div>
     <notifications
       group="watchlist"
-      position="top right"
+      position="top left"
     >
       <template slot="body">
         <div
@@ -93,11 +122,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Carousel from "@/components/common/Carousel";
 import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
 import MediaList from "@/components/media/MediaList";
+import MovieReview from "@/components/movie/MovieReview";
 export default {
   name: "SingleMoviePage",
   components: {
@@ -105,6 +135,7 @@ export default {
     Rating,
     SpinnerLoader,
     MediaList,
+    MovieReview,
   },
   props: {
     movie: {
@@ -116,10 +147,18 @@ export default {
     return {
       movieImgRes: null,
       isLoading: false,
+      isAddedToWatchlist: false,
       actors: [],
+      reviews: [],
+      reviewsPage: 1,
+      totalPages: 0,
     };
   },
   computed: {
+    ...mapGetters(["getUserWatchlist"]),
+    isInWatchlist() {
+      return this.getUserWatchlist.some(movie => movie.id === this.movie.id);
+    },
     imgUrls() {
       return (
         this.movieImgRes &&
@@ -143,10 +182,14 @@ export default {
   async created() {
     try {
       this.isLoading = true;
+      this.setIsInWatchlist();
       const response = await this.getMovieActors(this.movie.id);
       const { data } = response;
       this.actors = data.cast;
       this.movieImgRes = await this.getMovieImages(this.movie.id);
+      await this.getActors();
+      await this.getImgs();
+      await this.getReviews();
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;
@@ -154,12 +197,18 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors", "sendToList", "getUserAccountDetails"]),
+    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage", 'sendToList', 'getUserAccountDetails']),
     toMovieHomepage(url) {
       window.location.href = url;
     },
+    setIsInWatchlist() {
+      if (this.isInWatchlist) {
+        this.isAddedToWatchlist = true;
+      }
+    },
     async addToWatchlist(id) {
       try {
+        this.isAddedToWatchlist = true;
         const session_id = localStorage.getItem("sessionToken");
         const { data } = await this.getUserAccountDetails(session_id);
         const mediaInfo = {
@@ -172,9 +221,50 @@ export default {
         await this.sendToList(mediaInfo);
         this.$notify({
           group: "watchlist",
+          ignoreDuplicates: true,
         });
       } catch (e) {
         console.log(e);
+      }
+    },
+    async getActors() {
+      try {
+        const response = await this.getMovieActors(this.movie.id);
+        const { data } = response;
+        this.actors = data.cast;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getImgs() {
+      try {
+        this.movieImgRes = await this.getMovieImages(this.movie.id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getReviews() {
+      try {
+        const response = await this.getMovieReviews(this.movie.id);
+        const { data } = response;
+        this.reviews = data.results;
+        this.totalPages = data.total_pages;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async changeReviewsPage() {
+      if(this.reviewsPage > this.totalPages) {
+        return;
+      }
+      try {
+        this.reviewsPage++;
+        const obj = { id: this.movie.id, page: this.reviewsPage };
+        const response = await this.changeMovieReviewsPage(obj);
+        const { data } = response;
+        this.reviews = this.reviews.concat(data.results);
+      } catch (error) {
+        console.error(error);
       }
     },
   },
@@ -188,6 +278,25 @@ export default {
 }
 .actors {
   padding-top: 0!important;
+}
+.reviews {
+  padding-left: 0;
+}
+.tabElement {
+  .nav-tabs {
+    border-bottom: 1px solid $lightGreen;
+    cursor: pointer;
+
+    .nav-link {
+      border: 1px solid $lightGreen;
+      color: $lightGreen;
+    }
+    .nav-link.active {
+      background-color: $lightGreen;
+      border: 1px solid $lightGreen;
+      color: rgb(27, 13, 45);
+    }
+  }
 }
 @media (max-width: 992px) {
   .movie-carousel {
@@ -207,7 +316,7 @@ export default {
 .movie__info {
   background-color: rgba(74, 36, 141, 0.316);
   box-shadow: 8px 8px 24px 0px rgb(0 0 0);
-  padding: 40px 40px 40px 40px;
+  padding: 40px 40px 80px 40px;
   border-radius: 10px;
   color: white;
   > p {

@@ -12,7 +12,7 @@
         />
         <div
           v-else
-          class="profile__content p-5 col-12 col-md-12 col-lg-9 col-xl-10"
+          class="profile__content p-5 col-12 col-md-12 col-lg-12 col-xl-112"
         >
           <div class="row d-flex">
             <div class="profile__img-container col-md-4 col-lg-4 col-xl-3">
@@ -48,6 +48,7 @@
               <b-tab
                 title="My favorites"
               />
+              <div class="row my-0 gx-2" />
             </b-tabs>
           </div>
         </div>
@@ -56,7 +57,7 @@
   </section>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Watchlist from '../../components/profile/Watchlist.vue';
 import SpinnerLoader from '../../components/common/SpinnerLoader.vue';
 export default {
@@ -76,11 +77,12 @@ export default {
       }
       return avatar && `https://image.tmdb.org/t/p/w200${avatar.tmdb.avatar_path}`;
     },
+    ...mapGetters(["getSessionToken"]),
   },
   async created() {
     try {
       this.isLoading = true;
-      const session_id = localStorage.getItem("sessionToken");
+      const session_id = this.getSessionToken;
       const { data } = await this.getUserAccountDetails(session_id);
       const accountInfo = {
         session_id,
