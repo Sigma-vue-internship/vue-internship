@@ -1,16 +1,20 @@
 /* eslint-disable */
 module.exports = {
   root: true,
+
   env: {
     browser: true,
     node: true,
   },
+
   parserOptions: {
     parser: 'babel-eslint',
   },
+
   extends: [
     'plugin:vue/recommended',
   ],
+
   // add your custom rules here
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'off' : 'off',
@@ -34,6 +38,18 @@ module.exports = {
       'functions': 'never'
     }],
     'no-trailing-spaces': [1, { 'ignoreComments': true }],
-  }
+  },
+
+  overrides: [
+    {
+      files: [
+        '**/__tests__/*.{j,t}s?(x)',
+        '**/tests/unit/**/*.spec.{j,t}s?(x)'
+      ],
+      env: {
+        jest: true
+      }
+    }
+  ]
 };
 /* eslint-enable */
