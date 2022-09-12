@@ -3,7 +3,7 @@
     v-if="isLoading"
     class="text-center"
   >
-    <div class="spinner-border text-primary">
+    <div class="mt-4 spinner-border text-light">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>

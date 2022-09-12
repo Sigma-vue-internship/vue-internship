@@ -36,13 +36,25 @@
           <p class="movie__overview">
             {{ movie.overview }}
           </p>
-          <b-button
-            v-if="movie.homepage"
-            variant="dark"
-            @click="toMovieHomepage(movie.homepage)"
-          >
-            Go to the movie site
-          </b-button>
+          <div class="d-flex align-items-start mt-4">
+            <b-button
+              v-if="movie.homepage"
+              class="movie__homepage-btn mb-3"
+              variant="outline-secondary"
+              @click="toMovieHomepage(movie.homepage)"
+            >
+              Go to the movie site
+            </b-button>
+            <b-button
+              :disabled="isAddedToWatchlist"
+              class="movie__watchlist-btn mb-3"
+              :variant="isAddedToWatchlist ? 'secondary' : 'info'"
+              @click="addToWatchlist(movie.id)"
+            >
+              <span :class="isAddedToWatchlist ? 'icon-ok' : 'icon-bookmark'" />
+              {{ isAddedToWatchlist ? 'Movie added' : 'Add to watchlist' }}
+            </b-button>
+          </div>
         </div>
       </div>
       <div
@@ -74,6 +86,7 @@
           <b-tab
             v-if="reviews.length"
             title="Reviews"
+            lazy
           >
             <ul class="row my-0 gx-2 reviews">
               <li
@@ -92,11 +105,24 @@
         v-intersection="changeReviewsPage"
       />
     </div>
+    <notifications
+      group="watchlist"
+      position="top left"
+    >
+      <template slot="body">
+        <div
+          class="watchlist__alert alert alert-success p-3 text-start m-2"
+          role="alert"
+        >
+          Successfully added movie
+        </div>
+      </template>
+    </notifications>
   </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Carousel from "@/components/common/Carousel";
 import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
@@ -121,6 +147,7 @@ export default {
     return {
       movieImgRes: null,
       isLoading: false,
+      isAddedToWatchlist: false,
       actors: [],
       reviews: [],
       reviewsPage: 1,
@@ -128,6 +155,10 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["getUserWatchlist"]),
+    isInWatchlist() {
+      return this.getUserWatchlist.some(movie => movie.id === this.movie.id);
+    },
     imgUrls() {
       return (
         this.movieImgRes &&
@@ -151,19 +182,50 @@ export default {
   async created() {
     try {
       this.isLoading = true;
+      this.setIsInWatchlist();
+      const response = await this.getMovieActors(this.movie.id);
+      const { data } = response;
+      this.actors = data.cast;
+      this.movieImgRes = await this.getMovieImages(this.movie.id);
       await this.getActors();
       await this.getImgs();
       await this.getReviews();
       this.isLoading = false;
-    } catch (error) {
+    } catch (e) {
       this.isLoading = false;
-      console.error(error);
+      console.log(e);
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage"]),
+    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage", 'sendToList', 'getUserAccountDetails']),
     toMovieHomepage(url) {
       window.location.href = url;
+    },
+    setIsInWatchlist() {
+      if (this.isInWatchlist) {
+        this.isAddedToWatchlist = true;
+      }
+    },
+    async addToWatchlist(id) {
+      try {
+        this.isAddedToWatchlist = true;
+        const session_id = localStorage.getItem("sessionToken");
+        const { data } = await this.getUserAccountDetails(session_id);
+        const mediaInfo = {
+          media_type: "movie",
+          media_id: id,
+          session_id,
+          account_id: data.id,
+          list_type: "watchlist",
+        };
+        await this.sendToList(mediaInfo);
+        this.$notify({
+          group: "watchlist",
+          ignoreDuplicates: true,
+        });
+      } catch (e) {
+        console.log(e);
+      }
     },
     async getActors() {
       try {
@@ -269,5 +331,14 @@ export default {
     padding-bottom: 10px;
     color: rgba(255, 255, 255, 0.507);
   }
+  .movie__homepage-btn{
+    color:white;
+    margin-right:10px;
+  }
+}
+.watchlist__alert{
+  background-color: rgb(41, 255, 148);
+  border: none;
+  color: black;
 }
 </style>

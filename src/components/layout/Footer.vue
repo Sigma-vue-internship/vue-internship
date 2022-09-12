@@ -70,7 +70,16 @@
           </form>
         </div>
       </div>
-      <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
+      <div
+        class="
+          d-flex
+          flex-column flex-sm-row
+          justify-content-between
+          py-4
+          my-4
+          border-top
+        "
+      >
         <p>© 2022 Sigma, Inc. All rights reserved.</p>
         <ul class="list-unstyled d-flex">
           <li>
@@ -85,6 +94,7 @@
               class="bi icon-youtube icons"
             />
           </li>
+
           <li class="ms-3">
             <a
               href="https://www.instagram.com/sigma_software/"
@@ -126,8 +136,12 @@ export default {
   methods: {
     ...mapActions(["getMoviesTopRated", "getMoviesNowPlaying"]),
     async loadData() {
-      this.topMovies = this.cashedTopMovies.length ? this.cashedTopMovies : await this.getMoviesTopRated();
-      this.moviesNowPlaying = this.cashedMoviesNowPlaying.length ? this.cashedMoviesNowPlaying : await this.getMoviesNowPlaying();
+      this.topMovies = this.cashedTopMovies.length
+        ? this.cashedTopMovies
+        : await this.getMoviesTopRated();
+      this.moviesNowPlaying = this.cashedMoviesNowPlaying.length
+        ? this.cashedMoviesNowPlaying
+        : await this.getMoviesNowPlaying();
     },
     async findMedia(searchData) {
       if (searchData) {
@@ -145,37 +159,37 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/scss/variables.scss";
-    footer {
-      min-width: 100%;
-      background-color: $darkPurple;
-      .icons {
-        color: #513f7a;
-        font-size: 25px;
-        text-decoration: none;
+footer {
+  min-width: 100%;
+  background-color: $darkPurple;
+  .icons {
+    color: #513f7a;
+    font-size: 25px;
+    text-decoration: none;
 
-        &:hover {
-          color: #9f8fc3;
-        }
-      }
-      h5 {
-        color: white;
-      }
-      p {
-        color: rgb(184, 184, 184);
-      }
-      .searchForm {
-        background-color: transparent;
-        padding: 0;
-      }
-      .border-top {
-        border-top-color: #4c3e6b !important;
-      }
-      a {
-        text-decoration: none;
-        color: rgb(111, 111, 111);
-        &:hover {
-          color: #9f8fc3;
-        }
-      }
+    &:hover {
+      color: #9f8fc3;
     }
+  }
+  h5 {
+    color: white;
+  }
+  p {
+    color: rgb(184, 184, 184);
+  }
+  .searchForm {
+    background-color: transparent;
+    padding: 0;
+  }
+  .border-top {
+    border-top-color: #4c3e6b !important;
+  }
+  a {
+    text-decoration: none;
+    color: rgb(111, 111, 111);
+    &:hover {
+      color: #9f8fc3;
+    }
+  }
+}
 </style>

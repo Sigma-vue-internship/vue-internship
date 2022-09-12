@@ -1,6 +1,6 @@
 <template>
   <div class="w-100">
-    <b-nav class="navbar p-2 px-4 navbar-light amber lighten-4 mb-1">
+    <b-nav class="navbar px-2 navbar-light amber lighten-4 mb-1">
       <b-navbar-brand
         class="navbar-brand"
         to="/"

@@ -12,7 +12,8 @@ const options = {
 export default new Vuex.Store({
   state: {
     user:{
-      auth:false,
+      auth: false,
+      watchlist:[],
     },
     movies: [],
     celebrities: [],
@@ -21,6 +22,8 @@ export default new Vuex.Store({
   },
   getters: {
     getUserAuth: (state) => state.user.auth,
+    getUserWatchlist: (state) => state.user.watchlist,
+    getSessionToken: () => localStorage.getItem("sessionToken"),
 
     cashedTopMovies: (state) => state.topMovies,
     cashedMoviesNowPlaying: (state) => state.moviesNowPlaying,
@@ -30,6 +33,9 @@ export default new Vuex.Store({
   mutations: {
     SET_USER_AUTH(state, isAuth) {
       state.user.auth = isAuth;
+    },
+    SET_USER_WATCHLIST(state, movies) {
+      state.user.watchlist = movies;
     },
     SET_MOVIES(state, movies) {
       state.movies = movies;
@@ -45,8 +51,27 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    async checkIsUserLogged({ commit }){
-      if(localStorage.getItem("sessionToken")){
+    setUserWatchlist({ commit }, movies) {
+      commit("SET_USER_WATCHLIST", movies);
+    },
+    async getUserList(_, { session_id, account_id, list_type }) {
+      return this.axios.get(`/account/${account_id}/${list_type}/movies`, { params: { session_id } });
+    },
+    async sendToList(_, { media_type, media_id, session_id, account_id, list_type }) {
+      return this.axios.post(`/account/${account_id}/${list_type}`,{
+        media_type,
+        media_id,
+        [list_type]: true,
+      }, { params:{ session_id } });
+    },
+    async getUserAccountDetails(_, session_id) {
+      if (session_id) {
+        return this.axios.get("/account", { params: { session_id } });
+
+      }
+    },
+    async checkIsUserLogged({ commit, getters }) {
+      if(getters.getSessionToken){
         commit("SET_USER_AUTH", true);
         return;
       }
