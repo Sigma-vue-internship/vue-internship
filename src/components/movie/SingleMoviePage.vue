@@ -51,14 +51,14 @@
               variant="info"
               @click="addToWatchlist(movie.id)"
             >
-              <span class="btn-label"><i class="icon-bookmark" /></span>Add to watchlist
+              <span class="btn-label"><em class="icon-bookmark" /></span>Add to watchlist
             </b-button>
             <b-button
               v-else
               class="movie__watchlist-btn mb-3"
               variant="success"
             >
-              <span class="btn-label"><i class="icon-ok" /></span>Movie added
+              <span class="btn-label"><em class="icon-ok" /></span>Movie added
             </b-button>
           </div>
         </div>
