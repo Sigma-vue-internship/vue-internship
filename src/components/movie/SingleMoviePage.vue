@@ -55,31 +55,40 @@
         />
       </div>
       <div
-        v-if="actors.length"
-        class="row my-0 gx-2"
+        v-if="reviews.length || actors.length"
+        class="pt-3 tabElement"
       >
-        <MediaList
-          title="Cast"
-          route="/celebrity/"
-          :elements="actors"
-          class="pb-4 text-center actors"
-        />
+        <b-tabs content-class="mt-3">
+          <b-tab
+            v-if="actors.length"
+            title="Cast"
+          >
+            <div class="row my-0 gx-2">
+              <MediaList
+                route="/celebrity/"
+                :elements="actors"
+                class="pb-4 text-center actors"
+              />
+            </div>
+          </b-tab>
+          <b-tab
+            v-if="reviews.length"
+            title="Reviews"
+            class="active"
+            active
+          >
+            <ul class="row my-0 gx-2 reviews">
+              <li
+                v-for="review in reviews"
+                :key="review.uuid"
+                class="pb-3 text-white"
+              >
+                <MovieReview :review="review" />
+              </li>
+            </ul>
+          </b-tab>
+        </b-tabs>
       </div>
-      <ul
-        v-if="reviews.length"
-        class="row my-0 gx-2 reviews"
-      >
-        <h2 class="py-3 text-white">
-          Reviews
-        </h2>
-        <li
-          v-for="review in reviews"
-          :key="review.uuid"
-          class="pb-3 text-white"
-        >
-          <MovieReview :review="review" />
-        </li>
-      </ul>
       <div
         v-show="reviews.length && !isLoading"
         v-intersection="changeReviewsPage"
@@ -141,23 +150,22 @@ export default {
       return Math.floor(this.movie.vote_average);
     },
   },
-  created() {
-    this.getData();
+  async created() {
+    try {
+      this.isLoading = true;
+      await this.getActors();
+      await this.getImgs();
+      await this.getReviews();
+      this.isLoading = false;
+    } catch (error) {
+      this.isLoading = false;
+      console.error(error);
+    }
   },
   methods: {
     ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage"]),
     toMovieHomepage(url) {
       window.location.href = url;
-    },
-    async getData() {
-      try {
-        this.isLoading = true;
-        await Promise.all([this.getImgs(), this.getActors(), this.getReviews()]);
-        this.isLoading = false;
-      } catch (error) {
-        this.isLoading = false;
-        console.error(error);
-      }
     },
     async getActors() {
       try {
@@ -213,6 +221,20 @@ export default {
 }
 .reviews {
   padding-left: 0;
+}
+.tabElement {
+  .nav-tabs {
+    border-bottom: 1px solid $lightGreen;
+    .nav-link {
+      border: 1px solid $lightGreen;
+      color: $lightGreen;
+    }
+    .nav-link.active {
+      background-color: $lightGreen;
+      border: 1px solid $lightGreen;
+      color: rgb(27, 13, 45);
+    }
+  }
 }
 @media (max-width: 992px) {
   .movie-carousel {

@@ -29,7 +29,6 @@ Vue.use(BootstrapVue);
 Vue.use(VueAxios, axiosInstance);
 Vue.use(Notifications);
 Vue.use(withUUID);
-Vue.use(require('vue-moment'));
 
 directives.forEach((directive) => {
   Vue.directive(directive.name, directive);
