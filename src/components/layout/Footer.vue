@@ -44,8 +44,17 @@
               </router-link>
             </li>
             <li class="nav-item mb-2">
-              <router-link to="/login">
+              <router-link
+                v-if="!getUserAuth"
+                to="/login"
+              >
                 Login
+              </router-link>
+              <router-link
+                v-else
+                to="/user/profile"
+              >
+                Profile
               </router-link>
             </li>
           </ul>
@@ -109,7 +118,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cashedTopMovies", "cashedMoviesNowPlaying"]),
+    ...mapGetters(["cashedTopMovies", "cashedMoviesNowPlaying", "getUserAuth"]),
   },
   created() {
     this.loadData();
