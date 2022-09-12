@@ -12,7 +12,7 @@
         />
         <div
           v-else
-          class="profile__content p-5 col-12 col-md-12 col-lg-9 col-xl-10"
+          class="profile__content p-5 col-12 col-md-12 col-lg-12 col-xl-112"
         >
           <div class="row d-flex">
             <div class="profile__img-container col-md-4 col-lg-4 col-xl-3">
