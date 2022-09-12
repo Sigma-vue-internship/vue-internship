@@ -48,6 +48,7 @@
               <b-tab
                 title="My favorites"
               />
+              <div class="row my-0 gx-2" />
             </b-tabs>
           </div>
         </div>

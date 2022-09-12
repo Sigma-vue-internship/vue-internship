@@ -46,11 +46,19 @@
               Go to the movie site
             </b-button>
             <b-button
+              v-if="!isInWatchlist"
               class="movie__watchlist-btn mb-3"
               variant="info"
               @click="addToWatchlist(movie.id)"
             >
-              Add to watchlist
+              <span class="btn-label"><i class="icon-bookmark" /></span>Add to watchlist
+            </b-button>
+            <b-button
+              v-else
+              class="movie__watchlist-btn mb-3"
+              variant="success"
+            >
+              <span class="btn-label"><i class="icon-ok" /></span>Movie added
             </b-button>
           </div>
         </div>
@@ -78,7 +86,7 @@
     </div>
     <notifications
       group="watchlist"
-      position="top right"
+      position="top left"
     >
       <template slot="body">
         <div
@@ -116,6 +124,7 @@ export default {
     return {
       movieImgRes: null,
       isLoading: false,
+      isInWatchlist: false,
       actors: [],
     };
   },
@@ -160,6 +169,7 @@ export default {
     },
     async addToWatchlist(id) {
       try {
+        this.isInWatchlist = true;
         const session_id = localStorage.getItem("sessionToken");
         const { data } = await this.getUserAccountDetails(session_id);
         const mediaInfo = {
@@ -172,6 +182,7 @@ export default {
         await this.sendToList(mediaInfo);
         this.$notify({
           group: "watchlist",
+          ignoreDuplicates: true,
         });
       } catch (e) {
         console.log(e);
