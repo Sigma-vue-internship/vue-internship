@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 export default {
   props: {
     watchlist: {
@@ -55,7 +56,11 @@ export default {
       isLoading: false,
     };
   },
+  created() {
+    this.setUserWatchlist(this.watchlist);
+  },
   methods: {
+    ...mapActions(["setUserWatchlist"]),
     loadMoreMovies() {
       const currentMoviesLength = this.currentMovies.length;
       if (currentMoviesLength <= this.watchlist.length) {

@@ -101,7 +101,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import Carousel from "@/components/common/Carousel";
 import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
@@ -124,11 +124,14 @@ export default {
     return {
       movieImgRes: null,
       isLoading: false,
-      isInWatchlist: false,
       actors: [],
     };
   },
   computed: {
+    ...mapGetters(["getUserWatchlist"]),
+    isInWatchlist() {
+      return this.getUserWatchlist.some(movie => movie.title === this.movie.title);
+    },
     imgUrls() {
       return (
         this.movieImgRes &&
