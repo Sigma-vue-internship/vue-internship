@@ -58,10 +58,10 @@
         v-if="reviews.length || actors.length"
         class="pt-3 tabElement"
       >
-        <b-tabs content-class="mt-3">
+        <b-tabs content-class="mt-3" fill>
           <b-tab
-            v-if="actors.length"
             title="Cast"
+            active
           >
             <div class="row my-0 gx-2">
               <MediaList
@@ -74,8 +74,6 @@
           <b-tab
             v-if="reviews.length"
             title="Reviews"
-            class="active"
-            active
           >
             <ul class="row my-0 gx-2 reviews">
               <li
@@ -225,6 +223,8 @@ export default {
 .tabElement {
   .nav-tabs {
     border-bottom: 1px solid $lightGreen;
+    cursor: pointer;
+
     .nav-link {
       border: 1px solid $lightGreen;
       color: $lightGreen;

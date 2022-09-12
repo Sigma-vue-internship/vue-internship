@@ -19,9 +19,6 @@
           class="review"
           :text="review.content"
           :lines="5"
-          additional-content-css="font-size:16px;"
-          additional-content-expanded-css="font-size:16px;"
-          additional-anchor-css="font-size: 16px;"
         />
       </div>
     </div>
