@@ -57,7 +57,7 @@
   </section>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import Watchlist from '../../components/profile/Watchlist.vue';
 import SpinnerLoader from '../../components/common/SpinnerLoader.vue';
 export default {
@@ -77,11 +77,12 @@ export default {
       }
       return avatar && `https://image.tmdb.org/t/p/w200${avatar.tmdb.avatar_path}`;
     },
+    ...mapGetters(["getSessionToken"]),
   },
   async created() {
     try {
       this.isLoading = true;
-      const session_id = localStorage.getItem("sessionToken");
+      const session_id = this.getSessionToken;
       const { data } = await this.getUserAccountDetails(session_id);
       const accountInfo = {
         session_id,

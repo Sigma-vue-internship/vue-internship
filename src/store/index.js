@@ -23,6 +23,7 @@ export default new Vuex.Store({
   getters: {
     getUserAuth: (state) => state.user.auth,
     getUserWatchlist: (state) => state.user.watchlist,
+    getSessionToken: () => localStorage.getItem("sessionToken"),
 
     cashedTopMovies: (state) => state.topMovies,
     cashedMoviesNowPlaying: (state) => state.moviesNowPlaying,
@@ -69,8 +70,8 @@ export default new Vuex.Store({
 
       }
     },
-    async checkIsUserLogged({ commit }){
-      if(localStorage.getItem("sessionToken")){
+    async checkIsUserLogged({ commit, getters }) {
+      if(getters.getSessionToken){
         commit("SET_USER_AUTH", true);
         return;
       }

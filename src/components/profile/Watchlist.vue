@@ -73,7 +73,7 @@ export default {
         : "https://dummyimage.com/90x140/000/00ff8c";
     },
     redirectToMovie(id) {
-      this.$router.push(`/movie/${id}`);
+      this.$router.push(`/movie/${id}`).catch(() => {});
     },
   },
 };

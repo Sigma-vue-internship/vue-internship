@@ -46,7 +46,7 @@
               Go to the movie site
             </b-button>
             <b-button
-              v-if="!isInWatchlist"
+              v-if="!isAddedToWatchlist"
               class="movie__watchlist-btn mb-3"
               variant="info"
               @click="addToWatchlist(movie.id)"
@@ -124,13 +124,14 @@ export default {
     return {
       movieImgRes: null,
       isLoading: false,
+      isAddedToWatchlist: false,
       actors: [],
     };
   },
   computed: {
     ...mapGetters(["getUserWatchlist"]),
     isInWatchlist() {
-      return this.getUserWatchlist.some(movie => movie.title === this.movie.title);
+      return this.getUserWatchlist.some(movie => movie.id === this.movie.id);
     },
     imgUrls() {
       return (
@@ -155,6 +156,7 @@ export default {
   async created() {
     try {
       this.isLoading = true;
+      this.setIsInWatchlist();
       const response = await this.getMovieActors(this.movie.id);
       const { data } = response;
       this.actors = data.cast;
@@ -170,9 +172,14 @@ export default {
     toMovieHomepage(url) {
       window.location.href = url;
     },
+    setIsInWatchlist() {
+      if (this.isInWatchlist) {
+        this.isAddedToWatchlist = true;
+      }
+    },
     async addToWatchlist(id) {
       try {
-        this.isInWatchlist = true;
+        this.isAddedToWatchlist = true;
         const session_id = localStorage.getItem("sessionToken");
         const { data } = await this.getUserAccountDetails(session_id);
         const mediaInfo = {
