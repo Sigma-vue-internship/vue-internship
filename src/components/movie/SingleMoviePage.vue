@@ -86,6 +86,7 @@
           <b-tab
             v-if="reviews.length"
             title="Reviews"
+            lazy
           >
             <ul class="row my-0 gx-2 reviews">
               <li
