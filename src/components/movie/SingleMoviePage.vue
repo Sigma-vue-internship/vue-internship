@@ -46,19 +46,13 @@
               Go to the movie site
             </b-button>
             <b-button
-              v-if="!isAddedToWatchlist"
+              :disabled="isAddedToWatchlist"
               class="movie__watchlist-btn mb-3"
-              variant="info"
+              :variant="isAddedToWatchlist ? 'secondary' : 'info'"
               @click="addToWatchlist(movie.id)"
             >
-              <span class="btn-label"><em class="icon-bookmark" /></span>Add to watchlist
-            </b-button>
-            <b-button
-              v-else
-              class="movie__watchlist-btn mb-3"
-              variant="success"
-            >
-              <span class="btn-label"><em class="icon-ok" /></span>Movie added
+              <span :class="isAddedToWatchlist ? 'icon-ok' : 'icon-bookmark'" />
+              {{ isAddedToWatchlist ? 'Movie added' : 'Add to watchlist' }}
             </b-button>
           </div>
         </div>
@@ -221,13 +215,13 @@ export default {
   flex-direction: column;
   padding-bottom: 20px;
   .movie__poster-img {
-    box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+    box-shadow: 8px 8px 24px 0 rgb(0 0 0);
     border-radius: 10px;
   }
 }
 .movie__info {
   background-color: rgba(74, 36, 141, 0.316);
-  box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+  box-shadow: 8px 8px 24px 0 rgb(0 0 0);
   padding: 40px 40px 40px 40px;
   border-radius: 10px;
   color: white;
