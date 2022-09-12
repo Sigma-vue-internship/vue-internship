@@ -229,5 +229,24 @@ export default new Vuex.Store({
         console.error(error);
       }
     },
+    async getMovieReviews(_, movieId) {
+      try {
+        return await this.axios.get(`movie/${movieId}/reviews`);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async changeMovieReviewsPage(_, obj) {
+      const options = {
+        params: {
+          page: obj.page,
+        },
+      };
+      try {
+        return await this.axios.get(`movie/${obj.id}/reviews`, options);
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 });
