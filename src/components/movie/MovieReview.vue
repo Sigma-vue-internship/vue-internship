@@ -27,6 +27,7 @@
 
 <script>
 import vueShowMoreText from "vue-show-more-text";
+
 export default {
   name: "MovieReview",
   components: {
@@ -47,10 +48,9 @@ export default {
     },
     checkDateOfCreate() {
       const date = new Date(this.review.created_at);
-      const dateCreate = ('0' + date.getDate()).slice(-2) + '.'
-        + ('0' + (date.getMonth()+1)).slice(-2) + '.'
-        + date.getFullYear();
-      return dateCreate;
+      return ('0' + date.getDate()).slice(-2) + '.'
+          + ('0' + (date.getMonth() + 1)).slice(-2) + '.'
+          + date.getFullYear();
     },
   },
 };
