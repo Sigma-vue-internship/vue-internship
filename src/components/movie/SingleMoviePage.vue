@@ -55,16 +55,42 @@
         />
       </div>
       <div
-        v-if="actors.length"
-        class="row my-0 gx-2"
+        v-if="reviews.length || actors.length"
+        class="pt-3 tabElement"
       >
-        <MediaList
-          title="Cast"
-          route="/celebrity/"
-          :elements="actors"
-          class="pb-4 text-center actors"
-        />
+        <b-tabs content-class="mt-3" fill>
+          <b-tab
+            title="Cast"
+            active
+          >
+            <div class="row my-0 gx-2">
+              <MediaList
+                route="/celebrity/"
+                :elements="actors"
+                class="pb-4 text-center actors"
+              />
+            </div>
+          </b-tab>
+          <b-tab
+            v-if="reviews.length"
+            title="Reviews"
+          >
+            <ul class="row my-0 gx-2 reviews">
+              <li
+                v-for="review in reviews"
+                :key="review.uuid"
+                class="pb-3 text-white"
+              >
+                <MovieReview :review="review" />
+              </li>
+            </ul>
+          </b-tab>
+        </b-tabs>
       </div>
+      <div
+        v-show="reviews.length && !isLoading"
+        v-intersection="changeReviewsPage"
+      />
     </div>
   </div>
 </template>
@@ -75,6 +101,7 @@ import Carousel from "@/components/common/Carousel";
 import Rating from "@/components/common/Rating";
 import SpinnerLoader from "@/components/common/SpinnerLoader";
 import MediaList from "@/components/media/MediaList";
+import MovieReview from "@/components/movie/MovieReview";
 export default {
   name: "SingleMoviePage",
   components: {
@@ -82,6 +109,7 @@ export default {
     Rating,
     SpinnerLoader,
     MediaList,
+    MovieReview,
   },
   props: {
     movie: {
@@ -94,6 +122,9 @@ export default {
       movieImgRes: null,
       isLoading: false,
       actors: [],
+      reviews: [],
+      reviewsPage: 1,
+      totalPages: 0,
     };
   },
   computed: {
@@ -120,20 +151,59 @@ export default {
   async created() {
     try {
       this.isLoading = true;
-      const response = await this.getMovieActors(this.movie.id);
-      const { data } = response;
-      this.actors = data.cast;
-      this.movieImgRes = await this.getMovieImages(this.movie.id);
+      await this.getActors();
+      await this.getImgs();
+      await this.getReviews();
       this.isLoading = false;
-    } catch (e) {
+    } catch (error) {
       this.isLoading = false;
-      console.log(e);
+      console.error(error);
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors"]),
+    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage"]),
     toMovieHomepage(url) {
       window.location.href = url;
+    },
+    async getActors() {
+      try {
+        const response = await this.getMovieActors(this.movie.id);
+        const { data } = response;
+        this.actors = data.cast;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getImgs() {
+      try {
+        this.movieImgRes = await this.getMovieImages(this.movie.id);
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async getReviews() {
+      try {
+        const response = await this.getMovieReviews(this.movie.id);
+        const { data } = response;
+        this.reviews = data.results;
+        this.totalPages = data.total_pages;
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    async changeReviewsPage() {
+      if(this.reviewsPage > this.totalPages) {
+        return;
+      }
+      try {
+        this.reviewsPage++;
+        const obj = { id: this.movie.id, page: this.reviewsPage };
+        const response = await this.changeMovieReviewsPage(obj);
+        const { data } = response;
+        this.reviews = this.reviews.concat(data.results);
+      } catch (error) {
+        console.error(error);
+      }
     },
   },
 };
@@ -146,6 +216,25 @@ export default {
 }
 .actors {
   padding-top: 0!important;
+}
+.reviews {
+  padding-left: 0;
+}
+.tabElement {
+  .nav-tabs {
+    border-bottom: 1px solid $lightGreen;
+    cursor: pointer;
+
+    .nav-link {
+      border: 1px solid $lightGreen;
+      color: $lightGreen;
+    }
+    .nav-link.active {
+      background-color: $lightGreen;
+      border: 1px solid $lightGreen;
+      color: rgb(27, 13, 45);
+    }
+  }
 }
 @media (max-width: 992px) {
   .movie-carousel {
