@@ -36,17 +36,18 @@
           <p class="movie__overview">
             {{ movie.overview }}
           </p>
-          <div class="d-flex flex-column align-items-start">
+          <div class="d-flex align-items-start mt-4">
             <b-button
               v-if="movie.homepage"
-              class="mb-3"
-              variant="dark"
+              class="movie__homepage-btn mb-3"
+              variant="outline-secondary"
               @click="toMovieHomepage(movie.homepage)"
             >
               Go to the movie site
             </b-button>
             <b-button
-              variant="dark"
+              class="movie__watchlist-btn mb-3"
+              variant="info"
               @click="addToWatchlist(movie.id)"
             >
               Add to watchlist
@@ -220,6 +221,10 @@ export default {
     display: block;
     padding-bottom: 10px;
     color: rgba(255, 255, 255, 0.507);
+  }
+  .movie__homepage-btn{
+    color:white;
+    margin-right:10px;
   }
 }
 .watchlist__alert{

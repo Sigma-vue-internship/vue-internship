@@ -1,5 +1,5 @@
 <template>
-  <section class="vh-100">
+  <section>
     <div
       class="profile container h-100"
     >
@@ -33,7 +33,23 @@
               </div>
             </div>
           </div>
-          <Watchlist :watchlist="watchlist" />
+          <div
+            class="pt-3 mt-4 tabElement"
+          >
+            <b-tabs content-class="">
+              <b-tab
+                title="My Watchlist"
+                active
+              >
+                <div class="row my-0 gx-2">
+                  <Watchlist :watchlist="watchlist" />
+                </div>
+              </b-tab>
+              <b-tab
+                title="My favorites"
+              />
+            </b-tabs>
+          </div>
         </div>
       </div>
     </div>
@@ -86,12 +102,23 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
   @import "../../assets/scss/variables.scss";
   .profile{
-    &__container{
-      background-image: linear-gradient( 83.2deg,  rgba(70, 179, 125, 0.575) 10.8%, rgb(173, 65, 245) 94.3%);
+    .tabElement {
+  .nav-tabs {
+    border-bottom: 1px solid $lightGreen;
+    .nav-link {
+    border: 1px solid $lightGreen;
+    color: $lightGreen;
     }
+    .nav-link.active {
+      background-color: $lightGreen;
+      border: 1px solid $lightGreen;
+      color: rgb(27, 13, 45);
+    }
+  }
+}
     &__content{
       background-color: rgba(0, 0, 0, 0.192);
       box-shadow: 0px -10px 29px 7px rgba(0, 0, 0, 0.616);
