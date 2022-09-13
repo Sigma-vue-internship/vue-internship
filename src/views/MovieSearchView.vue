@@ -74,6 +74,16 @@ export default {
       isLoading: false,
     };
   },
+  computed: {
+    notificationError() {
+      return this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
+    },
+  },
   watch: {
     $route: {
       async handler(newRoute) {
@@ -93,13 +103,8 @@ export default {
       this.regions = results;
       this.isLoading = false;
     } catch (error) {
+      this.notificationError();
       this.isLoading = false;
-      this.$notify({
-        group: "error",
-        type: "error",
-        title: "Error message",
-        text: error.message,
-      });
     }
   },
   methods: {
@@ -117,13 +122,8 @@ export default {
           this.isLoading = false;
           console.log(this.notifyData);
         } catch (error) {
+          this.notificationError();
           this.isLoading = false;
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
         }
       }
     },
@@ -154,12 +154,7 @@ export default {
           this.currentPage = 1;
           return;
         } catch (error) {
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
+          this.notificationError();
           this.isLoading = false;
         }
       }
@@ -187,12 +182,7 @@ export default {
           this.currentPage = 1;
           return;
         } catch (error) {
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
+          this.notificationError();
           this.isLoading = false;
         }
       }
@@ -213,12 +203,7 @@ export default {
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
         } catch (error) {
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
+          this.notificationError();
           this.isLoading = false;
         }
       }
