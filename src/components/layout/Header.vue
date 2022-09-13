@@ -85,8 +85,8 @@ export default {
   input:checked + .toggler {
     background: #393939;
   }
-  input:focus + toggler {
-    box-shadow: 0 0 2px #2196F3;
+  input:focus + .toggler {
+    box-shadow: 0 0 2px #d6d8d9;
   }
   input:checked + .toggler:before {
     -webkit-transform: translateX(26px);
