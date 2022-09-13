@@ -72,12 +72,6 @@ export default {
       totalPages: null,
       routeSearchData: null,
       isLoading: false,
-      notifyData: {
-        group: "error",
-        type: "error",
-        title: "Error message",
-        text: error.message,
-      },
     };
   },
   watch: {
@@ -100,7 +94,12 @@ export default {
       this.isLoading = false;
     } catch (error) {
       this.isLoading = false;
-      this.$notify(this.notifyData);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
     }
   },
   methods: {
@@ -119,7 +118,12 @@ export default {
           console.log(this.notifyData);
         } catch (error) {
           this.isLoading = false;
-          this.$notify(this.notifyData);
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
         }
       }
     },
@@ -150,7 +154,12 @@ export default {
           this.currentPage = 1;
           return;
         } catch (error) {
-          this.$notify(this.notifyData);
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
           this.isLoading = false;
         }
       }
@@ -178,7 +187,12 @@ export default {
           this.currentPage = 1;
           return;
         } catch (error) {
-          this.$notify(this.notifyData);
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
           this.isLoading = false;
         }
       }
@@ -199,7 +213,12 @@ export default {
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
         } catch (error) {
-          this.$notify(this.notifyData);
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
           this.isLoading = false;
         }
       }
