@@ -72,6 +72,12 @@ export default {
       totalPages: null,
       routeSearchData: null,
       isLoading: false,
+      notifyData: {
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      },
     };
   },
   watch: {
@@ -115,14 +121,10 @@ export default {
           const updatedMedia = res.data.results;
           this.searchMedia = [...this.searchMedia, ...updatedMedia];
           this.isLoading = false;
+          console.log(this.notifyData);
         } catch (error) {
           this.isLoading = false;
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
+          this.$notify(this.notifyData);
         }
       }
     },
@@ -153,12 +155,7 @@ export default {
           this.currentPage = 1;
           return;
         } catch (error) {
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
+          this.$notify(this.notifyData);
           this.isLoading = false;
         }
       }
@@ -186,12 +183,7 @@ export default {
           this.currentPage = 1;
           return;
         } catch (error) {
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
+          this.$notify(this.notifyData);
           this.isLoading = false;
         }
       }
@@ -212,12 +204,7 @@ export default {
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
         } catch (error) {
-          this.$notify({
-            group: "error",
-            type: "error",
-            title: "Error message",
-            text: error.message,
-          });
+          this.$notify(this.notifyData);
           this.isLoading = false;
         }
       }
