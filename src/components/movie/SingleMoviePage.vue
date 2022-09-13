@@ -10,11 +10,18 @@
         class="row gx-0 justify-content-between"
       >
         <div class="movie__poster col-lg-4 col-xl-3">
-          <img
-            class="movie__poster-img img-fluid"
-            :src="posterPath"
-            alt="movie poster"
-          >
+          <div class="movie__poster-img">
+            <b-button
+              :class="`bi icon-${heart} icons like`"
+              :disabled="isAddedToFavoritelist"
+              @click="addTolist(movie.id, 'favorite')"
+            />
+            <img
+              class="img-fluid"
+              :src="posterPath"
+              alt="movie poster"
+            >
+          </div>
           <Rating :movie-rating="movieRating" />
         </div>
         <div class="movie__info col-lg-7 col-xl-8">
@@ -54,11 +61,6 @@
               <span :class="isAddedToWatchlist ? 'icon-ok' : 'icon-bookmark'" />
               {{ isAddedToWatchlist ? 'Movie added' : 'Add to watchlist' }}
             </b-button>
-            <b-button
-              :class="`bi icon-${heart} icons like`"
-              :disabled="isAddedToFavoritelist"
-              @click="addTolist(movie.id, 'favorite')"
-            />
           </div>
         </div>
       </div>
@@ -320,14 +322,20 @@ export default {
   }
 }
 .like, .like:disabled {
+  position: absolute;
+  right: 0;
+  z-index: 3;
   color: red;
   background-color: transparent;
   border: none;
+  font-size: 50px;
 }
-.like:hover {
+.like:hover,
+.like:focus {
   background: none;
+  border: none;
+  box-shadow: none!important;
 }
-
 @media (max-width: 992px) {
   .movie-carousel {
     margin-right: 0;
@@ -338,7 +346,9 @@ export default {
   align-items: center;
   flex-direction: column;
   padding-bottom: 20px;
+  position: relative;
   .movie__poster-img {
+    position: relative;
     box-shadow: 8px 8px 24px 0px rgb(0 0 0);
     border-radius: 10px;
   }
