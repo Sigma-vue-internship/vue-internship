@@ -100,12 +100,7 @@ export default {
       this.isLoading = false;
     } catch (error) {
       this.isLoading = false;
-      this.$notify({
-        group: "error",
-        type: "error",
-        title: "Error message",
-        text: error.message,
-      });
+      this.$notify(this.notifyData);
     }
   },
   methods: {
