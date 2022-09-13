@@ -191,9 +191,14 @@ export default {
       await this.getImgs();
       await this.getReviews();
       this.isLoading = false;
-    } catch (e) {
+    } catch (error) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
     }
   },
   methods: {
@@ -223,8 +228,13 @@ export default {
           group: "watchlist",
           ignoreDuplicates: true,
         });
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getActors() {
@@ -233,14 +243,24 @@ export default {
         const { data } = response;
         this.actors = data.cast;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getImgs() {
       try {
         this.movieImgRes = await this.getMovieImages(this.movie.id);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getReviews() {
@@ -250,7 +270,12 @@ export default {
         this.reviews = data.results;
         this.totalPages = data.total_pages;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async changeReviewsPage() {
@@ -264,7 +289,12 @@ export default {
         const { data } = response;
         this.reviews = this.reviews.concat(data.results);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
   },

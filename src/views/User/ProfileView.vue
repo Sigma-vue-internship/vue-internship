@@ -94,9 +94,14 @@ export default {
       this.watchlist = watchlistRes.data.results;
       this.isLoading = false;
     }
-    catch (e) {
+    catch (error) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
     }
   },
   methods: {

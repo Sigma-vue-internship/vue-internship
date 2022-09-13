@@ -92,9 +92,14 @@ export default {
       } = await this.getRegions();
       this.regions = results;
       this.isLoading = false;
-    } catch (e) {
+    } catch (error) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
     }
   },
   methods: {
@@ -110,9 +115,14 @@ export default {
           const updatedMedia = res.data.results;
           this.searchMedia = [...this.searchMedia, ...updatedMedia];
           this.isLoading = false;
-        } catch (e) {
+        } catch (error) {
           this.isLoading = false;
-          console.log(e);
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
         }
       }
     },
@@ -142,8 +152,13 @@ export default {
           this.isLoading = false;
           this.currentPage = 1;
           return;
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
           this.isLoading = false;
         }
       }
@@ -170,8 +185,13 @@ export default {
           this.isLoading = false;
           this.currentPage = 1;
           return;
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
           this.isLoading = false;
         }
       }
@@ -191,8 +211,13 @@ export default {
           this.searchMedia = this.resData.data.results;
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
           this.isLoading = false;
         }
       }

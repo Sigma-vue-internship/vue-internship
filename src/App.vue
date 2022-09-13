@@ -8,6 +8,10 @@
       <router-view />
     </div>
     <Footer />
+    <notifications
+      group="error"
+      type="error"
+    />
   </div>
 </template>
 <script>
