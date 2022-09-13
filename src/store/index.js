@@ -91,8 +91,13 @@ export default new Vuex.Store({
       try {
         const { data } = await this.axios.get("/authentication/token/new");
         return data.request_token;
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getAuthorizedToken(_, { username, password, requestToken }) {
@@ -106,8 +111,13 @@ export default new Vuex.Store({
           }
         );
         return data.request_token;
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getSessionToken(_, authToken) {
@@ -149,7 +159,12 @@ export default new Vuex.Store({
           options
         );
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getCelebrityImages(_, celebrityId) {
@@ -162,7 +177,12 @@ export default new Vuex.Store({
       try {
         return await this.axios.get(`movie/${id}`);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMovies({ commit }) {
@@ -174,7 +194,12 @@ export default new Vuex.Store({
         commit("SET_MOVIES", results);
         return results;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMoviesTopRated({ commit }) {
@@ -186,7 +211,12 @@ export default new Vuex.Store({
         commit("SET_TOP_MOVIES", results);
         return results.slice(0, 3);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMoviesNowPlaying({ commit }) {
@@ -198,7 +228,12 @@ export default new Vuex.Store({
         commit("SET_MOVIES_NOW_PLAYING", results);
         return results.slice(0, 3);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getActors({ commit }) {
@@ -210,7 +245,12 @@ export default new Vuex.Store({
         commit("SET_CELEBRITIES", results);
         return results;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async changeMediaPage(_, obj) {
@@ -226,21 +266,36 @@ export default new Vuex.Store({
           return await this.axios.get("movie/popular", options);
         }
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMovieActors(_, movieId) {
       try {
         return await this.axios.get(`movie/${movieId}/credits`);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMovieReviews(_, movieId) {
       try {
         return await this.axios.get(`movie/${movieId}/reviews`);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async changeMovieReviewsPage(_, obj) {
@@ -252,7 +307,12 @@ export default new Vuex.Store({
       try {
         return await this.axios.get(`movie/${obj.id}/reviews`, options);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
   },

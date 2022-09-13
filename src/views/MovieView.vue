@@ -37,7 +37,12 @@ export default {
           this.movie = data;
           this.isLoading = false;
         } catch (error) {
-          console.log(error);
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
           this.isLoading = false;
         }
       },
@@ -51,7 +56,12 @@ export default {
       this.movie = data;
       this.isLoading = false;
     } catch (error) {
-      console.log(error);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
       this.isLoading = false;
     }
   },
