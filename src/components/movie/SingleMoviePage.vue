@@ -17,7 +17,7 @@
           >
           <Rating :movie-rating="movieRating" />
         </div>
-        <div class="movie__info col-lg-7 col-xl-8">
+        <div :class="`movie__info col-lg-7 col-xl-8 movie__${getMode}`">
           <h1>{{ movie.title }}</h1>
           <span
             v-if="movie.tagline"
@@ -70,7 +70,10 @@
         v-if="reviews.length || actors.length"
         class="pt-3 tabElement"
       >
-        <b-tabs content-class="mt-3" fill>
+        <b-tabs
+          content-class="mt-3"
+          fill
+        >
           <b-tab
             title="Cast"
             active
@@ -155,7 +158,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserWatchlist"]),
+    ...mapGetters(["getUserWatchlist", "getMode"]),
     isInWatchlist() {
       return this.getUserWatchlist.some(movie => movie.id === this.movie.id);
     },
@@ -318,7 +321,6 @@ export default {
   box-shadow: 8px 8px 24px 0px rgb(0 0 0);
   padding: 40px 40px 80px 40px;
   border-radius: 10px;
-  color: white;
   > p {
     font-size: 18px;
     font-weight: 400;
@@ -335,6 +337,12 @@ export default {
     color:white;
     margin-right:10px;
   }
+}
+.movie__dark {
+  color: white;
+}
+.movie__light {
+  color: black;
 }
 .watchlist__alert{
   background-color: rgb(41, 255, 148);

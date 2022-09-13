@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-md-7 col-lg-5 col-xl-4">
-          <div class="login-wrap">
+          <div :class="`login-wrap login-wrap__${getMode}`">
             <div class="img d-flex align-items-center justify-content-center" />
             <h3 class="text-center mb-0">
               Welcome
@@ -95,7 +95,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserSessionToken"]),
+    ...mapGetters(["getUserSessionToken", "getMode"]),
   },
   created() {
     const isRequestTokenExists = localStorage.getItem("requestToken");
@@ -146,7 +146,6 @@ export default {
   transform: translate(-50%, -50%);
   text-align: center;
   &__info {
-    color: white;
     background: rgba(0, 0, 0, 0.418);
     font-size: 18px;
     padding: 20px;
@@ -164,6 +163,12 @@ export default {
       color: rgb(236, 92, 255);
     }
   }
+}
+.login-wrap__dark {
+  color: white;
+}
+.login-wrap__light {
+  color: black;
 }
 .welcome-info {
   margin-bottom: 20px;
@@ -212,12 +217,8 @@ export default {
   h3 {
     font-weight: 400;
     font-size: 18px;
-    color: white;
     text-transform: uppercase;
     letter-spacing: 1px;
-  }
-  .welcome-info {
-    color: rgba(255, 255, 255, 0.5);
   }
   .img {
     width: 100px;

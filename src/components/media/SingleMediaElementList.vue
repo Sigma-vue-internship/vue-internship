@@ -10,7 +10,10 @@
       "
     >
     <div class="card-body">
-      <h5 class="card-title">
+      <h5
+        class="card-title"
+        :class="getMode==='dark' ? 'text-white' : 'text-black'"
+      >
         {{ captionElement }}
       </h5>
     </div>
@@ -18,6 +21,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "SingleMediaElementList",
   props: {
@@ -27,6 +31,7 @@ export default {
     },
   },
   computed: {
+    ...mapGetters(["getMode"]),
     imgPath() {
       if ("profile_path" in this.element) {
         return this.element.profile_path;

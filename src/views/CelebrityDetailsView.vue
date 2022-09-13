@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="celebrity-profile__info col-lg-7 col-xl-7">
+      <div :class="`celebrity-profile__info col-lg-7 col-xl-7 celebrity-profile__${getMode}`">
         <h1 class="celebrity-profile__name">
           {{ celebrity.name }}
         </h1>
@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import vueShowMoreText from "vue-show-more-text";
 import SpinnerLoader from "../components/common/SpinnerLoader";
 import MediaList from "../components/media/MediaList";
@@ -105,6 +105,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["getMode"]),
     celebrityImages() {
       if (this.resImagesData) {
         let [, , ...celebrityImages] = this.resImagesData.data.profiles;
@@ -204,7 +205,6 @@ export default {
   background-color: rgba(74, 36, 141, 0.316);
   box-shadow: 8px 8px 24px 0 rgb(0, 0, 0);
   border-radius: 10px;
-  color: white;
 
   .celebrity-profile__bio-name {
     font-size: 22px;
@@ -224,6 +224,12 @@ export default {
   .bio--active {
     max-height: 700px;
   }
+}
+.celebrity-profile__dark {
+  color: white;
+}
+.celebrity-profile__light {
+  color: black;
 }
 .celebrity-profile__image-container {
   display: flex;

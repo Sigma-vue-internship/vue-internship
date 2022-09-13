@@ -8,8 +8,10 @@
         <div class="main__overlay" />
       </div>
       <div class="text-center">
-        <div class="main__watch py-3">
-          <h4>Find movie or actor info</h4>
+        <div :class="`main__watch py-3 main__${getMode}`">
+          <h4 :class="getMode==='dark' ? 'text-white' : 'text-black'">
+            Find movie or actor info
+          </h4>
           <SearchForm
             :mode="'preview'"
             class="main__searchForm"
@@ -64,7 +66,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cashedMovies", "cashedCelebrities"]),
+    ...mapGetters(["cashedMovies", "cashedCelebrities", "getMode"]),
   },
   created() {
     this.loadData();
@@ -135,13 +137,18 @@ export default {
     z-index: 1;
   }
   &__watch {
-    background-color: $lightPurple;
     -webkit-box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
     -moz-box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
     box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
   }
   &__searchForm {
     max-width: 800px;
+  }
+  &__dark {
+    background-color: $lightPurple;
+  }
+  &__light {
+    background-color: rgb(170, 146, 203);
   }
 }
 </style>

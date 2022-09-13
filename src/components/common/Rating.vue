@@ -13,7 +13,7 @@
       :value="celebrityRating ? celebrityRating : movieRating"
       :max="celebrityRating ? 250 : 10"
     />
-    <div class="movie-raiting__info row text-center">
+    <div :class="`movie-raiting__info row text-center movie-raiting__${getMode}`">
       <h4 class="movie-raiting__title col-md-6 col-lg-5">
         Rating
       </h4>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "Rating",
   props: {
@@ -43,6 +44,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["getMode"]),
     celebrityRatingColor() {
       return this.setRatingColor("celebrityRating", 100, 175);
     },
@@ -84,7 +86,6 @@ export default {
     display: flex;
     justify-content: space-between;
     align-content: center;
-    color: white;
   }
   &__number {
     text-align: end;
@@ -95,6 +96,12 @@ export default {
   &__title {
     text-align: start;
     font-size: 1.2rem;
+  }
+  &__dark {
+  color: white;
+  }
+  &__light {
+    color: black;
   }
 }
 @media (max-width: 992px) {

@@ -1,6 +1,6 @@
 <!-- eslint-disable comma-dangle -->
 <template>
-  <div class="search-form__container container">
+  <div :class="`search-form__container container search-form__${getMode}`">
     <div>
       <div class="search-form">
         <div
@@ -115,6 +115,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
   name: "SearchForm",
   props: {
@@ -139,6 +140,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["getMode"]),
     regionOptions() {
       if (this.mode !== "preview") {
         return this.regions.map((reg, i) =>
@@ -255,9 +257,14 @@ export default {
   }
 }
 .search-form__container {
-  color: white;
   display: flex;
   flex-direction: column;
+}
+.search-form__dark {
+  color: white;
+}
+.search-form__light {
+  color: black;
 }
 #radio-group-1 {
   > .custom-control-input {

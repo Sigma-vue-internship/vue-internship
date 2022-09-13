@@ -2,7 +2,7 @@
   <div class="container pt-5 d-flex flex-column align-items-center">
     <div
       v-if="title.length"
-      class="text-start text-white w-100 py-3"
+      :class="`text-start ${getMode==='dark' ? 'text-white' : 'text-black'} w-100 py-3`"
     >
       <h2>
         {{ title }}
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import SingleMediaElementList from "./SingleMediaElementList";
 export default {
   name: "MediaList",
@@ -55,6 +56,9 @@ export default {
       type: String,
       default: "",
     },
+  },
+  computed: {
+    ...mapGetters(["getMode"]),
   },
   methods: {
     routeToElementPage(id) {

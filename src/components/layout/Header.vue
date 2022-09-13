@@ -2,8 +2,7 @@
   <b-navbar
     toggleable="lg"
     type="dark"
-    variant="dark"
-    class="fixed-top"
+    :class="`fixed-top navbar${getMode}`"
   >
     <div class="container">
       <Navbar>
@@ -98,6 +97,13 @@ export default {
   }
   .toggler.round:before {
     border-radius: 50%;
+  }
+  .navbardark {
+    background-color: rgba(33,37,41,255);
+  }
+  .navbarlight {
+    background-color: rgba(43,29,73,255);
+    opacity: 1;
   }
   @media (max-width: 600px) {
     .toggle {

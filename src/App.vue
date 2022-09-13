@@ -59,8 +59,8 @@ body,
   min-height: 100%;
   background-image: linear-gradient(
     110.1deg,
-    rgb(112, 72, 185) 44.2%,
-    rgb(255, 214, 244) 138.2%
+    rgb(243, 230, 255) 44.2%,
+    rgb(255, 255, 255) 138.2%
   );
 }
 </style>
