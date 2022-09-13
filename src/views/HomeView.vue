@@ -107,12 +107,6 @@ export default {
 <style scoped lang="scss">
 @import "../assets/scss/variables.scss";
 .main {
-  background-image: linear-gradient(
-    110.1deg,
-    rgba(30, 2, 83, 1) 44.2%,
-    rgba(198, 55, 160, 1) 138.2%
-  );
-
   &__top {
     background-image: url(../assets/poster.jpg);
     -webkit-background-size: cover;

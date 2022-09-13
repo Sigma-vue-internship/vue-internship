@@ -19,6 +19,7 @@ export default new Vuex.Store({
     celebrities: [],
     topMovies: [],
     moviesNowPlaying: [],
+    mode: "dark",
   },
   getters: {
     getUserAuth: (state) => state.user.auth,
@@ -29,6 +30,8 @@ export default new Vuex.Store({
     cashedMoviesNowPlaying: (state) => state.moviesNowPlaying,
     cashedMovies: (state) => state.movies,
     cashedCelebrities: (state) => state.celebrities,
+
+    getMode: (state) => state.mode,
   },
   mutations: {
     SET_USER_AUTH(state, isAuth) {
@@ -48,6 +51,9 @@ export default new Vuex.Store({
     },
     SET_MOVIES_NOW_PLAYING(state, movies) {
       state.moviesNowPlaying = movies;
+    },
+    SET_MODE(state, mode) {
+      state.mode = mode;
     },
   },
   actions: {
@@ -247,6 +253,9 @@ export default new Vuex.Store({
       } catch (error) {
         console.error(error);
       }
+    },
+    setMode({ commit }, mode) {
+      commit("SET_MODE", mode);
     },
   },
 });

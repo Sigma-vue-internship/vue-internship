@@ -1,9 +1,12 @@
 <template>
   <div id="app">
-    <Header />
+    <Header
+      :mode="mode"
+      @toggle="toggle"
+    />
     <div
       no-body
-      class="router"
+      :class="getMode==='dark' ? 'darkTheme' : 'lightTheme'"
     >
       <router-view />
     </div>
@@ -11,13 +14,34 @@
   </div>
 </template>
 <script>
-import Footer from "./components/layout/Footer.vue";
-import Header from "./components/layout/Header.vue";
+import { mapActions, mapGetters } from "vuex";
+import Footer from "./components/layout/Footer";
+import Header from "./components/layout/Header";
 export default {
   name: "App",
   components: {
     Header,
     Footer,
+  },
+  data() {
+    return {
+      mode: "dark",
+    };
+  },
+  computed: {
+    ...mapGetters(["getMode"]),
+  },
+  methods: {
+    ...mapActions(["setMode"]),
+    toggle() {
+      if (this.mode === "dark") {
+        this.mode = "light";
+        this.setMode("light");
+      } else {
+        this.mode = "dark";
+        this.setMode("dark");
+      }
+    },
   },
 };
 </script>
@@ -43,12 +67,20 @@ body,
 #app {
   height: 100vh;
 }
-.router {
+.darkTheme {
   min-height: 100%;
   background-image: linear-gradient(
     110.1deg,
     rgba(30, 2, 83, 1) 44.2%,
     rgba(198, 55, 160, 1) 138.2%
+  );
+}
+.lightTheme {
+  min-height: 100%;
+  background-image: linear-gradient(
+    110.1deg,
+    rgb(112, 72, 185) 44.2%,
+    rgb(255, 214, 244) 138.2%
   );
 }
 </style>

@@ -1,5 +1,6 @@
 <template>
   <div class="w-100">
+    <slot name="toggle" />
     <b-nav class="navbar px-2 navbar-light amber lighten-4 mb-1">
       <b-navbar-brand
         class="navbar-brand"
