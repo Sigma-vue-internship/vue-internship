@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <Header
-      :mode="mode"
-      @toggle="toggle"
-    />
+    <Header />
     <div
       no-body
       :class="getMode==='dark' ? 'darkTheme' : 'lightTheme'"
@@ -14,7 +11,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters } from "vuex";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 export default {
@@ -23,25 +20,8 @@ export default {
     Header,
     Footer,
   },
-  data() {
-    return {
-      mode: "dark",
-    };
-  },
   computed: {
     ...mapGetters(["getMode"]),
-  },
-  methods: {
-    ...mapActions(["setMode"]),
-    toggle() {
-      if (this.mode === "dark") {
-        this.mode = "light";
-        this.setMode("light");
-      } else {
-        this.mode = "dark";
-        this.setMode("dark");
-      }
-    },
   },
 };
 </script>

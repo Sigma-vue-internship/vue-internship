@@ -15,8 +15,8 @@
           <input
             id="checkbox"
             type="checkbox"
-            :checked="(mode === 'dark') ? 'checked' : false"
-            @change="$emit('toggle')"
+            :checked="(getMode === 'dark') ? 'checked' : false"
+            @change="toggle"
           >
           <span class="toggler round" />
         </label>
@@ -26,20 +26,20 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
 import Navbar from "./Navbar";
 export default {
   name: "Header",
   components: {
     Navbar,
   },
-  props: {
-    mode: {
-      type: String,
-      default: "",
-    },
-    toggle: {
-      type: Function,
-      default: () => {},
+  computed: {
+    ...mapGetters(["getMode"]),
+  },
+  methods: {
+    ...mapActions(["setMode"]),
+    toggle() {
+      this.getMode === "dark" ? this.setMode("light") : this.setMode("dark");
     },
   },
 };
