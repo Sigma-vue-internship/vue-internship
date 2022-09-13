@@ -70,7 +70,10 @@
         v-if="reviews.length || actors.length"
         class="pt-3 tabElement"
       >
-        <b-tabs content-class="mt-3" fill>
+        <b-tabs
+          content-class="mt-3"
+          fill
+        >
           <b-tab
             title="Cast"
             active
@@ -181,6 +184,7 @@ export default {
   },
   async created() {
     try {
+      console.log(this.movie);
       this.isLoading = true;
       this.setIsInWatchlist();
       const response = await this.getMovieActors(this.movie.id);
