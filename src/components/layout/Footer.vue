@@ -1,5 +1,5 @@
 <template>
-  <footer class="pt-5 px-5">
+  <footer :class="`pt-5 px-5 footer${getMode}`">
     <div class="container">
       <div class="row">
         <div class="col-6 col-md-2 mb-3">
@@ -128,7 +128,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["cashedTopMovies", "cashedMoviesNowPlaying", "getUserAuth"]),
+    ...mapGetters(["cashedTopMovies", "cashedMoviesNowPlaying", "getUserAuth", "getMode"]),
   },
   created() {
     this.loadData();
@@ -159,37 +159,44 @@ export default {
 
 <style scoped lang="scss">
 @import "../../assets/scss/variables.scss";
-footer {
-  min-width: 100%;
-  background-color: $darkPurple;
-  .icons {
-    color: #513f7a;
-    font-size: 25px;
-    text-decoration: none;
+  footer {
+    min-width: 100%;
+    background-color: $darkPurple;
+    .icons {
+      color: #513f7a;
+      font-size: 25px;
+      text-decoration: none;
 
-    &:hover {
-      color: #9f8fc3;
+      &:hover {
+        color: #9f8fc3;
+      }
+    }
+    h5 {
+      color: white;
+    }
+    p {
+      color: rgb(184, 184, 184);
+    }
+    .searchForm {
+      background-color: transparent;
+      padding: 0;
+    }
+    .border-top {
+      border-top-color: #4c3e6b !important;
+    }
+    a {
+      text-decoration: none;
+      color: rgb(111, 111, 111);
+      &:hover {
+        color: #9f8fc3;
+      }
     }
   }
-  h5 {
-    color: white;
-  }
-  p {
-    color: rgb(184, 184, 184);
-  }
-  .searchForm {
-    background-color: transparent;
-    padding: 0;
-  }
-  .border-top {
-    border-top-color: #4c3e6b !important;
-  }
-  a {
-    text-decoration: none;
-    color: rgb(111, 111, 111);
-    &:hover {
-      color: #9f8fc3;
+  .footerlight {
+    border-top: 1px solid gray;
+    background-color: rgb(255, 255, 255);
+    h5 {
+      color: black;
     }
   }
-}
 </style>

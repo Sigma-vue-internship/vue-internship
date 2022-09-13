@@ -76,6 +76,7 @@
         >
           <b-tab
             title="Cast"
+            :title-item-class="`title${getMode}`"
             active
           >
             <div class="row my-0 gx-2">
@@ -89,6 +90,7 @@
           <b-tab
             v-if="reviews.length"
             title="Reviews"
+            :title-item-class="`title${getMode}`"
             lazy
           >
             <ul class="row my-0 gx-2 reviews">
@@ -200,7 +202,14 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage", 'sendToList', 'getUserAccountDetails']),
+    ...mapActions([
+      "getMovieImages",
+      "getMovieActors",
+      "getMovieReviews",
+      "changeMovieReviewsPage",
+      "sendToList",
+      "getUserAccountDetails"
+    ]),
     toMovieHomepage(url) {
       window.location.href = url;
     },
@@ -292,13 +301,22 @@ export default {
 
     .nav-link {
       border: 1px solid $lightGreen;
-      color: $lightGreen;
     }
     .nav-link.active {
       background-color: $lightGreen;
       border: 1px solid $lightGreen;
       color: rgb(27, 13, 45);
     }
+  }
+}
+.titlelight {
+  a {
+    color: rgb(5, 31, 0);
+  }
+}
+.titledark {
+  a {
+    color: rgb(255, 255, 255);
   }
 }
 @media (max-width: 992px) {

@@ -1,9 +1,8 @@
 <template>
-  <div class="w-100">
-    <slot name="toggle" />
+  <div class="w-100 flex-column">
     <b-nav class="navbar px-2 navbar-light amber lighten-4 mb-1">
       <b-navbar-brand
-        class="navbar-brand"
+        :class="`navbar-brand navbar${getMode}`"
         to="/"
       >
         Moviedesk
@@ -26,7 +25,7 @@
       >
         <ul
           v-if="isMenuOpen"
-          class="navbar-nav"
+          :class="`navbar-nav navbar${getMode}`"
         >
           <li @click="showHideMenu">
             <b-nav-item to="/">
@@ -83,6 +82,7 @@
         </ul>
       </div>
     </b-nav>
+    <slot name="toggle" />
   </div>
 </template>
 
@@ -96,7 +96,7 @@ export default {
     };
   },
   computed:{
-    ...mapGetters(["getUserAuth"]),
+    ...mapGetters(["getUserAuth", "getMode"]),
   },
   watch:{
     $route: {
@@ -217,7 +217,6 @@ export default {
 }
 .nav-link {
   font-weight: 400;
-  color: rgba(255, 255, 255, 1);
   &:hover {
     color: $lightGreen;
   }
@@ -227,5 +226,17 @@ export default {
 }
 a.nav-link.router-link-exact-active.router-link-active {
   color: rgb(63, 123, 252);
+}
+.navbardark {
+  color: white;
+  a {
+    color: white;
+  }
+}
+.navbarlight {
+  color: black;
+  a {
+    color: black;
+  }
 }
 </style>

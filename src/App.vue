@@ -49,6 +49,7 @@ body,
 }
 .darkTheme {
   min-height: 100%;
+  padding-top: 20px;
   background-image: linear-gradient(
     110.1deg,
     rgba(30, 2, 83, 1) 44.2%,
@@ -57,6 +58,7 @@ body,
 }
 .lightTheme {
   min-height: 100%;
+  padding-top: 20px;
   background-image: linear-gradient(
     110.1deg,
     rgb(243, 230, 255) 44.2%,

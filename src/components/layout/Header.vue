@@ -2,23 +2,52 @@
   <b-navbar
     toggleable="lg"
     type="dark"
-    :class="`fixed-top navbar${getMode}`"
+    :class="`fixed-top headerNavbar${getMode}`"
   >
     <div class="container">
       <Navbar>
-        <label
+        <div
           slot="toggle"
-          class="toggle"
-          for="checkbox"
+          class="form-check form-switch ms-auto me-3 d-flex flex-row justify-content-end"
         >
+          <label
+            class="form-check-label ms-3"
+            for="lightSwitch"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              :fill="getMode==='dark' ? 'white' : 'black'"
+              class="bi bi-brightness-high"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="
+                M8 11a3 3 0 1 1 0-6 3 3 0 0 1 0
+                6zm0 1a4 4 0 1 0 0-8 4 4 0 0 0 0
+                8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8
+                0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8
+                13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1
+                .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3
+                8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1
+                1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5
+                0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5
+                0 0 1.707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5
+                0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0
+                .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1
+                1.707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"
+              />
+            </svg>
+          </label>
           <input
-            id="checkbox"
+            id="lightSwitch"
+            class="form-check-input"
             type="checkbox"
             :checked="(getMode === 'dark') ? 'checked' : false"
             @change="toggle"
           >
-          <span class="toggler round" />
-        </label>
+        </div>
       </Navbar>
     </div>
   </b-navbar>
@@ -45,80 +74,28 @@ export default {
 </script>
 
 <style lang="scss">
-  .toggle {
-    position: absolute;
-    z-index: 3;
-    display: inline-block;
-    width: 46px;
-    height: 20px;
-    left: 5px;
-    top: 5px;
+  #lightSwitch {
+    margin-left: 10px;
   }
-  .toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
+  .form-check-input {
+    background-color: #eeeeee!important;
   }
-  .toggler {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #b4b4b4;
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+  .form-check-input:checked {
+    box-shadow: none!important;
+    border: none;
+    background-color: #393939!important;
+    border-color: rgb(137, 137, 137)!important;
   }
-  .toggler:before {
-    position: absolute;
-    content: "";
-    height: 12px;
-    width: 12px;
-    left: 4px;
-    bottom: 4px;
-    background: rgb(42, 42, 42);
-    -webkit-transition: 0.4s;
-    transition: 0.4s;
+  .form-check-input:focus {
+    box-shadow: none!important;
+    border: none;
   }
-  input:checked + .toggler {
-    background: #393939;
-  }
-  input:focus + .toggler {
-    box-shadow: 0 0 2px #d6d8d9;
-  }
-  input:checked + .toggler:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-  .toggler.round {
-    border-radius: 34px;
-  }
-  .toggler.round:before {
-    border-radius: 50%;
-  }
-  .navbardark {
+  .headerNavbardark {
     background-color: rgba(33,37,41,255);
   }
-  .navbarlight {
-    background-color: rgba(43,29,73,255);
+  .headerNavbarlight {
+    border-bottom: 1px solid gray;
+    background-color: rgb(255, 255, 255);
     opacity: 1;
-  }
-  @media (max-width: 600px) {
-    .toggle {
-      width: 30px;
-      height: 15px;
-    }
-    .toggler:before {
-      content: "";
-      height: 7px;
-      width: 7px;
-    }
-    input:checked + .toggler:before {
-      -webkit-transform: translateX(15px);
-      -ms-transform: translateX(15px);
-      transform: translateX(15px);
-    }
   }
 </style>
