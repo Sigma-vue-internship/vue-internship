@@ -12,7 +12,7 @@
         <div class="movie__poster col-lg-4 col-xl-3">
           <div class="movie__poster-img">
             <b-button
-              :class="`bi icon-${heart} icons like`"
+              :class="`bi ${heartIcon} icons like`"
               :disabled="isAddedToFavoritelist"
               @click="addTolist(movie.id, 'favorite')"
             />
@@ -158,12 +158,11 @@ export default {
       movieImgRes: null,
       isLoading: false,
       isAddedToWatchlist: false,
+      isAddedToFavoritelist: false,
       actors: [],
       reviews: [],
       reviewsPage: 1,
       totalPages: 0,
-      heart: 'heart-empty',
-      isAddedToFavoritelist: false,
     };
   },
   computed: {
@@ -193,6 +192,9 @@ export default {
     movieRating() {
       return Math.floor(this.movie.vote_average);
     },
+    heartIcon() {
+      return this.isAddedToFavoritelist ? 'icon-heart' : 'icon-heart-empty';
+    },
   },
   async created() {
     try {
@@ -220,18 +222,13 @@ export default {
     },
     setIsInFavoritelist() {
       if (this.isInFavoritelist) {
-        this.heart = "heart";
         this.isAddedToFavoritelist = true;
       }
     },
     async addTolist(id, type) {
+      const propsName = type === "favorite" ? 'isAddedToFavoritelist' : 'isAddedToWatchlist';
       try {
-        if(type==="favorite"){
-          this.heart = "heart";
-          this.isAddedToFavoritelist = true;
-        } else {
-          this.isAddedToWatchlist = true;
-        }
+        this[propsName] = true;
         const session_id = localStorage.getItem("sessionToken");
         const { data } = await this.getUserAccountDetails(session_id);
         const mediaInfo = {
@@ -349,13 +346,17 @@ export default {
   position: relative;
   .movie__poster-img {
     position: relative;
-    box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+    box-shadow: 8px 8px 24px 0 rgb(0 0 0);
     border-radius: 10px;
+
+    .btn:first-child:hover {
+      background: none;
+    }
   }
 }
 .movie__info {
   background-color: rgba(74, 36, 141, 0.316);
-  box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+  box-shadow: 8px 8px 24px 0 rgb(0 0 0);
   padding: 40px 40px 80px 40px;
   border-radius: 10px;
   color: white;
