@@ -12,6 +12,7 @@
         <div class="movie__poster col-lg-4 col-xl-3">
           <div class="movie__poster-img">
             <b-button
+              v-if="getUserAuth"
               :class="`bi ${heartIcon} icons like`"
               :disabled="isAddedToFavoritelist"
               @click="addTolist(movie.id, 'favorite')"
@@ -53,6 +54,7 @@
               Go to the movie site
             </b-button>
             <b-button
+              v-if="getUserAuth"
               :disabled="isAddedToWatchlist"
               class="movie__watchlist-btn mb-3"
               :variant="isAddedToWatchlist ? 'secondary' : 'info'"
@@ -166,7 +168,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserWatchlist", "getUserFavoritelist"]),
+    ...mapGetters(["getUserWatchlist", "getUserFavoritelist", "getUserAuth"]),
     isInWatchlist() {
       return this.getUserWatchlist.some(movie => movie.id === this.movie.id);
     },
@@ -196,6 +198,15 @@ export default {
       return this.isAddedToFavoritelist ? 'icon-heart' : 'icon-heart-empty';
     },
   },
+  watch:{
+    $route: {
+      async handler() {
+        await this.checkIsUserLogged();
+      },
+      deep: true,
+      immediate:true,
+    },
+  },
   async created() {
     try {
       console.log(this.movie);
@@ -212,7 +223,8 @@ export default {
     }
   },
   methods: {
-    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage", 'sendToList', 'getUserAccountDetails']),
+    ...mapActions(["getMovieImages", "getMovieActors", "getMovieReviews", "changeMovieReviewsPage",
+      'sendToList', 'getUserAccountDetails', "checkIsUserLogged"]),
     toMovieHomepage(url) {
       window.location.href = url;
     },
