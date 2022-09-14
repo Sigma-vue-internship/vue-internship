@@ -25,7 +25,6 @@ export default new Vuex.Store({
     getUserAuth: (state) => state.user.auth,
     getUserWatchlist: (state) => state.user.watchlist,
     getUserFavoritelist: (state) => state.user.favoritelist,
-    getSessionToken: () => localStorage.getItem("sessionToken"),
 
     cashedTopMovies: (state) => state.topMovies,
     cashedMoviesNowPlaying: (state) => state.moviesNowPlaying,
@@ -77,8 +76,8 @@ export default new Vuex.Store({
         return this.axios.get("/account", { params: { session_id } });
       }
     },
-    async checkIsUserLogged({ commit, getters }) {
-      if(getters.getSessionToken){
+    async checkIsUserLogged({ commit }) {
+      if(localStorage.getItem("sessionToken")){
         commit("SET_USER_AUTH", true);
         return;
       }

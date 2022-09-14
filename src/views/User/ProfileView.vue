@@ -66,7 +66,7 @@
   </section>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions} from 'vuex';
 import ProfileList from '@/components/profile/ProfileList';
 import SpinnerLoader from '@/components/common/SpinnerLoader';
 export default {
@@ -90,7 +90,6 @@ export default {
       }
       return avatar && `https://image.tmdb.org/t/p/w200${avatar.tmdb.avatar_path}`;
     },
-    ...mapGetters(["getSessionToken"]),
   },
   async created() {
     try {
