@@ -10,11 +10,18 @@
         class="row gx-0 justify-content-between"
       >
         <div class="movie__poster col-lg-4 col-xl-3">
-          <img
-            class="movie__poster-img img-fluid"
-            :src="posterPath"
-            alt="movie poster"
-          >
+          <div class="movie__poster-img">
+            <b-button
+              :class="`bi ${heartIcon} icons like`"
+              :disabled="isAddedToFavoritelist"
+              @click="addTolist(movie.id, 'favorite')"
+            />
+            <img
+              class="img-fluid"
+              :src="posterPath"
+              alt="movie poster"
+            >
+          </div>
           <Rating :movie-rating="movieRating" />
         </div>
         <div :class="`movie__info col-lg-7 col-xl-8 movie__${getMode}`">
@@ -49,7 +56,7 @@
               :disabled="isAddedToWatchlist"
               class="movie__watchlist-btn mb-3"
               :variant="isAddedToWatchlist ? 'secondary' : 'info'"
-              @click="addToWatchlist(movie.id)"
+              @click="addTolist(movie.id, 'watchlist')"
             >
               <span :class="isAddedToWatchlist ? 'icon-ok' : 'icon-bookmark'" />
               {{ isAddedToWatchlist ? 'Movie added' : 'Add to watchlist' }}
@@ -111,15 +118,15 @@
       />
     </div>
     <notifications
-      group="watchlist"
+      group="list"
       position="top left"
     >
       <template slot="body">
         <div
-          class="watchlist__alert alert alert-success p-3 text-start m-2"
+          class="list__alert alert alert-success p-3 text-start m-2"
           role="alert"
         >
-          Successfully added movie
+          Successfully added
         </div>
       </template>
     </notifications>
@@ -153,6 +160,7 @@ export default {
       movieImgRes: null,
       isLoading: false,
       isAddedToWatchlist: false,
+      isAddedToFavoritelist: false,
       actors: [],
       reviews: [],
       reviewsPage: 1,
@@ -160,9 +168,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserWatchlist", "getMode"]),
+    ...mapGetters(["getUserWatchlist", "getUserFavoritelist", "getMode"]),
     isInWatchlist() {
       return this.getUserWatchlist.some(movie => movie.id === this.movie.id);
+    },
+    isInFavoritelist() {
+      return this.getUserFavoritelist.some(movie => movie.id === this.movie.id);
     },
     imgUrls() {
       return (
@@ -183,22 +194,27 @@ export default {
     movieRating() {
       return Math.floor(this.movie.vote_average);
     },
+    heartIcon() {
+      return this.isAddedToFavoritelist ? 'icon-heart' : 'icon-heart-empty';
+    },
   },
   async created() {
     try {
       this.isLoading = true;
       this.setIsInWatchlist();
-      const response = await this.getMovieActors(this.movie.id);
-      const { data } = response;
-      this.actors = data.cast;
-      this.movieImgRes = await this.getMovieImages(this.movie.id);
+      this.setIsInFavoritelist();
       await this.getActors();
       await this.getImgs();
       await this.getReviews();
       this.isLoading = false;
-    } catch (e) {
+    } catch (error) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
     }
   },
   methods: {
@@ -218,9 +234,15 @@ export default {
         this.isAddedToWatchlist = true;
       }
     },
-    async addToWatchlist(id) {
+    setIsInFavoritelist() {
+      if (this.isInFavoritelist) {
+        this.isAddedToFavoritelist = true;
+      }
+    },
+    async addTolist(id, type) {
+      const propsName = type === "favorite" ? 'isAddedToFavoritelist' : 'isAddedToWatchlist';
       try {
-        this.isAddedToWatchlist = true;
+        this[propsName] = true;
         const session_id = localStorage.getItem("sessionToken");
         const { data } = await this.getUserAccountDetails(session_id);
         const mediaInfo = {
@@ -228,15 +250,20 @@ export default {
           media_id: id,
           session_id,
           account_id: data.id,
-          list_type: "watchlist",
+          list_type: type,
         };
         await this.sendToList(mediaInfo);
         this.$notify({
-          group: "watchlist",
+          group: "list",
           ignoreDuplicates: true,
         });
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getActors() {
@@ -245,14 +272,24 @@ export default {
         const { data } = response;
         this.actors = data.cast;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getImgs() {
       try {
         this.movieImgRes = await this.getMovieImages(this.movie.id);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getReviews() {
@@ -262,7 +299,12 @@ export default {
         this.reviews = data.results;
         this.totalPages = data.total_pages;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async changeReviewsPage() {
@@ -276,7 +318,12 @@ export default {
         const { data } = response;
         this.reviews = this.reviews.concat(data.results);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
   },
@@ -309,6 +356,21 @@ export default {
     }
   }
 }
+.like, .like:disabled {
+  position: absolute;
+  right: 0;
+  z-index: 3;
+  color: red;
+  background-color: transparent;
+  border: none;
+  font-size: 50px;
+}
+.like:hover,
+.like:focus {
+  background: none;
+  border: none;
+  box-shadow: none!important;
+}
 .titlelight {
   a {
     color: rgb(5, 31, 0);
@@ -329,14 +391,20 @@ export default {
   align-items: center;
   flex-direction: column;
   padding-bottom: 20px;
+  position: relative;
   .movie__poster-img {
-    box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+    position: relative;
+    box-shadow: 8px 8px 24px 0 rgb(0 0 0);
     border-radius: 10px;
+
+    .btn:first-child:hover {
+      background: none;
+    }
   }
 }
 .movie__info {
   background-color: rgba(74, 36, 141, 0.316);
-  box-shadow: 8px 8px 24px 0px rgb(0 0 0);
+  box-shadow: 8px 8px 24px 0 rgb(0 0 0);
   padding: 40px 40px 80px 40px;
   border-radius: 10px;
   > p {
@@ -362,7 +430,7 @@ export default {
 .movie__light {
   color: black;
 }
-.watchlist__alert{
+.list__alert{
   background-color: rgb(41, 255, 148);
   border: none;
   color: black;

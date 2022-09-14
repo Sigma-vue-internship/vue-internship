@@ -99,7 +99,12 @@ export default {
         const { data } = response;
         this[type] = this[type].concat(data.results);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
   },

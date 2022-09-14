@@ -14,6 +14,7 @@ export default new Vuex.Store({
     user:{
       auth: false,
       watchlist:[],
+      favoritelist: [],
     },
     movies: [],
     celebrities: [],
@@ -24,6 +25,7 @@ export default new Vuex.Store({
   getters: {
     getUserAuth: (state) => state.user.auth,
     getUserWatchlist: (state) => state.user.watchlist,
+    getUserFavoritelist: (state) => state.user.favoritelist,
     getSessionToken: () => localStorage.getItem("sessionToken"),
 
     cashedTopMovies: (state) => state.topMovies,
@@ -39,6 +41,9 @@ export default new Vuex.Store({
     },
     SET_USER_WATCHLIST(state, movies) {
       state.user.watchlist = movies;
+    },
+    SET_USER_FAVORITELIST(state, movies) {
+      state.user.favoritelist = movies;
     },
     SET_MOVIES(state, movies) {
       state.movies = movies;
@@ -60,6 +65,9 @@ export default new Vuex.Store({
     setUserWatchlist({ commit }, movies) {
       commit("SET_USER_WATCHLIST", movies);
     },
+    setUserFavoritelist({ commit }, movies) {
+      commit("SET_USER_FAVORITELIST", movies);
+    },
     async getUserList(_, { session_id, account_id, list_type }) {
       return this.axios.get(`/account/${account_id}/${list_type}/movies`, { params: { session_id } });
     },
@@ -73,7 +81,6 @@ export default new Vuex.Store({
     async getUserAccountDetails(_, session_id) {
       if (session_id) {
         return this.axios.get("/account", { params: { session_id } });
-
       }
     },
     async checkIsUserLogged({ commit, getters }) {
@@ -90,8 +97,13 @@ export default new Vuex.Store({
       try {
         const { data } = await this.axios.get("/authentication/token/new");
         return data.request_token;
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getAuthorizedToken(_, { username, password, requestToken }) {
@@ -105,8 +117,13 @@ export default new Vuex.Store({
           }
         );
         return data.request_token;
-      } catch (e) {
-        console.log(e);
+      } catch (error) {
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getSessionToken(_, authToken) {
@@ -148,7 +165,12 @@ export default new Vuex.Store({
           options
         );
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getCelebrityImages(_, celebrityId) {
@@ -161,7 +183,12 @@ export default new Vuex.Store({
       try {
         return await this.axios.get(`movie/${id}`);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMovies({ commit }) {
@@ -173,7 +200,12 @@ export default new Vuex.Store({
         commit("SET_MOVIES", results);
         return results;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMoviesTopRated({ commit }) {
@@ -185,7 +217,12 @@ export default new Vuex.Store({
         commit("SET_TOP_MOVIES", results);
         return results.slice(0, 3);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMoviesNowPlaying({ commit }) {
@@ -197,7 +234,12 @@ export default new Vuex.Store({
         commit("SET_MOVIES_NOW_PLAYING", results);
         return results.slice(0, 3);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getActors({ commit }) {
@@ -209,7 +251,12 @@ export default new Vuex.Store({
         commit("SET_CELEBRITIES", results);
         return results;
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async changeMediaPage(_, obj) {
@@ -225,21 +272,36 @@ export default new Vuex.Store({
           return await this.axios.get("movie/popular", options);
         }
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMovieActors(_, movieId) {
       try {
         return await this.axios.get(`movie/${movieId}/credits`);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async getMovieReviews(_, movieId) {
       try {
         return await this.axios.get(`movie/${movieId}/reviews`);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     async changeMovieReviewsPage(_, obj) {
@@ -251,7 +313,12 @@ export default new Vuex.Store({
       try {
         return await this.axios.get(`movie/${obj.id}/reviews`, options);
       } catch (error) {
-        console.error(error);
+        this.$notify({
+          group: "error",
+          type: "error",
+          title: "Error message",
+          text: error.message,
+        });
       }
     },
     setMode({ commit }, mode) {

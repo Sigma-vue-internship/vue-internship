@@ -134,9 +134,14 @@ export default {
           this.isLoading = true;
           await this.getCelebrityData();
           this.isLoading = false;
-        } catch (e) {
+        } catch (error) {
           this.isLoading = false;
-          console.error(e);
+          this.$notify({
+            group: "error",
+            type: "error",
+            title: "Error message",
+            text: error.message,
+          });
         }
       },
     },
@@ -146,9 +151,14 @@ export default {
       this.isLoading = true;
       await this.getCelebrityData();
       this.isLoading = false;
-    } catch (e) {
+    } catch (error) {
       this.isLoading = false;
-      console.error(e);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
     }
   },
   methods: {

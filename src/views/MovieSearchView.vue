@@ -72,6 +72,12 @@ export default {
       totalPages: null,
       routeSearchData: null,
       isLoading: false,
+      notifyData: {
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      },
     };
   },
   watch: {
@@ -92,9 +98,9 @@ export default {
       } = await this.getRegions();
       this.regions = results;
       this.isLoading = false;
-    } catch (e) {
+    } catch (error) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify(this.notifyData);
     }
   },
   methods: {
@@ -110,9 +116,10 @@ export default {
           const updatedMedia = res.data.results;
           this.searchMedia = [...this.searchMedia, ...updatedMedia];
           this.isLoading = false;
-        } catch (e) {
+          console.log(this.notifyData);
+        } catch (error) {
           this.isLoading = false;
-          console.log(e);
+          this.$notify(this.notifyData);
         }
       }
     },
@@ -142,8 +149,8 @@ export default {
           this.isLoading = false;
           this.currentPage = 1;
           return;
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          this.$notify(this.notifyData);
           this.isLoading = false;
         }
       }
@@ -170,8 +177,8 @@ export default {
           this.isLoading = false;
           this.currentPage = 1;
           return;
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          this.$notify(this.notifyData);
           this.isLoading = false;
         }
       }
@@ -191,8 +198,8 @@ export default {
           this.searchMedia = this.resData.data.results;
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
-        } catch (e) {
-          console.log(e);
+        } catch (error) {
+          this.$notify(this.notifyData);
           this.isLoading = false;
         }
       }

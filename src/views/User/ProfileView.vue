@@ -42,13 +42,22 @@
                 active
               >
                 <div class="row my-0 gx-2">
-                  <Watchlist :watchlist="watchlist" />
+                  <ProfileList
+                    :list="watchlist"
+                    type="watchlist"
+                  />
                 </div>
               </b-tab>
               <b-tab
                 title="My favorites"
-              />
-              <div class="row my-0 gx-2" />
+              >
+                <div class="row my-0 gx-2">
+                  <ProfileList
+                    :list="favouritelist"
+                    type="favouritelist"
+                  />
+                </div>
+              </b-tab>
             </b-tabs>
           </div>
         </div>
@@ -58,14 +67,18 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import Watchlist from '../../components/profile/Watchlist.vue';
-import SpinnerLoader from '../../components/common/SpinnerLoader.vue';
+import ProfileList from '@/components/profile/ProfileList';
+import SpinnerLoader from '@/components/common/SpinnerLoader';
 export default {
-  components: { Watchlist, SpinnerLoader },
+  components: {
+    ProfileList,
+    SpinnerLoader,
+  },
   data() {
     return {
       account: {},
       watchlist: [],
+      favouritelist: [],
       isLoading:false,
     };
   },
@@ -89,14 +102,26 @@ export default {
         account_id: data.id,
         list_type: "watchlist",
       };
+      const accountInfoFavourites = {
+        session_id,
+        account_id: data.id,
+        list_type: "favorite",
+      };
       const watchlistRes = await this.getUserList(accountInfo);
+      const favouritelistRes = await this.getUserList(accountInfoFavourites);
       this.account = { ...data };
       this.watchlist = watchlistRes.data.results;
+      this.favouritelist = favouritelistRes.data.results;
       this.isLoading = false;
     }
-    catch (e) {
+    catch (error) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify({
+        group: "error",
+        type: "error",
+        title: "Error message",
+        text: error.message,
+      });
     }
   },
   methods: {
@@ -106,21 +131,21 @@ export default {
 </script>
 <style lang="scss">
   @import "../../assets/scss/variables.scss";
-  .profile{
+  .profile {
     .tabElement {
-  .nav-tabs {
-    border-bottom: 1px solid $lightGreen;
-    .nav-link {
-    border: 1px solid $lightGreen;
-    color: $lightGreen;
+      .nav-tabs {
+        border-bottom: 1px solid $lightGreen;
+        .nav-link {
+          border: 1px solid $lightGreen;
+          color: $lightGreen;
+        }
+        .nav-link.active {
+          background-color: $lightGreen;
+          border: 1px solid $lightGreen;
+          color: rgb(27, 13, 45);
+        }
+      }
     }
-    .nav-link.active {
-      background-color: $lightGreen;
-      border: 1px solid $lightGreen;
-      color: rgb(27, 13, 45);
-    }
-  }
-}
     &__content{
       background-color: rgba(0, 0, 0, 0.192);
       box-shadow: 0px -10px 29px 7px rgba(0, 0, 0, 0.616);

@@ -1,30 +1,30 @@
 <template>
-  <div class="watchlist">
+  <div class="profilelist">
     <ul
-      v-if="watchlist.length"
-      class="scroll watchlist__list"
+      v-if="list.length"
+      class="scroll profilelist__list"
     >
       <li
         v-for="(movie, i) in currentMovies"
-        :key="`watchlist item ${i}`"
-        class="watchlist__item"
+        :key="`profilelist item ${i}`"
+        class="profilelist__item"
         @click="redirectToMovie(movie.id)"
       >
         <div class="d-flex">
           <img
-            class="watchlist__img"
+            class="profilelist__img"
             :src="posterPath(movie.poster_path)"
             alt="movie poster"
           >
-          <div class="watchlist__item-info">
-            <h2 class="watchlist__item-title">
+          <div class="profilelist__item-info">
+            <h2 class="profilelist__item-title">
               {{ movie.title }}
             </h2>
             <p>Votes: {{ movie.vote_average }}</p>
           </div>
         </div>
         <button
-          class="watchlist__btn btn btn-dark"
+          class="profilelist__btn btn btn-dark"
           @click="redirectToMovie(movie.id)"
         >
           To movie
@@ -36,7 +36,7 @@
       />
     </ul>
     <p v-else>
-      There will be your watchlist
+      There will be your list
     </p>
   </div>
 </template>
@@ -44,27 +44,32 @@
 <script>
 import { mapActions } from 'vuex';
 export default {
+  name: "ProfileList",
   props: {
-    watchlist: {
+    list: {
       type: Array,
       default: () => [],
+    },
+    type: {
+      type: String,
+      default: "",
     },
   },
   data() {
     return {
-      currentMovies: [...this.watchlist.slice(0, 5)],
+      currentMovies: [...this.list.slice(0, 5)],
       isLoading: false,
     };
   },
   created() {
-    this.setUserWatchlist(this.watchlist);
+    this.type === "watchlist" ? this.setUserWatchlist(this.list) : this.setUserFavoritelist(this.list);
   },
   methods: {
-    ...mapActions(["setUserWatchlist"]),
+    ...mapActions(["setUserWatchlist", "setUserFavoritelist"]),
     loadMoreMovies() {
       const currentMoviesLength = this.currentMovies.length;
-      if (currentMoviesLength <= this.watchlist.length) {
-        this.currentMovies = [...this.currentMovies, ...this.watchlist.slice(currentMoviesLength, currentMoviesLength + 5)];
+      if (currentMoviesLength <= this.list.length) {
+        this.currentMovies = [...this.currentMovies, ...this.list.slice(currentMoviesLength, currentMoviesLength + 5)];
       }
     },
     posterPath(poster_path) {
@@ -99,7 +104,7 @@ export default {
   box-shadow: inset 0 0 6px black;
   -webkit-box-shadow: inset 0 0 6px black;
 }
-.watchlist{
+.profilelist{
   color:white;
   margin-top: 15px;
     &__title{
@@ -147,6 +152,6 @@ export default {
       &__btn{
         display:none;
     }
-    }
+  }
 }
 </style>

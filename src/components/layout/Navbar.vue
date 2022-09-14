@@ -8,7 +8,7 @@
         Moviedesk
       </b-navbar-brand>
       <button
-        class="navbar-toggler first-button"
+        class="navbar-toggler first-button burger-btn"
         type="button"
         @click="showHideMenu"
       >
@@ -25,9 +25,12 @@
       >
         <ul
           v-if="isMenuOpen"
-          :class="`navbar-nav navbar${getMode}`"
+          :class="`navbar-nav navbar${getMode} align-items-center`"
         >
-          <li @click="showHideMenu">
+          <li
+            class="pt-2"
+            @click="showHideMenu"
+          >
             <b-nav-item to="/">
               Home
             </b-nav-item>
@@ -51,10 +54,13 @@
               Profile
             </b-nav-item>
           </li>
+          <li>
+            <slot name="toggle" />
+          </li>
         </ul>
       </div>
       <div class="navbar-collapse d-flex justify-content-end navbar__wide">
-        <ul class="navbar-nav navbar__wide">
+        <ul :class="`align-items-center navbar-nav navbar__wide navbar${getMode}`">
           <li>
             <b-nav-item to="/">
               Home
@@ -79,10 +85,12 @@
               Profile
             </b-nav-item>
           </li>
+          <li>
+            <slot name="toggle" />
+          </li>
         </ul>
       </div>
     </b-nav>
-    <slot name="toggle" />
   </div>
 </template>
 
@@ -141,7 +149,7 @@ export default {
   width: 30px;
   height: 20px;
   position: relative;
-  margin: 0px;
+  margin: auto;
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
   -o-transform: rotate(0deg);
@@ -238,5 +246,9 @@ a.nav-link.router-link-exact-active.router-link-active {
   a {
     color: black;
   }
+}
+.burger-btn {
+  width: 85px;
+  border: none;
 }
 </style>

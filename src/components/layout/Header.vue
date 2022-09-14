@@ -8,10 +8,10 @@
       <Navbar>
         <div
           slot="toggle"
-          class="form-check form-switch ms-auto me-3 d-flex flex-row justify-content-end"
+          class="form-check form-switch ms-auto d-flex flex-row justify-content-start"
         >
           <label
-            class="form-check-label ms-3"
+            class="form-check-label"
             for="lightSwitch"
           >
             <svg
@@ -77,8 +77,17 @@ export default {
   #lightSwitch {
     margin-left: 10px;
   }
+  .form-check {
+    padding-left: 0!important;
+  }
   .form-check-input {
     background-color: #eeeeee!important;
+    margin-top: 0!important;
+    height: 25px!important;
+    width: 50px!important;
+  }
+  .form-switch .form-check-input {
+    width: 2em;
   }
   .form-check-input:checked {
     box-shadow: none!important;
