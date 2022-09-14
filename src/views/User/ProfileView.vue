@@ -95,7 +95,7 @@ export default {
   async created() {
     try {
       this.isLoading = true;
-      const session_id = this.getSessionToken;
+      const session_id = localStorage.getItem("sessionToken");
       const { data } = await this.getUserAccountDetails(session_id);
       const accountInfo = {
         session_id,
