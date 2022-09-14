@@ -59,14 +59,12 @@
                 >
               </div>
               <div class="form-group d-md-flex">
-                <div class="w-100 text-end p-2 forgot-msg">
-                  <a href="#">Forgot Password</a>
-                </div>
+                <div class="w-100 text-end p-2 forgot-msg"></div>
               </div>
               <div class="form-group">
                 <button
                   type="submit"
-                  :disabled="disableForm ? true : false"
+                  :disabled="disableForm"
                   class="submit-btn btn form-control btn-primary rounded px-3"
                 >
                   Login
