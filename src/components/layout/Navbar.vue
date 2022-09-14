@@ -51,6 +51,13 @@
               Profile
             </b-nav-item>
           </li>
+          <li v-if="getUserAuth">
+            <b-nav-item
+              @click="logoutUser"
+            >
+              Log out
+            </b-nav-item>
+          </li>
         </ul>
       </div>
       <div class="navbar-collapse d-flex justify-content-end navbar__wide">
@@ -77,6 +84,13 @@
               to="/user/profile"
             >
               Profile
+            </b-nav-item>
+          </li>
+          <li v-if="getUserAuth">
+            <b-nav-item
+              @click="logoutUser"
+            >
+              Log out
             </b-nav-item>
           </li>
         </ul>
@@ -111,6 +125,12 @@ export default {
     showHideMenu() {
       this.isMenuOpen = !this.isMenuOpen;
     },
+    logoutUser() {
+      localStorage.removeItem("sessionToken");
+      this.$router.push({
+        path: "/login",
+      });
+    },
   },
 };
 </script>
@@ -123,7 +143,8 @@ export default {
     transition: height cubic-bezier(0.075, 0.82, 0.165, 1) 0.5s;
   }
   &__open {
-    height: 120px;
+    padding-top:10px;
+    height: 150px;
   }
 }
 @media (max-width: 992px) {

@@ -59,7 +59,7 @@
                 >
               </div>
               <div class="form-group d-md-flex">
-                <div class="w-100 text-end p-2 forgot-msg"></div>
+                <div class="w-100 text-end p-2 forgot-msg" />
               </div>
               <div class="form-group">
                 <button
@@ -93,22 +93,28 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getUserSessionToken"]),
+    ...mapGetters(["getUserSessionToken", "getUserAuth"]),
   },
   created() {
-    const isRequestTokenExists = localStorage.getItem("requestToken");
-    if (isRequestTokenExists === null) {
+    if (this.getUserAuth) {
+      this.$router.push({
+        path: "/user/profile",
+      });
+    } else {
+      const isRequestTokenExists = localStorage.getItem("requestToken");
+      if (isRequestTokenExists === null) {
+        this.disableForm = true;
+        return;
+      }
+      if (isRequestTokenExists) {
+        this.disableForm = false;
+        return;
+      }
       this.disableForm = true;
-      return;
     }
-    if (isRequestTokenExists) {
-      this.disableForm = false;
-      return;
-    }
-    this.disableForm = true;
   },
   methods: {
-    ...mapActions(["getRequestToken", "getAuthorizedToken", "getSessionToken"]),
+    ...mapActions(["getRequestToken", "getAuthorizedToken", "getSessionToken", "checkIsUserLogged"]),
     async createRequestToken() {
       const reqToken = await this.getRequestToken();
       localStorage.setItem("requestToken", reqToken);
