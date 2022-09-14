@@ -37,7 +37,7 @@
                 <input
                   v-model="user.username"
                   type="text"
-                  :disabled="disableForm ? true : false"
+                  :disabled="disableForm"
                   class="form-control"
                   placeholder="Username"
                   required=""
@@ -51,7 +51,7 @@
                 </div>
                 <input
                   v-model="user.password"
-                  :disabled="disableForm ? true : false"
+                  :disabled="disableForm"
                   type="password"
                   class="form-control"
                   placeholder="Password"
