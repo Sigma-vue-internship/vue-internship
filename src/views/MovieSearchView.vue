@@ -10,6 +10,7 @@
       v-if="isLoading"
       :is-loading="isLoading"
     />
+
     <ul
       v-if="searchMedia.length"
       class="search__results-list"
