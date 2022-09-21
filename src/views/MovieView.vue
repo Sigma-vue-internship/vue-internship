@@ -37,7 +37,11 @@ export default {
           this.movie = data;
           this.isLoading = false;
         } catch (error) {
-          console.log(error);
+          this.$notify({
+  type: 'error',
+  title: 'Important message',
+  text: 'Hello user! This is a notification!'
+});;
           this.isLoading = false;
         }
       },
@@ -51,7 +55,11 @@ export default {
       this.movie = data;
       this.isLoading = false;
     } catch (error) {
-      console.log(error);
+      this.$notify({
+  type: 'error',
+  title: 'Important message',
+  text: 'Hello user! This is a notification!'
+});;
       this.isLoading = false;
     }
   },

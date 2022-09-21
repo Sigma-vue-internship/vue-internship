@@ -218,7 +218,7 @@ export default {
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify(e);
     }
   },
   methods: {
@@ -256,7 +256,7 @@ export default {
           ignoreDuplicates: true,
         });
       } catch (e) {
-        console.log(e);
+        this.$notify(e);
       }
     },
     async getActors() {
