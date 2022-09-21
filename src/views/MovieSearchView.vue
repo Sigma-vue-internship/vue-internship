@@ -94,7 +94,7 @@ export default {
       this.isLoading = false;
     } catch (e) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify(e);
     }
   },
   methods: {
@@ -112,7 +112,7 @@ export default {
           this.isLoading = false;
         } catch (e) {
           this.isLoading = false;
-          console.log(e);
+          this.$notify(e);
         }
       }
     },
@@ -143,7 +143,7 @@ export default {
           this.currentPage = 1;
           return;
         } catch (e) {
-          console.log(e);
+          this.$notify(e);
           this.isLoading = false;
         }
       }
@@ -171,7 +171,7 @@ export default {
           this.currentPage = 1;
           return;
         } catch (e) {
-          console.log(e);
+          this.$notify(e);
           this.isLoading = false;
         }
       }
@@ -192,7 +192,7 @@ export default {
           this.totalPages = this.resData.data.total_pages;
           this.isLoading = false;
         } catch (e) {
-          console.log(e);
+          this.$notify(e);
           this.isLoading = false;
         }
       }

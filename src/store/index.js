@@ -91,7 +91,7 @@ export default new Vuex.Store({
         const { data } = await this.axios.get("/authentication/token/new");
         return data.request_token;
       } catch (e) {
-        console.log(e);
+        this.$notify(e);
       }
     },
     async getAuthorizedToken(_, { username, password, requestToken }) {
@@ -106,7 +106,7 @@ export default new Vuex.Store({
         );
         return data.request_token;
       } catch (e) {
-        console.log(e);
+        this.$notify(e);
       }
     },
     async getSessionToken(_, authToken) {

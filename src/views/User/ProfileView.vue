@@ -115,7 +115,7 @@ export default {
     }
     catch (e) {
       this.isLoading = false;
-      console.log(e);
+      this.$notify(e);
     }
   },
   methods: {
