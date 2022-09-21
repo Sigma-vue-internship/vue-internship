@@ -17,4 +17,3 @@
 * Comments & Reviews section using firebase or other DB provider
 * Dark mode
 
-###
