@@ -16,5 +16,3 @@
 * Show movie reviews on movie page	
 * Comments & Reviews section using firebase or other DB provider
 * Dark mode
-
-#### Examples of implementation can be chekced [here](https://www.opensourceagenda.com/tags/tmdb)
