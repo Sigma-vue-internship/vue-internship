@@ -209,7 +209,6 @@ export default {
   },
   async created() {
     try {
-      console.log(this.movie);
       this.isLoading = true;
       this.setIsInWatchlist();
       this.setIsInFavoritelist();
