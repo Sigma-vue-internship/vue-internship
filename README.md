@@ -16,3 +16,4 @@
 * Show movie reviews on movie page	
 * Comments & Reviews section using firebase or other DB provider
 * Dark mode
+
