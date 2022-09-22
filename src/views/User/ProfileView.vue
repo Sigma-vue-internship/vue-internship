@@ -66,7 +66,7 @@
   </section>
 </template>
 <script>
-import { mapActions} from 'vuex';
+import { mapActions } from 'vuex';
 import ProfileList from '@/components/profile/ProfileList';
 import SpinnerLoader from '@/components/common/SpinnerLoader';
 export default {

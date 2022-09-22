@@ -5,6 +5,7 @@
   />
   <div
     v-else
+    id="celebrity-details-id"
     class="
       container
       d-flex
@@ -43,12 +44,16 @@
         </div>
       </div>
 
-      <div class="celebrity-profile__info col-lg-7 col-xl-7">
-        <h1 class="celebrity-profile__name">
+      <div
+        class="celebrity-profile__info col-lg-7 col-xl-7"
+      >
+        <h1
+          class="celebrity-profile__name"
+        >
           {{ celebrity.name }}
         </h1>
         <p><strong> Birthday: </strong>{{ celebrity.birthday }}</p>
-        <p>
+        <p v-if="celebrity.also_known_as">
           <strong> Also known as: </strong>{{ celebrity.also_known_as.join(", ") }}
         </p>
         <p><strong> Place of birth: </strong>{{ celebrity.place_of_birth }}</p>
