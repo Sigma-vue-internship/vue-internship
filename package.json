@@ -5,7 +5,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test:unit": "vue-cli-service test:unit",
+    "test:unit": "vue-cli-service test:unit --watch",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "postinstall": "npm run build",
     "start": "node server.js"
@@ -16,6 +16,7 @@
     "bootstrap-vue": "^2.22.0",
     "core-js": "^3.6.5",
     "express": "^4.18.1",
+    "lodash": "4.17.21",
     "serve-static": "^1.15.0",
     "vue": "^2.7.10",
     "vue-axios": "^3.4.1",

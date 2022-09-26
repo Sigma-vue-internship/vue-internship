@@ -2,6 +2,12 @@ export default function celebrityDetailsMock() {
   let findSingleCelebrity = jest.fn(()=>Promise.resolve({ data:123 }));
   let getCelebrityImages = jest.fn(()=>Promise.resolve(123));
   let getCelebrityMovies = jest.fn(() => Promise.resolve({ data: { cast: [1, 2, 3] } }));
+  const $route = {
+    path: '/some/path',
+    params: {
+      id:1,
+    },
+  };
   const actions = {
     findSingleCelebrity,
     getCelebrityImages,
@@ -15,6 +21,7 @@ export default function celebrityDetailsMock() {
   const mocks = {
     actions,
     computed,
+    $route,
 
   };
   return mocks;

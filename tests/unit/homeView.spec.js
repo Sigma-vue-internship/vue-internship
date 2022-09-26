@@ -18,8 +18,5 @@ describe('HomeView.vue', () => {
   it('should call findMedia function after input', async() => {
     wrapper = shallowMount(HomeView, { store, localVue });
     expect(wrapper.vm.celebrities).toEqual([]);
-    // const input = wrapper.find('input');
-    // input.element.value = 'input';
-    // input.trigger('input');
   });
 });

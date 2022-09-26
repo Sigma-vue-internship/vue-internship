@@ -164,7 +164,9 @@ export default {
     },
   },
   created() {
-    this.searchQuery = this.$route.query.searchQuery;
+    if (this.$route) {
+      this.searchQuery = this.$route.query.searchQuery;
+    } 
   },
   methods: {
     emitFindMedia() {

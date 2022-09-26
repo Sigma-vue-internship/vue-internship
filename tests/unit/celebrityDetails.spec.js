@@ -1,5 +1,6 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils';
+import { createLocalVue } from '@vue/test-utils';
 import Vuex from 'vuex';
+import wrapperFactory from '../service/wrapperFactory';
 import CelebrityDetailsView from "@/views/CelebrityDetailsView.vue";
 import { BootstrapVue } from 'bootstrap-vue';
 import celebrityDetailsMock from '../__mocks__/celebrityDetailsMock';
@@ -14,59 +15,35 @@ describe("CelebrityDetailsView.vue", () => {
   let store;
   let mocks;
   let spyMethod;
-  const $route = {
-    path: '/some/path',
-    params: {
-      id:1,
-    },
-  };
+  let componentData;
   beforeEach(() => {
     mocks = celebrityDetailsMock();
     actions = mocks.actions;
     store = new Vuex.Store({
       actions,
     });
+    componentData = {
+      celebrity: {
+        also_known_as: ["Idrissa Akuna Elba ", "إدريس إلبا", "Идрис Эльба", "伊德瑞斯·艾尔巴", "イドリス・エルバ",
+          "이드리스 엘바", "Idrissa Akuna \"Idris\" Elba", "Ίντρις Έλμπα", "Ідріс Ельба"],
+      },
+      celebrityMovies: ["1"],
+    };
   });
   it("on created hook getCelebrityData called", async() => {
     spyMethod = jest.spyOn(CelebrityDetailsView.methods, "getCelebrityData");
-    shallowMount(CelebrityDetailsView, {
-      localVue,
-      store,
-      data() {
-        return {
-          celebrity: {
-            also_known_as: ["Idrissa Akuna Elba ", "إدريس إلبا", "Идрис Эльба", "伊德瑞斯·艾尔巴", "イドリス・エルバ",
-              "이드리스 엘바", "Idrissa Akuna \"Idris\" Elba", "Ίντρις Έλμπα", "Ідріс Ельба"],
-          },
-          celebrityMovies: ["1"],
-        };
-      },
-      computed: mocks.computed,
-      mocks: {
-        $route,
-      },
-    });
+
+    wrapperFactory(CelebrityDetailsView, componentData,
+      localVue, store, mocks);
+
     expect(spyMethod).toBeCalled();
+
     spyMethod.mockReset;
   });
   it("on created hook celebrityData should be loaded", async() => {
-    const wrapper = shallowMount(CelebrityDetailsView, {
-      localVue,
-      store,
-      data() {
-        return {
-          celebrity: {
-            also_known_as: ["Idrissa Akuna Elba ", "إدريس إلبا", "Идрис Эльба", "伊德瑞斯·艾尔巴", "イドリス・エルバ",
-              "이드리스 엘바", "Idrissa Akuna \"Idris\" Elba", "Ίντρις Έλμπα", "Ідріс Ельба"],
-          },
-        };
-      },
-      computed: mocks.computed,
-      mocks: {
-        $route,
-      },
+    const wrapper = wrapperFactory(CelebrityDetailsView, componentData,
+      localVue, store, mocks);
 
-    });
     expect(actions.findSingleCelebrity).toHaveBeenCalled();
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.celebrity).toEqual(123);
